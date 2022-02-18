@@ -162,4 +162,164 @@ class pago
     }
 
 
+    protected function save(string $query, string $type = 'insert'): ?bool
+    {
+        if($type == 'deleted'){
+            $arrData = [ ':idPago' =>   $this->getIdPago() ];
+        }else{
+            $arrData = [
+                ':idPago' =>   $this->getIdPago(),
+                ':abono' =>   $this->getAbono(),
+                ':saldo' =>  $this->getSaldo(),
+                ':fechaPago' =>$this ->getFechaPago(),
+                ':descuento'=> $this-> getDescuento(),
+                ':estado' => $this->getEstado(),
+                'Venta_id_Venta'=>$this->getVentaIdVenta(),
+                'Usuario_id_Usuario' => $this ->Usuario_id_Usuario(),
+
+
+            ];
+        }
+
+        $this->Connect();
+        $result = $this->insertRow($query, $arrData);
+        $this->Disconnect();
+        return $result;
+
+    }
+
+    function insert(): ?bool
+    {
+        $query = "INSERT INTO postres.pago VALUES (:idPago,:abono,:saldo,:fechaPago,:descuento,:estado,:Venta_id_Venta,:Usuario_id_Usuario)";
+        if($this->save($query)){
+            return $this->getProducto()->substractStock($this->getCantidad());
+        }
+        return false;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function update() : bool
+    {
+        $query = "UPDATE postres.pago SET 
+            abono = :abono, saldo = :saldo, fechaPago = :fechaPago,descuento= :descuento
+              WHERE idPago = :idpago";
+        return $this->save($query);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function deleted() : bool
+    {
+        $query = "DELETE FROM pago WHERE idpago = :idPago";
+        return $this->save($query, 'deleted');
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public static function search($query) : ?array
+    {
+        try {
+            $arrPago = array();
+            $tmp = new pago();
+            $tmp->Connect();
+            $getrows = $tmp->getRows($query);
+            $tmp->Disconnect();
+
+            foreach ($getrows as $valor) {
+                $pago = new ($valor);
+                array_push($arrPago, $pago);
+                unset($pago);
+            }
+            return $arrPago;
+        } catch (Exception $e) {
+            GeneralFunctions::logFile('Exception',$e, 'error');
+        }
+        return NULL;
+    }
+
+    /**
+     * @param $idPago
+     * @return mixed
+     */
+    public static function searchForId($idPago) : ?pago
+    {
+        try {
+            if ($idPago > 0) {
+                $pago= new pago();
+                $pago->Connect();
+                $getrow = $pago->getRow("SELECT * FROM weber.pago WHERE idPago = ?", array($idPago));
+                $pago->Disconnect();
+                return ($getrow) ? new pago($getrow) : null;
+            }else{
+                throw new Exception('Id de pago Invalido');
+            }
+        } catch (Exception $e) {
+            GeneralFunctions::logFile('Exception',$e, 'error');
+        }
+        return NULL;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getAll() : array
+    {
+        return pago::search("SELECT * FROM weber.pago");
+    }
+
+    /**
+     * @param $idVenta
+     * @param $idpPago
+     * @return bool
+     */
+
+    public static function productoEnFactura($Venta_id_venta,$Usuario_id_Usuario): bool
+
+    {
+        $result = pago::search("SELECT idPago FROM weber.pago where idventa = '" . $Venta_id_venta. "' and $Usuario_id_Usuario = '" . $Usuario_id_Usuario. "'");
+        if (count($result) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString() : string
+    {
+        return "Venta: ".$this->venta->getNumeroVenta().", Producto: ".$this->producto->getNombre().", Cantidad: $this->cantidad, fechaVencimineto: $this->fechaVencimineto";
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4
+     */
+    public function jsonSerialize()
+    {
+        return [
+
+            'idPago'=> $this->getIdPago(),
+            'abono' => $this->getIdPago(),
+            'saldo'=>$this->getSaldo(),
+            'fechaPago' =>$this->getSaldo(),
+            'descuento'=>$this->getDescuento(),
+            'estado'=> $this->getEstado(),
+             'Venta_id_Venta'=>$this->getVentaIdVenta(),
+             'Usuario_id_Usuario'=>$this->getUsuarioIdUsuario(),
+
+        ];
+    }
+
+
 }

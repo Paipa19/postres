@@ -202,7 +202,7 @@ class usuario
             ':correo' => $this->getCorreo(),
             ':rol' => $this->getRol(),
             ':contrasena' => $this->getContrasena(),
-            'estado' => $this->getEstado()
+            ':estado' => $this->getEstado()
         ];
 
         $this->Connet();

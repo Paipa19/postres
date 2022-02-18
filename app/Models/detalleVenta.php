@@ -141,7 +141,7 @@ class detalleVenta
     public function update() : bool
     {
         $query = "UPDATE postres.detalleVenta SET 
-            Venta_id_Venta = :venta_id_Venta, producto_id_Producto = :producto_id_Producto, cantidad = :cantidad,fechaVencimiento= :fechaVencimiento 
+            Venta_id_Venta = :venta_id_Venta, Producto_id_Producto = :Producto_id_Producto, cantidad = :cantidad,fechaVencimiento= :fechaVencimiento 
               WHERE idDetalleVenta = :idDetalleVenta";
         return $this->save($query);
     }
@@ -151,7 +151,7 @@ class detalleVenta
      */
     public function deleted() : bool
     {
-        $query = "DELETE FROM detalleVenta WHERE id = :id";
+        $query = "DELETE FROM detalleVenta WHERE idDetalleVenta = :idDetalleVenta";
         return $this->save($query, 'deleted');
     }
 
@@ -184,15 +184,15 @@ class detalleVenta
      * @param $id
      * @return mixed
      */
-    public static function searchForId($id) : ?DetalleVentas
+    public static function searchForId($id) : ?DetalleVenta
     {
         try {
             if ($id > 0) {
-                $DetalleVenta = new DetalleVentas();
+                $DetalleVenta = new DetalleVenta();
                 $DetalleVenta->Connect();
-                $getrow = $DetalleVenta->getRow("SELECT * FROM weber.detalle_ventas WHERE id = ?", array($id));
+                $getrow = $DetalleVenta->getRow("SELECT * FROM weber.DetalleVenta WHERE idDetalleVenta = ?", array($id));
                 $DetalleVenta->Disconnect();
-                return ($getrow) ? new DetalleVentas($getrow) : null;
+                return ($getrow) ? new DetalleVenta($getrow) : null;
             }else{
                 throw new Exception('Id de detalle venta Invalido');
             }
@@ -207,7 +207,7 @@ class detalleVenta
      */
     public static function getAll() : array
     {
-        return DetalleVentas::search("SELECT * FROM weber.detalle_ventas");
+        return DetalleVenta::search("SELECT * FROM weber.DetalleVenta");
     }
 
     /**
@@ -215,9 +215,10 @@ class detalleVenta
      * @param $producto_id
      * @return bool
      */
-    public static function productoEnFactura($venta_id,$producto_id): bool
+    public static function productoEnFactura($Venta_id_venta,$Producto_id_Producto): bool
+
     {
-        $result = DetalleVentas::search("SELECT id FROM weber.detalle_ventas where venta_id = '" . $venta_id. "' and producto_id = '" . $producto_id. "'");
+        $result = DetalleVenta::search("SELECT id FROM weber.DetalleVenta where Venta_id_venta = '" . $Venta_id_venta. "' and Producto_id_Producto = '" . $Producto_id_Producto. "'");
         if (count($result) > 0) {
             return true;
         } else {
@@ -230,7 +231,7 @@ class detalleVenta
      */
     public function __toString() : string
     {
-        return "Venta: ".$this->venta->getNumeroSerie().", Producto: ".$this->producto->getNombre().", Cantidad: $this->cantidad, Precio Venta: $this->precio_venta";
+        return "Venta: ".$this->venta->getNumeroVenta().", Producto: ".$this->producto->getNombre().", Cantidad: $this->cantidad, fechaVencimineto: $this->fechaVencimineto";
     }
 
     /**
@@ -243,11 +244,11 @@ class detalleVenta
     public function jsonSerialize()
     {
         return [
-            'venta_id' => $this->getVenta()->jsonSerialize(),
-            'producto_id' => $this->getProducto()->jsonSerialize(),
+            'idDetalleVenta' => $this->getIdDetalleVenta(),
             'cantidad' => $this->getCantidad(),
-            'precio_venta' => $this->getPrecioVenta(),
-            'created_at' => $this->getCreatedAt()->toDateTimeString(),
+            'fechaVencimineto' => $this->getVencimineto(),
+            'Venta_id_Venta' => $this->getVentaIdVenta(),
+            'Producto_id_Producto' => $this->getProductoIdProducto(),
         ];
     }
 

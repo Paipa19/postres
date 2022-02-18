@@ -161,5 +161,160 @@ class venta
         $this->Usuario_id_Usuario = $Usuario_id_Usuario;
     }
 
+    protected function save(string $query, string $type = 'insert'): ?bool
+    {
+        if($type == 'deleted'){
+            $arrData = [ ':idDetalleVenta' =>   $this->getIdDetalleVenta() ];
+        }else{
+            $arrData = [
+                ':idVenta' =>   $this->getIdVenta(),
+                ':numeroVenta' =>   $this->getNuemeroVenta(),
+                ':fecha' =>  $this->getfecha(),
+                ':total' =>$this ->getTotal(),
+                ':costo_domicilio' => $this-> getCostoDomicilio(),
+                ':estado' =>$this ->getEstado(),
+                'Domicilio_id_Domicilio' =>$this ->getDomicilioIdDomicilio(),
+                'Usuario_id_Usuario' =>$this ->getUsuarioIdUsuario(),
+
+            ];
+        }
+
+        $this->Connect();
+        $result = $this->insertRow($query, $arrData);
+        $this->Disconnect();
+        return $result;
+    }
+
+
+    function insert(): ?bool
+    {
+        $query = "INSERT INTO postres.venta VALUES (:idVenta,:numeroVenta,:fecha,:total,:costo_domicilio,:estado,:Domicilio_id_Domiicilio,:Usuario_id_Usuario)";
+        if($this->save($query)){
+            return $this->getProducto()->substractStock($this->getCantidad());
+        }
+        return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function update() : bool
+    {
+        $query = "UPDATE postres.detalleVenta SET 
+            idVenta = :idVenta, numeroVenta = :numeroVenta, fecha = :fecha,total= :total, costo_domicilio, :costo_domicilio, Domicilio_id_Domicilio, :Domicilio_id_Domicilio, Usuario_id_Usuario, :Usuario_id_Usuario; 
+              WHERE idVenta = :idVenta";
+        return $this->save($query);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function deleted() : bool
+    {
+        $query = "DELETE FROM venta WHERE idVenta = :idVenta";
+        return $this->save($query, 'deleted');
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public static function search($query) : ?array
+    {
+        try {
+            $arrventa = array();
+            $tmp = new DetalleVenta();
+            $tmp->Connect();
+            $getrows = $tmp->getRows($query);
+            $tmp->Disconnect();
+
+            foreach ($getrows as $valor) {
+                $venta = new venta($valor);
+                array_push($arrventa, $venta);
+                unset($venta);
+            }
+            return $arrventa;
+        } catch (Exception $e) {
+            GeneralFunctions::logFile('Exception',$e, 'error');
+        }
+        return NULL;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function searchForId($id) : ?venta
+    {
+        try {
+            if ($id > 0) {
+                $venta = new venta();
+                $venta->Connect();
+                $getrow = $venta->getRow("SELECT * FROM weber.venta WHERE id = ?", array($id));
+                $venta->Disconnect();
+                return ($getrow) ? new ventas($getrow) : null;
+            }else{
+                throw new Exception('Id de venta Invalido');
+            }
+        } catch (Exception $e) {
+            GeneralFunctions::logFile('Exception',$e, 'error');
+        }
+        return NULL;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getAll() : array
+    {
+        return venta::search("SELECT * FROM weber.venta");
+    }
+
+    /**
+     * @param $Domicilio_id_Domicilio
+     * @param $Usuario_id_Usuario
+     * @return bool
+     */
+    public static function productoEnFactura($Domicilio_id_Domicilio,$Usuario_id_Usuario): bool
+    {
+        $result = venta::search("SELECT id FROM weber.venta where idVenta = '" . $Domicilio_id_Domicilio. "' and Usuario_id_Usuario = '" . $Usuario_id_Usuario. "'");
+        if (count($result) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString() : string
+    {
+        return "venta: ".$this->venta->getNumeroSerie().", Producto: ".$this->producto->getNombre().", Cantidad: $this->cantidad, Precio Venta: $this->precio_venta";
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'idVenta' => $this->getIdVenta(),
+            'numeroVenta' => $this->getNumeroVenta(),
+            'fecha' => $this->getFecha(),
+            'total' => $this->getTotal(),
+            'costo_domicilio' => $this->getCostoDomicilio(),
+            'estado' => $this->getEstado(),
+            'Domicilio_id_Domicilio'=> $this->getDomicilioIdDomicilio(),
+            'Usuario_id_Usuario'  => $this->getUsuarioIdUsuario(),
+
+        ];
+    }
+
+
 
 }

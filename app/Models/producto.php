@@ -123,5 +123,119 @@ class producto
         $this->stock = $stock;
     }
 
+    protected function save(string $query, string $type = 'insert'): ?bool
+    {
+        if($type == 'deleted'){
+            $arrData = [ ':idDetalleVenta' =>   $this->getIdDetalleVenta() ];
+        }else{
+            $arrData = [
+                ':idProducto' =>   $this->getIdProducto(),
+                ':nombre' =>   $this->getNombre(),
+                ':descripcion' =>  $this->getDescripcion(),
+                ':valorUnitario' =>$this ->getValorUnitario(),
+                ':estado'=> $this-> getEstado(),
+                ':stock' => $this -> getStock(),
+            ];
+        }
 
+        $this->Connect();
+        $result = $this->insertRow($query, $arrData);
+        $this->Disconnect();
+        return $result;
+    }
+    function insert(): ?bool
+    {
+        $query = "INSERT INTO postres.producto VALUES (:idProducto,:nombre,:descripcion,:valorUnitario,:estado,:stock)";
+        if($this->save($query)){
+            return $this->getProducto()->substractStock($this->getCantidad());
+        }
+        return false;
+    }
+    public function update() : bool
+    {
+        $query = "UPDATE postres.producto SET 
+            idProducto = :idProducto, nombre = :nombre, descripcion = :descripcion,valorUnitario= :valorUnitario,estado= :estado ,stock= :stock
+              WHERE idproducto = :idproducto";
+        return $this->save($query);
+    }
+    public function deleted() : bool
+    {
+        $query = "DELETE FROM producto WHERE id = :id";
+        return $this->save($query, 'deleted');
+    }
+
+    public static function search($query) : ?array
+    {
+        try {
+            $arrproducto = array();
+            $tmp = new producto();
+            $tmp->Connect();
+            $getrows = $tmp->getRows($query);
+            $tmp->Disconnect();
+
+            foreach ($getrows as $valor) {
+                $producto = new producto($valor);
+                array_push($arrproducto, $producto);
+                unset($producto);
+            }
+            return $arrproducto;
+        } catch (Exception $e) {
+            GeneralFunctions::logFile('Exception',$e, 'error');
+        }
+        return NULL;
+    }
+
+    public static function searchForId($id) : ?producto
+    {
+        try {
+            if ($id > 0) {
+                $producto = new producto();
+                $producto->Connect();
+                $getrow = $producto->getRow("SELECT * FROM weber.producto WHERE id = ?", array($id));
+                $producto->Disconnect();
+                return ($getrow) ? new producto($getrow) : null;
+            }else{
+                throw new Exception('Id de producto Invalido');
+            }
+        } catch (Exception $e) {
+            GeneralFunctions::logFile('Exception',$e, 'error');
+        }
+        return NULL;
+    }
+
+
+    public static function getAll() : array
+    {
+        return producto::search("SELECT * FROM weber.producto");
+    }
+
+
+    public static function productoEnFactura($venta_id,$producto_id): bool
+    {
+        $result = producto::search("SELECT id FROM weber.producto where venta_id = '" . $venta_id. "' and producto_id = '" . $producto_id. "'");
+        if (count($result) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function __toString() : string
+    {
+        return "Venta: ".$this->venta->getNumeroSerie().", Producto: ".$this->producto->getNombre().", Cantidad: $this->cantidad, Precio Venta: $this->precio_venta";
+    }
+
+
+    public function jsonSerialize()
+    {
+        return [
+            'idProducto' => $this->getIdProducto(),
+            'nombre' => $this->getNombre(),
+            'descripcion' => $this->getDescripcion(),
+            'valorUnitario' => $this->getValorUnitario(),
+            'estado' => $this->getEstado(),
+            'stock' => $this -> getStock(),
+        ];
+    }
 }
