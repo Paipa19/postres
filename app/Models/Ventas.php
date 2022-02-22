@@ -37,9 +37,10 @@ class Venta extends AbstractDBConnection implements Model
         $this->setEstado($estado['estado'] ?? null);
     }
 
-    public function __destruct()
-    {
-        parent::__destruct();
+    public function __destruct(){
+        if ($this->isConnected()){
+            $this->Disconnect();
+        }
     }
 
     /**
@@ -260,9 +261,11 @@ class Venta extends AbstractDBConnection implements Model
         return null;
     }
 
+
+
     static function getAll(): ?array
     {
-        return Persona::search(query: "SELECT * FROM postres.ventas");
+        return Venta::search("SELECT * FROM postres.ventas");
     }
 
     /**
@@ -272,7 +275,7 @@ class Venta extends AbstractDBConnection implements Model
      */
     public static function VentaRegistrada($documento): bool
     {
-        $result = Ventas::search(query: "SELECT*FROM postres.ventas where documento = " . $documento);
+        $result = Venta::search("SELECT*FROM postres.ventas where documento = " . $documento);
         if (!empty($result) && count($result) > 0) {
             return true;
         } else {
