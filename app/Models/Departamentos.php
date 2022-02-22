@@ -18,25 +18,25 @@ final class Departamentos extends AbstractDBConnection implements Model
     private Carbon $deleted_at;
 
     /* Relaciones */
-    private ?array $MunicipiosDepartamento;
+    private ?array $MunicipiosDepartamentos;
 
     /**
      * Departamentos constructor. Recibe un array asociativo
-     * @param array $departamento
+     * @param array $departamentos
      */
-    public function __construct(array $departamento = [])
+    public function __construct(array $departamentos = [])
     {
         parent::__construct();
-        $this->setId($departamento['id'] ?? null);
-        $this->setNombre($departamento['nombre'] ?? '');
-        $this->setRegion($departamento['region'] ?? '');
-        $this->setEstado($departamento['estado'] ?? '');
-        $this->setCreatedAt(!empty($departamento['created_at']) ?
-            Carbon::parse($departamento['created_at']) : new Carbon());
-        $this->setUpdatedAt(!empty($departamento['updated_at']) ?
-            Carbon::parse($departamento['updated_at']) : new Carbon());
-        $this->setDeletedAt(!empty($departamento['deleted_at']) ?
-            Carbon::parse($departamento['deleted_at']) : new Carbon());
+        $this->setId($departamentos['id'] ?? null);
+        $this->setNombre($departamentos['nombre'] ?? '');
+        $this->setRegion($departamentos['region'] ?? '');
+        $this->setEstado($departamentos['estado'] ?? '');
+        $this->setCreatedAt(!empty($departamentos['created_at']) ?
+            Carbon::parse($departamentos['created_at']) : new Carbon());
+        $this->setUpdatedAt(!empty($departamentos['updated_at']) ?
+            Carbon::parse($departamentos['updated_at']) : new Carbon());
+        $this->setDeletedAt(!empty($departamentos['deleted_at']) ?
+            Carbon::parse($departamentos['deleted_at']) : new Carbon());
     }
 
     public function __destruct()
@@ -161,12 +161,12 @@ final class Departamentos extends AbstractDBConnection implements Model
      * retorna un array de municipios que perteneces a un departamento
      * @return array
      */
-    public function getMunicipiosDepartamento(): ?array
+    public function getMunicipiosDepartamentos(): ?array
     {
-        $this-> MunicipiosDepartamento = Municipios::search(
-            "SELECT * FROM municipios WHERE departamento_id = ".$this->id
+        $this-> MunicipiosDepartamentos = Municipios::search(
+            "SELECT * FROM municipios WHERE departamentos_id = ".$this->id
         );
-        return $this-> MunicipiosDepartamento ?? null;
+        return $this-> MunicipiosDepartamentos ?? null;
     }
 
     public static function search($query): ?array
@@ -179,9 +179,9 @@ final class Departamentos extends AbstractDBConnection implements Model
             $tmp->Disconnect();
 
             foreach ($getrows as $valor) {
-                $Departamento = new Departamentos($valor);
-                array_push($arrDepartamentos, $Departamento);
-                unset($Departamento);
+                $Departamentos = new Departamentos($valor);
+                array_push($arrDepartamentos, $Departamentos);
+                unset($Departamentos);
             }
             return $arrDepartamentos;
         } catch (Exception $e) {
@@ -194,10 +194,10 @@ final class Departamentos extends AbstractDBConnection implements Model
     {
         try {
             if ($id > 0) {
-                $tmpDepartamento = new Departamentos();
-                $tmpDepartamento->Connect();
-                $getrow = $tmpDepartamento->getRow("SELECT * FROM departamentos WHERE id =?", array($id));
-                $tmpDepartamento->Disconnect();
+                $tmpDepartamentos = new Departamentos();
+                $tmpDepartamentos->Connect();
+                $getrow = $tmpDepartamentos->getRow("SELECT * FROM departamentos WHERE id =?", array($id));
+                $tmpDepartamentos->Disconnect();
                 return ($getrow) ? new Departamentos($getrow) : null;
             } else {
                 throw new Exception('Id de departamento Invalido');
