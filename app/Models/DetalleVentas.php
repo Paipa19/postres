@@ -21,9 +21,9 @@ class DetalleVentas extends AbstractDBConnection implements Model
 
     {
         parent::__construct();
-        $this->setIdDetalleVenta(IdDetalleVenta: $IdDetalleVenta ['IdDetalleVenta'] ?? null);
-        $this->setcantidad(cantidad: $cantidad['cantidad'] ?? '');
-        $this->setfechaVencimiento(fechaVencimiento: $fechaVencimiento ['fechaVencimiento'] ?? '');
+        $this->setIdDetalleVenta($IdDetalleVenta ['IdDetalleVenta'] ?? null);
+        $this->setcantidad( $cantidad['cantidad'] ?? '');
+        $this->setfechaVencimiento( $fechaVencimiento ['fechaVencimiento'] ?? '');
 
     }
 
@@ -179,7 +179,7 @@ class DetalleVentas extends AbstractDBConnection implements Model
 
     static function getAll(): ?array
     {
-        return Persona::search(query: "SELECT * FROM postres.DetalleVentas");
+        return DetalleVentas::search( "SELECT * FROM postres.DetalleVentas");
     }
 
     /**
@@ -189,7 +189,7 @@ class DetalleVentas extends AbstractDBConnection implements Model
      */
     public static function DetalleVentaRegistrada($documento): bool
     {
-        $result = Ventas::search(query: "SELECT*FROM postres.detalleventas where documento = " . $documento);
+        $result = DetalleVentas::search( "SELECT*FROM postres.detalleventas where documento = " . $documento);
         if (!empty($result) && count($result) > 0) {
             return true;
         } else {
