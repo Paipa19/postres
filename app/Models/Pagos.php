@@ -13,8 +13,11 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
     private Carbon $fechaPago;
     private string $descuento;
     private string $estado;
-    private int $Venta_id_Venta;
-    private int $Usuario_id_Usuario;
+
+
+    /*RELACIONES*/
+    private ?Ventas $venta;
+    private ?Usuarios $usuario;
 
     /**
      * @param int $idPago
@@ -139,37 +142,6 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
         $this->estado = $estado;
     }
 
-    /**
-     * @return int
-     */
-    public function getVentaIdVenta(): int
-    {
-        return $this->Venta_id_Venta;
-    }
-
-    /**
-     * @param int $Venta_id_Venta
-     */
-    public function setVentaIdVenta(int $Venta_id_Venta): void
-    {
-        $this->Venta_id_Venta = $Venta_id_Venta;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUsuarioIdUsuario(): int
-    {
-        return $this->Usuario_id_Usuario;
-    }
-
-    /**
-     * @param int $Usuario_id_Usuario
-     */
-    public function setUsuarioIdUsuario(int $Usuario_id_Usuario): void
-    {
-        $this->Usuario_id_Usuario = $Usuario_id_Usuario;
-    }
 
 
     protected function save(string $query): ?bool
@@ -182,8 +154,7 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
             'fechaPago'=>$this->fechaPago(),
             ':descuento'=>$this->descuento(),
             ':estado'=>$this->descuento(),
-            'Venta_id_Venta' =>$this-> Venta_id_Venta(),
-            'Usuario_id_Usuario'=> $this -> Usuario_id_Usuario(),
+
         ];
         $this->Connect();
         $result = $this->insertRow($query, $arrData);
@@ -195,7 +166,7 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
     {
         $query = "INSERT INTO postres.pago Values(
            :idPago,:abono,:saldo, :fechaPago,:descuento,
-           :estado,:Venta_id_Venta,:Usuario_id_Usuario)";
+           :estado)";
 
         return $this->save($query);
     }
@@ -204,7 +175,7 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
     {
         $query = "UPDATE postres.pago SET
         abono = :abono, saldo = :saldo, fechaPago = :fechaPago,
-        estado = :estado, Venta_id_Venta = :Venta_id_Venta, 
+        estado = :estado 
         WHERE idPago = :idPago";
 
         return $this->save($query);
@@ -295,8 +266,7 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
             'fechaPago' => $this->getFechaPago(),
             'descuento' => $this->getDescuento(),
             'estado' => $this->getEstado(),
-            '$Venta_id_Venta' => $this->getVentaIdVenta(),
-            'Usuario_id_Usuario' => $this->getUsuarioIdUsuario(),
+
 
         ];
     }
