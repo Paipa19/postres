@@ -1,7 +1,9 @@
 <?php
 
+namespace App\Models;
 
-class usuario
+
+class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
 {
     private ?int $idUsuario;
     private int $numeroIdentificacion;
@@ -12,6 +14,10 @@ class usuario
     private string $rol;
     private ?string $contrasena;
     private string $estado;
+
+    /* Seguridad de Contraseña */
+    const HASH = PASSWORD_DEFAULT;
+    const COST = 10;
 
     /**
      * @param int|null $idUsuario
@@ -24,17 +30,19 @@ class usuario
      * @param string|null $contrasena
      * @param string $estado
      */
-    public function __construct(?int $idUsuario, int $numeroIdentificacion, string $nombre, string $apellido, int $telefono, string $correo, string $rol, ?string $contrasena, string $estado)
+    public function __construct(array $usuario = [])
     {
-        $this->idUsuario = $idUsuario;
-        $this->numeroIdentificacion = $numeroIdentificacion;
-        $this->nombre = $nombre;
-        $this->apellido = $apellido;
-        $this->telefono = $telefono;
-        $this->correo = $correo;
-        $this->rol = $rol;
-        $this->contrasena = $contrasena;
-        $this->estado = $estado;
+        parent::__construct();
+        $this->setIdUsuario($usuario['idUsuario'] ?? null);
+        $this->setNombre($usuario['nombres'] ?? '');
+        $this->setApellido($usuario['apellidos'] ?? '');
+        $this->setNumeroIdentificacion($usuario['numeroIdetficacion'] ?? '');
+        $this->setTelefono($usuario['telefono'] ?? 0);
+        $this->setCorreo($usuario['direccion'] ?? '');
+        $this->setRol($usuario['rol'] ?? '');
+        $this->setContrasena($usuario['contrasena'] ?? null);
+        $this->setEstado($usuario['estado'] ?? '');
+
     }
 
     public function __destruct()
@@ -43,7 +51,6 @@ class usuario
             $this->Disconnect();
         }
     }
-
 
     /**
      * @return int|null
@@ -191,9 +198,11 @@ class usuario
 
 
 
-    protected function save(string $query): bool
+    protected function save(string $query): ?bool
     {
+        $hashPassword = hashPassword($this->contrasena, self::HASH, ['cost' => self::COST]);
         $arrData = [
+
             ':idUsuario' => $this->getIdUsuario(),
             ':numeroIdentificacion' => $this->getNumeroIdentificacion(),
             ':nombre' => $this->getNombre(),
@@ -201,17 +210,19 @@ class usuario
             ':telefono' => $this->getTelefono(),
             ':correo' => $this->getCorreo(),
             ':rol' => $this->getRol(),
-            ':contrasena' => $this->getContrasena(),
+            ':contrasena' => $hashPassword,
             ':estado' => $this->getEstado()
-        ];
 
+        ];
         $this->Connet();
         $result = $this->insertRow($query, $arrData);
         $this->Disconnect();
         return $result;
     }
 
-    public function insert(): ?bool
+
+
+    function insert(): ?bool
     {
         $query = "INSERT INTO postres.usuario Values(
            :idUsuario,:numeroIdentidicacion,:nombre, :apellido,:telefono,
@@ -220,8 +231,7 @@ class usuario
         return $this->save($query);
     }
 
-
-    public function update(): ?bool
+    function update(): ?bool
     {
         $query = "UPDATE postres.usuario SET
         numeroIdentificacion = :numeroIdentificacion, nombre = :nombre, apellido = :apellido,
@@ -231,15 +241,13 @@ class usuario
         return $this->save($query);
     }
 
-    public function deleted(): bool
-
+    function deleted(): ?bool
     {
         $this->setEstado(estado: "Inactvo");
         return $this->update();
     }
 
-
-    public static function search($query): ?array
+    static function search($query): ?array
     {
         try {
             $arrUsuario = array();
@@ -263,7 +271,7 @@ class usuario
         return null;
     }
 
-    public static function searchForId(int $idUsuario): ?Usuario
+    static function searchForId(int $idUsuario): ?object
     {
         try {
             if ($idUsuario > 0) {
@@ -279,13 +287,13 @@ class usuario
             GeneralFunctions::logFile('Exception', $e);
         }
         return null;
+
     }
 
-    public static function getAll(): array
+    static function getAll(): ?array
     {
         return Usuario::search("SELECT * FROM postres.usuario");
     }
-
     public static function usuarioRegistrado($numeroIdentificacion): bool
     {
         $result = Usuario::search("SELECT * FROM postres.usuario where numeroIdentificacion = " . $numeroIdentificacion);
@@ -335,7 +343,11 @@ class usuario
             return "Error en Servidor";
         }
     }
-    public function jsonSerialize(): array
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): mixed
     {
         return [
             'idUsuario' => $this->getIdUsuario(),
@@ -351,5 +363,3 @@ class usuario
         ];
     }
 }
-
-
