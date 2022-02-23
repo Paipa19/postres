@@ -17,13 +17,15 @@ class DetalleVentas extends AbstractDBConnection implements Model
      * @param string $cantidad
      * @param carbon $fechaVencimiento
      */
-    public function __construct(array $idDetalleVenta = [] )
+    public function __construct(array $idDetalleVenta = [])
 
     {
         parent::__construct();
-        $this->setIdDetalleVenta($IdDetalleVenta ['IdDetalleVenta'] ?? null);
-        $this->setcantidad( $cantidad['cantidad'] ?? '');
-        $this->setfechaVencimiento( $fechaVencimiento ['fechaVencimiento'] ?? '');
+        $this->setIdDetalleVenta($$idDetalleVenta ['IdDetalleVenta'] ?? null);
+        $this->setcantidad( $idDetalleVenta['cantidad'] ?? '');
+        $this->setfechaVencimiento( $idDetalleVenta ['fechaVencimiento'] ?? '');
+        $this->setVentaidVenta($idDetalleVenta ['Venta_idVenta'] ?? '');
+        $this->setProductoidProducto($idDetalleVenta ['Producto_idProducto'] ?? '');
 
     }
 
@@ -82,6 +84,40 @@ class DetalleVentas extends AbstractDBConnection implements Model
         $this->fechaVencimiento = $fechaVencimiento;
     }
 
+    /**
+     * @return int
+     */
+    public function getVentaIdVenta(): int
+    {
+        return $this->Venta_idVenta;
+    }
+
+    /**
+     * @param int $Venta_idVenta
+     */
+    public function setVentaIdVenta(int $Venta_idVenta): void
+    {
+        $this->Venta_idVenta = $Venta_idVenta;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProductoIdProducto(): int
+    {
+        return $this->Producto_idProducto;
+    }
+
+    /**
+     * @param int $Producto_idProducto
+     */
+    public function setProductoIdProducto(int $Producto_idProducto): void
+    {
+        $this->Producto_idProducto = $Producto_idProducto;
+    }
+
+
+
 
 
 
@@ -92,6 +128,8 @@ class DetalleVentas extends AbstractDBConnection implements Model
             ':idDetalleVenta' => $this->getIdDetalleVenta(),
             ':cantidad' => $this->getCantidad(),
             ':fechaVencimiento' => $this->getFechaVencimiento(),
+            ':Venta_idVenta' => $this->getVentaIdVenta(),
+            ':Producto_idProducto' => $this->getProductoIdProducto(),
         ];
 
         $this->Connet();
@@ -108,7 +146,7 @@ class DetalleVentas extends AbstractDBConnection implements Model
         // TODO: Implement insert() method.
 
         $query = "INSERT INTO postres.detalleVenta SET
-        :idDetalleVentas, :cantidad, :fechaVencimiento)";
+        :idDetalleVentas, :cantidad, :fechaVencimiento, :Venta_idVenta, :Producto_idProducto,)";
 
         return $this->save($query);
 
@@ -120,8 +158,9 @@ class DetalleVentas extends AbstractDBConnection implements Model
         // TODO: Implement update() method.
 
         $query = "UPDATE postres.detalleVenta SET
-        cantidad = :cantidad, fechaVencimiento = :fechaVencimiento";
-        return $this - save($query);
+        cantidad = :cantidad, fechaVencimiento = :fechaVencimiento, Venta_idVenta = :Venta_idVenta, Producto_idProducto = :Producto_idProducto
+        WHERE idDetalleVenta = :idDetalleVenta";
+        return $this -> save($query);
 
     }
 
@@ -130,8 +169,7 @@ class DetalleVentas extends AbstractDBConnection implements Model
     function deleted(): ?bool
     {
         // TODO: Implement deleted() method.
-        $this->setEstado(EstadoGeneral::INACTIVO); //cambia el estado de la venta
-        return $this->update();
+        return null;
     }
 
 
@@ -159,37 +197,33 @@ class DetalleVentas extends AbstractDBConnection implements Model
 
 
 
-    public static function searchForId($id) : ?object
+    static function searchForId(int $id): ?object
     {
         try {
             if ($id > 0) {
-                $DetalleVenta = new DetalleVentas();
-                $DetalleVenta->Connect();
-                $getrow = $DetalleVenta->getRow("SELECT * FROM postres.DetalleVentas WHERE id = ?", array($id));
-                $DetalleVenta->Disconnect();
+                $tmpDetalleVenta = new DetalleVentas();
+                $tmpDetalleVenta->Connect();
+                $getrow = $tmpDetalleVenta->getRow("SELECT * FROM postres.DetalleVentas WHERE idDetalleVentas =?", array($id));
+                $tmpDetalleVenta->Disconnect();
                 return ($getrow) ? new DetalleVentas($getrow) : null;
-            }else{
-                throw new Exception('Id de detalle venta Invalido');
+            } else {
+                throw new Exception('Id de DetalleVentas Invalido');
             }
         } catch (Exception $e) {
-            GeneralFunctions::logFile('Exception',$e, 'error');
+            GeneralFunctions::logFile('Exception', $e);
         }
-        return NULL;
+        return null;
     }
 
-    static function getAll(): ?array
-    {
-        return DetalleVentas::search( "SELECT * FROM postres.DetalleVentas");
-    }
+
 
     /**
-     * @param $documento
+     * @param $numeroDetalleVenta
      * @return bool
-     * @throws Exception
      */
-    public static function DetalleVentaRegistrada($documento): bool
+    public static function DetalleVentaRegistrada($numeroDetalleVenta): bool
     {
-        $result = DetalleVentas::search( "SELECT*FROM postres.detalleventas where documento = " . $documento);
+        $result = DetalleVentas::search( "SELECT * FROM postres.DetalleVentas where numeroDetalleVenta = " . $numeroDetalleVenta);
         if (!empty($result) && count($result) > 0) {
             return true;
         } else {
@@ -197,21 +231,16 @@ class DetalleVentas extends AbstractDBConnection implements Model
         }
 
     }
-    /**
-     * @return string
-     */
-    public function __toString(): string
+    static function getAll(): ?array
     {
-        return "idDetalleVenta: $this->idDetalleVenta,
-               cantidad: $this->cantidad,
-               fechaVencimiento: $this->fechaVencimiento";
+        return DetalleVentas::search("SELECT * FROM postres.DetalleVentas");
     }
 
 
     /**
      * @inheritDoc
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             'idDetalleVenta' => $this->getIdDetalleVenta(),
