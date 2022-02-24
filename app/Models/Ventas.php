@@ -262,20 +262,14 @@ class Venta extends AbstractDBConnection implements Model
     }
 
 
-
-    static function getAll(): ?array
-    {
-        return Venta::search("SELECT * FROM postres.ventas");
-    }
-
     /**
-     * @param $documento
+     * @param $numeroVenta
      * @return bool
      * @throws Exception
      */
-    public static function VentaRegistrada($documento): bool
+    public static function VentaRegistrada($numeroVenta): bool
     {
-        $result = Venta::search("SELECT*FROM postres.ventas where documento = " . $documento);
+        $result = Venta::search("SELECT * FROM postres.ventas where documento = " . $numeroVenta);
         if (!empty($result) && count($result) > 0) {
             return true;
         } else {
@@ -284,18 +278,14 @@ class Venta extends AbstractDBConnection implements Model
 
     }
 
-    /**
-     * @return string
-     */
-    public function __toString(): string
+
+
+    static function getAll(): ?array
     {
-        return "idVenta: $this->idVenta,
-               numeroVenta: $this->numeroVenta,
-               fecha: $this->fecha,
-               total: $this->total,
-               costo_domicilio: $this->costo_domicilio,
-               estado: $this->estado";
+        return Venta::search("SELECT * FROM postres.ventas");
     }
+
+
 
     /**
      * @inheritDoc
