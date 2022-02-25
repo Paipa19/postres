@@ -1,15 +1,33 @@
 {
-  "name": "daom89/weber",
-  "description": "Proyecto de ejemplo de PHP",
+  "name": "Paipa19/postres",
+  "description": "Proyecto de postres de PHP",
   "type": "project",
   "keywords": ["console", "tool", "example"],
   "homepage": "https://google.com",
-  "time": "2019-10-28", fecha en que se creo el repositorio
+  "time": "2022-02-18",
   "license": "MIT",
   "authors": [
     {
-      "name": "Diego Ojeda",
-      "email": "daom89@gmail.com",
+      "name": "Anderson Paipa",
+      "email": "adpaipa4@misena.edu.co",
+      "homepage": "http://www.sena.edu.co",
+      "role": "Developer"
+    },
+    {
+      "name": "Daniel Huerfano",
+      "email": "dshuerfano9@misena.edu.co",
+      "homepage": "http://www.sena.edu.co",
+      "role": "Developer"
+    },
+    {
+      "name": "Andres Cachope",
+      "email": "afcachope@misena.edu.co",
+      "homepage": "http://www.sena.edu.co",
+      "role": "Developer"
+    },
+    {
+      "name": "Edwin Prieto",
+      "email": "ecprieto05@misena.edu.co",
       "homepage": "http://www.sena.edu.co",
       "role": "Developer"
     }

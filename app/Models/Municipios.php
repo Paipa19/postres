@@ -1,11 +1,11 @@
 <?php
+
 namespace App\Models;
 
+use App\Enums\Estado;
 use App\Interfaces\Model;
 use Carbon\Carbon;
-use Exception;
 use JetBrains\PhpStorm\ArrayShape;
-use JsonSerializable;
 
 final class Municipios extends AbstractDBConnection implements Model
 {
@@ -13,7 +13,7 @@ final class Municipios extends AbstractDBConnection implements Model
     private string $nombre;
     private int $departamento_id;
     private string $acortado;
-    private string $estado;
+    private Estado $estado;
     private Carbon $created_at;
     private Carbon $updated_at;
     private Carbon $deleted_at;
@@ -32,7 +32,7 @@ final class Municipios extends AbstractDBConnection implements Model
         $this->setNombre($municipio['nombre'] ?? '');
         $this->setDepartamentoId($municipio['departamento_id'] ?? 0);
         $this->setAcortado($municipio['acortado'] ?? '');
-        $this->setEstado($municipio['estado'] ?? '');
+        $this->setEstado($municipio['estado'] ?? Estado::ACTIVO);
         $this->setCreatedAt(!empty($municipio['created_at']) ? Carbon::parse($municipio['created_at']) : new Carbon());
         $this->setUpdatedAt(!empty($municipio['updated_at']) ? Carbon::parse($municipio['updated_at']) : new Carbon());
         $this->setDeletedAt(!empty($municipio['deleted_at']) ? Carbon::parse($municipio['deleted_at']) : new Carbon());
@@ -118,15 +118,19 @@ final class Municipios extends AbstractDBConnection implements Model
      */
     public function getEstado(): string
     {
-        return $this->estado;
+        return $this->estado->toString();
     }
 
     /**
-     * @param string $estado
+     * @param string|Estado|null $estado
      */
-    public function setEstado(string $estado): void
+    public function setEstado(null|string|Estado $estado): void
     {
-        $this->estado = $estado;
+        if(is_string($estado)){
+            $this->estado = Estado::from($estado);
+        }else{
+            $this->estado = $estado;
+        }
     }
 
     /**
@@ -216,6 +220,22 @@ final class Municipios extends AbstractDBConnection implements Model
         return Municipios::search("SELECT * FROM weber.municipios");
     }
 
+    /**
+     * @param $nombre
+     * @return bool
+     * @throws Exception
+     */
+
+    public static function MunicipioRegistrado($nombre): bool
+    {
+        $result = Municipios::search("SELECT * FROM postres.Municipios where nombre = '" . $nombre."'");
+        if (!empty($result) && count($result)>0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static function searchForId(int $id): ?Municipios
     {
         try {
@@ -272,21 +292,53 @@ final class Municipios extends AbstractDBConnection implements Model
 
     protected function save(string $query): ?bool
     {
-        return null;
+        $arrData = [
+            ':id' =>    $this->getId(),
+            ':nombre' =>   $this->getNombre(),
+            ':departamento_id' =>  $this->getDepartamentoId(),
+            ':acortado' =>  $this->getAcortado(),
+            ':estado' =>   $this->getEstado(),
+            ':created_at' =>  $this->getCreatedAt()->toDateTimeString(), //YYYY-MM-DD HH:MM:SS
+            ':updated_at' =>  $this->getUpdatedAt()->toDateTimeString(),
+            ':deleted_at' => $this->getDeletedAt()->toDateTimeString()
+        ];
+        $this->Connect();
+
+        $result = $this->insertRow($query, $arrData);
+        $this->Disconnect();
+        return $result;
     }
 
-    public function insert(): ?bool
+    /**
+     * @return bool|null
+     */
+
+    function insert(): ?bool
     {
-        return false;
+        $query = "INSERT INTO postres.municipios Values(
+           :id,:nombre, :departamento_id,:acortado,
+           :estado, :created_at, :updated_at, :deleted_at)";
+
+        return $this->save($query);
     }
 
-    public function update(): ?bool
+    function update(): ?bool
     {
-        return false;
+        $query = "UPDATE postres.municipios SET
+        id = :id,nombre = :nombre, departamento_id = :departamento_id,acortado = :acortado,
+        estado = :estado, created_at = :created_at, updated_at = :updated_at, deleted_at = :deleted_at,
+        WHERE id = :id";
+
+        return $this->save($query);
     }
 
-    public function deleted(): ?bool
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    function deleted(): ?bool
     {
-        return false;
+        $this->setEstado( "Inactvo");
+        return $this->update();
     }
 }

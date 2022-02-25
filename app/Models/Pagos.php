@@ -4,20 +4,29 @@ namespace App\Models;
 
 
 
+use App\Enums\Estado;
+use App\Enums\EstadoPago;
+use Carbon\Carbon;
+use Psr\Log\NullLogger;
+
 class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
 {
 
-    private int $idPago;
+    private ?int $idPago;
     private int $abono;
-    private string $saldo;
+    private int $saldo;
     private Carbon $fechaPago;
     private string $descuento;
-    private string $estado;
+    private EstadoPago $estado;
+    private int $Venta_idVenta;
+    private int $usuario_idUsuario;
 
 
     /*RELACIONES*/
     private ?Ventas $venta;
     private ?Usuarios $usuario;
+
+
 
     /**
      * @param int $idPago
@@ -26,18 +35,22 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
      * @param Carbon $fechaPago
      * @param string $descuento
      * @param string $estado
-     * @param int $Venta_id_Venta
-     * @param int $Usuario_id_Usuario
+     * @param int $Venta_idVenta
+     * @param int $usuario_idUsuario
      */
     public function __construct(array $pago=[])
     {
-        parent::__construct();
-        $this->setIdPago($pago['idpago'] ?? null);
-        $this->setAbono($abono['abono'] ?? '');
-        $this->setFechaPago($fechaPago['fechaPago'] ?? '');
-        $this->setDescuento($descuento['descuento'] ?? '');
-        $this->setEstado($estado['estado'] ?? '');
 
+        parent::__construct();
+        $this->setIdPago($pago['idPago'] ?? null);
+        $this->setAbono($pago['abono'] ?? 0);
+        $this->setSaldo($pago['saldo'] ?? 12);
+        $this->setFechaPago(!empty($pago['fechaPago'])?
+            carbon::parse($pago['fechaPago']) : new carbon());
+        $this->setDescuento($pago['descuento'] ?? 0);
+        $this->setEstadoPago($pago['estado'] ?? EstadoPago::CANCELADO);
+        $this->setVentaIdVenta($pago['Venta_idVenta'] ?? 0);
+        $this->setUsuarioIdUsuario ($pago['Usuario_idUsuario']?? 0);
     }
     public function __destruct()
     {
@@ -46,18 +59,20 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
         }
     }
 
+
+
     /**
-     * @return int
+     * @return int|null
      */
-    public function getIdPago(): int
+    public function getIdPago(): ?int
     {
         return $this->idPago;
     }
 
     /**
-     * @param int $idPago
+     * @param int|null $idPago
      */
-    public function setIdPago(int $idPago): void
+    public function setIdPago(?int $idPago): void
     {
         $this->idPago = $idPago;
     }
@@ -81,15 +96,15 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
     /**
      * @return string
      */
-    public function getSaldo(): string
+    public function getSaldo(): int
     {
         return $this->saldo;
     }
 
     /**
-     * @param string $saldo
+     * @param int $saldo
      */
-    public function setSaldo(string $saldo): void
+    public function setSaldo(int $saldo): void
     {
         $this->saldo = $saldo;
     }
@@ -99,7 +114,7 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
      */
     public function getFechaPago(): Carbon
     {
-        return $this->fechaPago;
+        return $this->fechaPago->locale('es');
     }
 
     /**
@@ -129,44 +144,115 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
     /**
      * @return string
      */
-    public function getEstado(): string
+    public function getEstadoPago(): string
     {
-        return $this->estado;
+        return $this->estado->toString();
     }
 
     /**
-     * @param string $estado
+     * @param string|Estado|null $estado
      */
-    public function setEstado(string $estado): void
+    public function setEstadoPago(null |string|EstadoPago $estado): void
     {
-        $this->estado = $estado;
+        if (is_string($estado)){
+            $this->estado = EstadoPago::from($estado) ;
+        }else{
+            $this->estado = $estado;
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getVentaIdVenta(): int
+    {
+        return $this->Venta_idVenta;
+    }
+
+    /**
+     * @param int $Venta_idVenta
+     */
+    public function setVentaIdVenta(int $Venta_idVenta): void
+    {
+        $this->Venta_idVenta = $Venta_idVenta;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUsuarioIdUsuario(): int
+    {
+        return $this->usuario_idUsuario;
+    }
+
+    /**
+     * @param int $usuario_idUsuario
+     */
+    public function setUsuarioIdUsuario(int $usuario_idUsuario): void
+    {
+        $this->usuario_idUsuario = $usuario_idUsuario;
     }
 
 
 
-    protected function save(string $query): ?bool
+
+
+    /**
+     * @return Ventas|null
+     */
+    public function getVenta(): ?Ventas
     {
-        $arrData = [
-
-            ':idPago'=> $this->idPago(),
-            ':abono' => $this->abono(),
-            ':saldo'=> $this->saldo(),
-            'fechaPago'=>$this->fechaPago(),
-            ':descuento'=>$this->descuento(),
-            ':estado'=>$this->descuento(),
-
-        ];
-        $this->Connect();
-        $result = $this->insertRow($query, $arrData);
-        $this->Disconnect();
-        return $result;
+        return $this->venta;
     }
 
+    /**
+     * @param Ventas|null $venta
+     */
+    public function setVenta(?Ventas $venta): void
+    {
+        $this->venta = $venta;
+    }
+
+
+    /**
+     * @return Usuarios|null
+     */
+    public function getUsuario(): ?Usuarios
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * @param Usuarios|null $usuario
+     */
+    public function setUsuario(?Usuarios $usuario): void
+    {
+        $this->usuario = $usuario;
+    }
+  protected function save(string $query): ?bool
+{
+    $arrData = [
+        ':idPago'=> $this->getIdPago(),
+        ':abono' => $this->getAbono(),
+        ':saldo'=> $this->getSaldo(),
+        ':fechaPago'=>$this->getFechaPago()->toDateString(),
+        ':descuento'=>$this->getDescuento(),
+        ':estado'=>$this->getEstadoPago(),
+        ':Venta_idVenta'=>$this->getVentaIdVenta(),
+        ':Usuario_idUsuario'=>$this->getUsuarioIdUsuario(),
+
+    ];
+    $this->Connect();
+    $result = $this->insertRow($query, $arrData);
+    $this->Disconnect();
+    return $result;
+}
     function insert(): ?bool
     {
         $query = "INSERT INTO postres.pago Values(
            :idPago,:abono,:saldo, :fechaPago,:descuento,
-           :estado)";
+           :estado, :Venta_idVenta, :Usuario_idUsuario)
+           ";
 
         return $this->save($query);
     }
@@ -175,7 +261,7 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
     {
         $query = "UPDATE postres.pago SET
         abono = :abono, saldo = :saldo, fechaPago = :fechaPago,
-        estado = :estado 
+        estado = :estado, Venta_idVenta = :Venta_idVenta, Usuario_idUsuario = :Usuario_idUsuario
         WHERE idPago = :idPago";
 
         return $this->save($query);
@@ -183,43 +269,49 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
 
     function deleted(): ?bool
     {
-        $this->setEstado(estado: "Inactvo");
+        $this->setEstadoPago( "Cancelado"); //cambia el estado del usuario
         return $this->update();
     }
 
     static function search($query): ?array
     {
         try {
-            $arrPago = array();
-            $tmp = new Pago();
+            $arrPagos = array();
+            $tmp = new Pagos();
             $tmp->Connect();
             $getrows = $tmp->getRows($query);
             $tmp->Disconnect();
 
             if (!empty($getrows)) {
                 foreach ($getrows as $valor) {
-                    $Pago = new Pago($valor);
-                    array_push($arrPago, $Pago);
+                    $Pagos = new Pagos($valor);
+                    array_push($arrPagos, $Pagos);
                     unset($Pago);
                 }
-                return $arrPago;
+                return $arrPagos;
             }
             return null;
         } catch (Exception $e) {
-            GeneralFunctions::logFile('Exception', $e);
+            \App\Models\GeneralFunctions::logFile('Exception', $e, 'error');
         }
         return null;
     }
 
-    static function searchForId(int $idPago): ?object
+    /**
+     * @param $idPagos
+     * @return Pagos
+     * @throws Exception
+     * @throws e
+     */
+    static function searchForId(int $idPagos): ?Pagos
     {
         try {
-            if ($idPago > 0) {
-                $tmpPago = new Pago();
+            if ($idPagos > 0) {
+                $tmpPago = new Pagos();
                 $tmpPago->Connect();
-                $getrow = $tmpPago->getRow("SELECT * FROM postres.Pago WHERE idPago =?", array($idPago));
+                $getrow = $tmpPago->getRow("SELECT * FROM postres.pago WHERE idPago =?", array($idPagos));
                 $tmpPago->Disconnect();
-                return ($getrow) ? new Pago($getrow) : null;
+                return ($getrow) ? new Pagos($getrow) : null;
             } else {
                 throw new Exception('Id de pago Invalido');
             }
@@ -231,11 +323,11 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
 
     static function getAll(): ?array
     {
-        return Pago::search("SELECT * FROM postres.pago");
+        return Pagos::search("SELECT * FROM postres.pago");
     }
     public static function pagoRegistrado($fechaPago): bool
     {
-        $result = Pago::search("SELECT * FROM postres.Pago where fechaPago = " . $fechaPago);
+        $result = Pagos::search("SELECT * FROM postres.pago where fechaPago = '" . $fechaPago."'");
         if (!empty($result) && count($result)>0) {
             return true;
         } else {
@@ -251,13 +343,14 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
                 descuento: $this->descuento, 
                 estado: $this->estado";
 
+
     }
 
     /**
      * @inheritDoc
      */
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
         return [
             'idPago' => $this->getIdPago(),
@@ -266,7 +359,8 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
             'fechaPago' => $this->getFechaPago(),
             'descuento' => $this->getDescuento(),
             'estado' => $this->getEstado(),
-
+            'Venta_IdVenta'=>$this->getVentaIdVenta(),
+            'Usuario_IdUsuario'=>$this->getUsuarioIdUsuario(),
 
         ];
     }

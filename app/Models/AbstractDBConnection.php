@@ -16,7 +16,7 @@ use PDOException;
 abstract class AbstractDBConnection {
 
     private bool $isConnected = false;
-    protected PDO $objConnection; es la base de la conexion me puedo conectar cualquier base de datos , coje el codigo siempre pdo para php
+    protected PDO $objConnection;
 
     abstract protected function save(string $query) : ?bool;
 

@@ -1,0 +1,26 @@
+$base-font-size: 16px;
+$verde : #18F483;
+
+#example {
+  font-size: $base-font-size;
+  color: $verde;
+}
+
+.select2-container .select2-selection--single {
+  height: 36px !important;
+}
+
+.login-page, .register-page {
+  background-image: url("../img/2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-logo {
+  text-shadow: 0px 0px 15px rgba(0,0,0,1);
+}
+
+.login-logo a {
+  color: black;
+}

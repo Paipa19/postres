@@ -1,18 +1,21 @@
 <?php
+
 namespace App\Models;
 
+
+
+use App\Enums\Estado;
+use App\Enums\RegionDepartamento;
 use App\Interfaces\Model;
 use Carbon\Carbon;
-use Exception;
-use JetBrains\PhpStorm\ArrayShape;
-use JsonSerializable;
+use phpDocumentor\Reflection\Types\String_;
 
 final class Departamentos extends AbstractDBConnection implements Model
 {
     private ?int $id;
     private string $nombre;
-    private string $region;
-    private string $estado;
+    private RegionDepartamento $region;
+    private Estado $estado;
     private Carbon $created_at;
     private Carbon $updated_at;
     private Carbon $deleted_at;
@@ -29,8 +32,8 @@ final class Departamentos extends AbstractDBConnection implements Model
         parent::__construct();
         $this->setId($departamento['id'] ?? null);
         $this->setNombre($departamento['nombre'] ?? '');
-        $this->setRegion($departamento['region'] ?? '');
-        $this->setEstado($departamento['estado'] ?? '');
+        $this->setRegion($departamento['region'] ?? RegionDepartamento::CENTRO_SUR);
+        $this->setEstado($departamento['estado'] ?? Estado::ACTIVO);
         $this->setCreatedAt(!empty($departamento['created_at']) ?
             Carbon::parse($departamento['created_at']) : new Carbon());
         $this->setUpdatedAt(!empty($departamento['updated_at']) ?
@@ -81,32 +84,42 @@ final class Departamentos extends AbstractDBConnection implements Model
      */
     public function getRegion(): string
     {
-        return $this->region;
+        return $this->region->toString();
     }
 
     /**
-     * @param string $region
+     * @param string|RegionDepartamento|null $region
      */
-    public function setRegion(string $region): void
+    public function setRegion(null|string|RegionDepartamento $region): void
     {
-        $this->region = $region;
+        if (is_string($region)){
+            $this->region = RegionDepartamento::from($region);
+        }else{
+            $this->region = $region;
+        }
     }
 
     /**
-     * @return string
+     * @return Estado
      */
     public function getEstado(): string
     {
-        return $this->estado;
+        return ucwords($this->estado->toString());
     }
 
     /**
-     * @param string $estado
+     * @param string|Estado|null $estado
      */
-    public function setEstado(string $estado): void
+    public function setEstado(null|string|Estado $estado): void
     {
-        $this->estado = $estado;
+        if (is_string($estado)){
+            $this->estado = estado::from($estado);
+        }else{
+            $this->estado = $estado;
+        }
     }
+
+
 
     /**
      * @return Carbon
@@ -178,12 +191,15 @@ final class Departamentos extends AbstractDBConnection implements Model
             $getrows = $tmp->getRows($query);
             $tmp->Disconnect();
 
-            foreach ($getrows as $valor) {
-                $Departamento = new Departamentos($valor);
-                array_push($arrDepartamentos, $Departamento);
-                unset($Departamento);
+            if (!empty($getrows)) {
+                foreach ($getrows as $valor) {
+                    $Departamento = new Departamentos($valor);
+                    array_push($arrDepartamentos, $Departamento);
+                    unset($Departamento);
+                }
+                return $arrDepartamentos;
             }
-            return $arrDepartamentos;
+            return null;
         } catch (Exception $e) {
             GeneralFunctions::logFile('Exception', $e);
         }
@@ -213,6 +229,22 @@ final class Departamentos extends AbstractDBConnection implements Model
         return Departamentos::search("SELECT * FROM departamentos");
     }
 
+    /**
+     * @param $nombre
+     * @throws Exception
+     */
+
+    public static function departamentoRegistrado($nombre): bool
+    {
+        $result = Departamentos::search("SELECT * FROM postres.departamentos where nombre = '" . $nombre . "'");
+        if (!empty($result) && count($result)>0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public function __toString() : string
     {
         return "Nombre: $this->nombre, Region: $this->region, Estado: $this->estado";
@@ -240,21 +272,46 @@ final class Departamentos extends AbstractDBConnection implements Model
 
     protected function save(string $query): ?bool
     {
-        return null;
+        $arrData = [
+            ':id' =>    $this->getId(),
+            ':nombre' =>   $this->getNombre(),
+            ':region' =>   $this->getRegion(),
+            ':estado' =>   $this->getEstado(),
+            ':created_at' =>  $this->getCreatedAt()->toDateTimeString(), //YYYY-MM-DD HH:MM:SS
+            ':updated_at' =>  $this->getUpdatedAt()->toDateTimeString(),
+            ':deleted_at' => $this->getDeletedAt()->toDateTimeString()
+        ];
+        $this->Connect();
+
+        $result = $this->insertRow($query, $arrData);
+        $this->Disconnect();
+        return $result;
     }
 
-    public function insert(): ?bool
+    function insert(): ?bool
     {
-        return false;
+        $query = "INSERT INTO postres.departamentos values(
+           :id,:nombre, :region,:estado, :created_at, :updated_at, :deleted_at) ";
+
+        return $this->save($query);
     }
 
-    public function update(): ?bool
+    function update(): ?bool
     {
-        return false;
+        $query = "UPDATE postres.departamentos SET
+        nombre = :nombre, region = :region, estado= :estado,created_at = :created_at, updated_at = :updated_at,deleted_at= :deleted_at
+        WHERE id = :id";
+
+        return $this->save($query);
     }
 
-    public function deleted(): ?bool
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    function deleted(): ?bool
     {
-        return false;
+        $this->setEstado( "Inactvo");
+        return $this->update();
     }
 }

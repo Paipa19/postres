@@ -1,9 +1,8 @@
-# WebER by @daom89
+# Postres by @dDsan27 @Paipa19 @FelipeCachope
 Sistema de Control de Inventarios.
 
 ## Descripción 
-Este repositorio es un punto de partida para los aprendices del Programa de ADSI del SENA. La intención del proyecto es servir de guía para desarrollar aplicaciones en PHP usando técnicas actuales de desarrollo bajo una estructura MVC.
-
+Este es un sistema de control de inventario para la empresa "DESEERT STORE" brindando gran facilidad para todos los integrantes que conforman la empresa, teniendo asi un control ordenado y con gran facilidad a la hora de su uso.
 ### Requisitos
 Para su correcto funcionamiento se requiere tener instaladas las siguientes herramientas:
 
