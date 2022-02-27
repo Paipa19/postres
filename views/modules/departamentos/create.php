@@ -1,12 +1,12 @@
 <?php
-<?php
+
 require("../../partials/routes.php");
 require_once("../../partials/check_login.php");
 
 use App\Models\GeneralFunctions;
 use Carbon\Carbon;
 
-$nameModel = "Cat";
+$nameModel = "departamento";
 $nameForm = 'frmCreate'.$nameModel;
 $pluralModel = $nameModel.'s';
 $frmSession = $_SESSION[$nameForm] ?? NULL;

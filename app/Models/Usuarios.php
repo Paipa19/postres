@@ -114,7 +114,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
      */
     public function setNombre(string $nombre): void
     {
-        $this->nombre = $nombre;
+        $this->nombre = strtolower($nombre);
     }
 
     /**
@@ -130,7 +130,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
      */
     public function setApellido(string $apellido): void
     {
-        $this->apellido = $apellido;
+        $this->apellido = strtolower($apellido);
     }
 
     /**
@@ -371,7 +371,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
             $resultUsuario = Usuario::search("SELECT * FROM usuario WHERE user = '$user'");
             /* @var $resultUsuario Usuario[] */
             if (!empty($resultUsuario) && count($resultUsuario) >= 1) {
-                if (password_verify($password, $resultUsuario[0]->getPassword())) {
+                if (password_verify($password, $resultUsuario[0]->getContrasena())) {
                     if ($resultUsuario[0]->getEstado() == 'Activo') {
                         return $resultUsuario[0];
                     } else {
