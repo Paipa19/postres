@@ -81,55 +81,40 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-sm-10">
-                                                <p>
-                                                    <strong><i class="fas fa-book mr-1"></i> Nombres y
-                                                        Apellidos</strong>
-                                                <p class="text-muted">
-                                                    <?= $DataUsuario->getNombre() . " " . $DataUsuario->getApellido() ?>
                                                 </p>
                                                 <hr>
                                                 <strong><i class="fas fa-user mr-1"></i> Numero de Identificacion</strong>
                                                 <p class="text-muted"><?= $DataUsuario->getNumeroIdentificacion() . ": " . $DataUsuario->getNumeroIdentificacion() ?></p>
                                                 <hr>
-                                                <strong><i class="fas fa-map-marker-alt mr-1"></i> Direccion</strong>
-                                                <p class="text-muted"><?= $DataUsuario->getDireccion() ?>
-                                                    , <?= $DataUsuario->getMunicipio()->getNombre() ?>
-                                                    - <?= $DataUsuario->getMunicipio()->getDepartamento()->getNombre() ?></p>
-                                                <hr>
-                                                <strong><i class="fas fa-calendar mr-1"></i> Fecha Nacimiento</strong>
-                                                <p class="text-muted"><?= $DataUsuario->getFechaNacimiento()->translatedFormat('l, j \\de F Y'); ?>
-                                                    &nbsp;
-                                                    🎉Tienes: <?= $DataUsuario->getFechaNacimiento()->diffInYears(); ?>
-                                                    Años🤡
-                                                </p>
+                                                <p>
+                                                    <strong><i class="fas fa-book mr-1"></i> Nombres y
+                                                        Apellidos</strong>
+                                                <p class="text-muted">
+                                                    <?= $DataUsuario->getNombre() . " " . $DataUsuario->getApellido() ?>
+                                                <p>
                                                 <hr>
                                                 <strong><i class="fas fa-phone mr-1"></i> Telefono</strong>
                                                 <p class="text-muted"><?= $DataUsuario->getTelefono() ?></p>
                                                 <hr>
-                                                <strong><i class="fas fa-calendar-check mr-1"></i> Fecha
-                                                    Registro</strong>
-                                                <p class="text-muted"><?= $DataUsuario->getCreatedat()->toDateTimeString(); ?></p>
+                                                <p>
                                                 <hr>
+                                                <strong><i class="fas fa-phone mr-1"></i> Correo</strong>
+                                                <p
+                                                        class="text-muted"><?= $DataUsuario->getCorreo() ?></p>
+                                                <p>
+                                                <hr>
+                                                <strong><i class="fas fa-phone mr-1"></i> Contraseña</strong>
+                                                <p
+                                                        class="text-muted"><?= $DataUsuario->getContrasena() ?></p>
+                                                <p>
+
                                                 <strong><i class="far fa-file-alt mr-1"></i> Estado y Rol</strong>
                                                 <p class="text-muted"><?= $DataUsuario->getEstado() . " - " . $DataUsuario->getRol() ?></p>
                                                 </p>
                                             </div>
-                                            <div class="col-sm-2">
-                                                <div class="row info-box">
-                                                    <div class="col-12">
-                                                        <h4>Foto Perfil</h4>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <?php if (!empty($DataUsuario->getFoto())) { ?>
-                                                            <img class='img-thumbnail rounded'
-                                                                 src='../../public/uploadFiles/photos/<?= $DataUsuario->getFoto(); ?>'
-                                                                 alt="Foto Perfil">
-                                                        <?php } ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
+
+
                                     <div class="card-footer">
                                         <div class="row">
                                             <div class="col-auto mr-auto">
@@ -139,7 +124,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                                 </a>
                                             </div>
                                             <div class="col-auto">
-                                                <a role="button" href="edit.php?id=<?= $DataUsuario->getId(); ?>"
+                                                <a role="button" href="edit.php?id=<?= $DataUsuario->getIdUsuario(); ?>"
                                                    class="btn btn-primary float-right"
                                                    style="margin-right: 5px;">
                                                     <i class="fas fa-edit"></i> Editar <?= $nameModel ?>

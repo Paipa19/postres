@@ -36,7 +36,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Pagina Principal</h1>
+                        <h1>DESSERT STORE</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -89,14 +89,15 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>numeroIdentificacion</th>
-                                                <th>nombre</th>
-                                                <th>apellido</th>
-                                                <th>telefono</th>
-                                                <th>correo</th>
-                                                <th>rol</th>
-                                                <th>contraseña</th>
+                                                <th>Numero de identificaion</th>
+                                                <th>Nombre</th>
+                                                <th>Apellido</th>
+                                                <th>Telefono</th>
+                                                <th>Correo</th>
+                                                <th>Rol</th>
+                                                <th>Contraseña</th>
                                                 <th>Estado</th>
+
 
                                             </tr>
                                             </thead>
@@ -147,13 +148,13 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             <tfoot>
                                             <tr>
                                                 <th>#</th>
-                                                <th>numeroIdentificacion</th>
-                                                <th>nombre</th>
-                                                <th>apellido</th>
-                                                <th>telefono</th>
-                                                <th>correo</th>
-                                                <th>rol</th>
-                                                <th>contraseña</th>
+                                                <th>Numero de identificaion</th>
+                                                <th>Nombre</th>
+                                                <th>Apellido</th>
+                                                <th>Telefono</th>
+                                                <th>Correo</th>
+                                                <th>Rol</th>
+                                                <th>Contraseña</th>
                                                 <th>Estado</th>
 
                                             </tr>

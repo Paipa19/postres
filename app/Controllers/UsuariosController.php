@@ -61,7 +61,7 @@ class UsuariosController
     static public function searchForID(array $data)
     {
         try {
-            $result = Usuarios::searchForId($data['idUsuario']);
+            $result = Usuarios::searchForId($data['id']);
             if (!empty($data['request']) and $data['request'] === 'ajax' and !empty($result)) {
                 header('Content-type: application/json; charset=utf-8');
                 $result = json_encode($result->jsonSerialize());

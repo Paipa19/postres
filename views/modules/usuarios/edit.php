@@ -85,59 +85,27 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                         <form class="form-horizontal" enctype="multipart/form-data" method="post" id="<?= $nameForm ?>"
                                               name="<?= $nameForm ?>"
                                               action="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=edit">
-                                            <input id="id" name="id" value="<?= $DataUsuario->getId(); ?>" hidden
+                                            <input id="id" name="id" value="<?= $DataUsuario->getIdUsuario(); ?>" hidden
                                                    required="required" type="text">
                                             <div class="row">
                                                 <div class="col-sm-10">
                                                     <div class="form-group row">
-                                                        <label for="nombres" class="col-sm-2 col-form-label">Nombres</label>
+                                                        <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
                                                         <div class="col-sm-10">
-                                                            <input required type="text" class="form-control" id="nombres"
-                                                                   name="nombres" value="<?= $DataUsuario->getNombres(); ?>"
-                                                                   placeholder="Ingrese sus nombres">
+                                                            <input required type="text" class="form-control" id="nombre"
+                                                                   name="nombre" value="<?= $DataUsuario->getNombre(); ?>"
+                                                                   placeholder="Ingrese su nombre">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
+                                                        <label for="apellido" class="col-sm-2 col-form-label">Apellido</label>
                                                         <div class="col-sm-10">
-                                                            <input required type="text" class="form-control" id="apellidos"
-                                                                   name="apellidos" value="<?= $DataUsuario->getApellidos(); ?>"
-                                                                   placeholder="Ingrese sus apellidos">
+                                                            <input required type="text" class="form-control" id="apellido"
+                                                                   name="apellido" value="<?= $DataUsuario->getApellido(); ?>"
+                                                                   placeholder="Ingrese su apellido">
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <label for="tipo_documento" class="col-sm-2 col-form-label">Tipo
-                                                            Documento</label>
-                                                        <div class="col-sm-10">
-                                                            <select id="tipo_documento" name="tipo_documento"
-                                                                    class="custom-select">
-                                                                <option <?= ($DataUsuario->getTipoDocumento() == "C.C") ? "selected" : ""; ?>
-                                                                    value="C.C">Cedula de Ciudadania
-                                                                </option>
-                                                                <option <?= ($DataUsuario->getTipoDocumento() == "T.I") ? "selected" : ""; ?>
-                                                                    value="T.I">Tarjeta de Identidad
-                                                                </option>
-                                                                <option <?= ($DataUsuario->getTipoDocumento() == "R.C") ? "selected" : ""; ?>
-                                                                    value="R.C">Registro Civil
-                                                                </option>
-                                                                <option <?= ($DataUsuario->getTipoDocumento() == "Pasaporte") ? "selected" : ""; ?>
-                                                                    value="Pasaporte">Pasaporte
-                                                                </option>
-                                                                <option <?= ($DataUsuario->getTipoDocumento() == "C.E") ? "selected" : ""; ?>
-                                                                    value="C.E">Cedula de Extranjeria
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="documento" class="col-sm-2 col-form-label">Documento</label>
-                                                        <div class="col-sm-10">
-                                                            <input required type="number" minlength="6" class="form-control"
-                                                                   id="documento" name="documento"
-                                                                   value="<?= $DataUsuario->getDocumento(); ?>"
-                                                                   placeholder="Ingrese su documento">
-                                                        </div>
-                                                    </div>
+
                                                     <div class="form-group row">
                                                         <label for="telefono" class="col-sm-2 col-form-label">Telefono</label>
                                                         <div class="col-sm-10">
@@ -148,72 +116,20 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="direccion" class="col-sm-2 col-form-label">Direccion</label>
+                                                        <label for="correo" class="col-sm-2 col-form-label">Correo</label>
                                                         <div class="col-sm-10">
-                                                            <input required type="text" class="form-control" id="direccion"
-                                                                   name="direccion" value="<?= $DataUsuario->getDireccion(); ?>"
-                                                                   placeholder="Ingrese su direccion">
+                                                            <input required type="text" class="form-control" id="correo"
+                                                                   name="correo" value="<?= $DataUsuario->getCorreo(); ?>"
+                                                                   placeholder="Ingrese su correo">
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <label for="municipio_id" class="col-sm-2 col-form-label">Municipio</label>
-                                                        <div class="col-sm-5">
-                                                            <?=
-                                                            DepartamentosController::selectDepartamentos(
-                                                                array(
-                                                                    'id' => 'departamento_id',
-                                                                    'name' => 'departamento_id',
-                                                                    'defaultValue' => (!empty($DataUsuario)) ? $DataUsuario->getMunicipio()->getDepartamento()->getId() : '15',
-                                                                    'class' => 'form-control select2bs4 select2-info',
-                                                                    'where' => "estado = 'Activo'"
-                                                                )
-                                                            )
-                                                            ?>
-                                                        </div>
-                                                        <div class="col-sm-5 ">
-                                                            <?= MunicipiosController::selectMunicipios(
-                                                                array (
-                                                                    'id' => 'municipio_id',
-                                                                    'name' => 'municipio_id',
-                                                                    'defaultValue' => (!empty($DataUsuario)) ? $DataUsuario->getMunicipioId() : '',
-                                                                    'class' => 'form-control select2bs4 select2-info',
-                                                                    'where' => "departamento_id = ".$DataUsuario->getMunicipio()->getDepartamento()->getId()." and estado = 'Activo'")
-                                                            )
-                                                            ?>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="fecha_nacimiento" class="col-sm-2 col-form-label">Fecha Nacimiento</label>
-                                                        <div class="col-sm-10">
-                                                            <input required type="date" max="<?= Carbon::now()->subYear(12)->format('Y-m-d') ?>"
-                                                                   value="<?= $DataUsuario->getFechaNacimiento()->toDateString(); ?>" class="form-control" id="fecha_nacimiento"
-                                                                   name="fecha_nacimiento" placeholder="Ingrese su Fecha de Nacimiento">
-                                                        </div>
-                                                    </div>
-                                                    <?php if ($_SESSION['UserInSession']['rol'] == 'Administrador'){ ?>
-                                                        <div class="form-group row">
-                                                            <label for="user" class="col-sm-2 col-form-label">Usuario</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="text" class="form-control" id="user" name="user" value="<?= $DataUsuario->getUser(); ?>" placeholder="Ingrese su Usuario">
-                                                            </div>
-                                                        </div>
+
 
                                                         <div class="form-group row">
-                                                            <label for="password" class="col-sm-2 col-form-label">Password</label>
+                                                            <label for="contrasena" class="col-sm-2 col-form-label">Contraseña</label>
                                                             <div class="col-sm-10">
-                                                                <input type="password" class="form-control" id="password" name="password" value="" placeholder="Ingrese su Password">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group row">
-                                                            <label for="rol" class="col-sm-2 col-form-label">Rol</label>
-                                                            <div class="col-sm-10">
-                                                                <select required id="rol" name="rol" class="custom-select">
-                                                                    <option <?= ($DataUsuario->getRol() == "Administrador") ? "selected" : ""; ?> value="Administrador">Administrador</option>
-                                                                    <option <?= ($DataUsuario->getRol() == "Empleado") ? "selected" : ""; ?> value="Empleado">Empleado</option>
-                                                                    <option <?= ($DataUsuario->getRol() == "Cliente") ? "selected" : ""; ?> value="Cliente">Cliente</option>
-                                                                    <option <?= ($DataUsuario->getRol() == "Proveedor") ? "selected" : ""; ?> value="Proveedor">Proveedor</option>
-                                                                </select>
+                                                                <input type="password" class="form-control"
+                                                                       id="contrasena" name="password" value="" placeholder="Ingrese su contrseña">
                                                             </div>
                                                         </div>
 
@@ -226,33 +142,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                    <?php } ?>
-                                                </div>
-                                                <div class="col-sm-2">
-                                                    <div class="info-box">
-                                                        <div class="imageupload panel panel-primary">
-                                                            <div class="panel-heading clearfix">
-                                                                <h5 class="panel-title pull-left">Foto de Perfil</h5>
-                                                            </div>
-                                                            <div class="file-tab panel-body">
-                                                                <label class="btn btn-default btn-file">
-                                                                    <span>Seleccionar</span>
-                                                                    <!-- The file is stored here. -->
-                                                                    <input value="<?= $DataUsuario->getFoto(); ?>" type="file" id="foto" name="foto">
-                                                                </label>
-                                                                <button type="button" class="btn btn-default">Eliminar</button>
-                                                            </div>
-                                                            <div class="panel-footer">
-                                                                <?php if(!empty($DataUsuario->getFoto())){?>
-                                                                    <img id="thumbFoto" src="../../public/uploadFiles/photos/<?= $DataUsuario->getFoto(); ?>"
-                                                                         alt="Sin Foto de Perfil" class="thumbnail" style="max-width: 250px; max-height: 250px">
-                                                                <?php } ?>
-                                                                <input type="hidden" name="nameFoto" id="nameFoto" value="<?= $DataUsuario->getFoto() ?? '' ?>">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                             <hr>
                                             <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>
                                             <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
@@ -287,27 +177,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
 <!-- ./wrapper -->
 <?php require('../../partials/scripts.php'); ?>
 <script>
-    $(function() {
-        $('#departamento_id').on('change', function() {
-            $.post("../../../app/Controllers/MainController.php?controller=Municipios&action=selectMunicipios", {
-                isMultiple: false,
-                isRequired: true,
-                id: "municipio_id",
-                nombre: "municipio_id",
-                defaultValue: "",
-                class: "form-control select2bs4 select2-info",
-                where: "departamento_id = "+$('#departamento_id').val()+" and estado = 'Activo'",
-                request: 'ajax'
-            }, function(e) {
-                if (e)
-                    console.log(e);
-                $("#municipio_id").html(e).select2({ height: '100px'});
-            })
-        });
-        $('#foto').on("change", function(){
-            $( "#thumbFoto" ).remove();
-        });
-    });
+  );
 </script>
 </body>
 </html>

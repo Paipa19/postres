@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\Estado;
 use App\Enums\RegionDepartamento;
+use App\Controllers\DepartamentosController;
 use App\Interfaces\Model;
 use Carbon\Carbon;
 use phpDocumentor\Reflection\Types\String_;
@@ -247,8 +248,21 @@ final class Departamentos extends AbstractDBConnection implements Model
 
     public function __toString() : string
     {
-        return "Nombre: $this->nombre, Region: $this->region, Estado: $this->estado";
+        return "Nombre: $this->nombre, MunicipiosDepartamento: $this->MunicipiosDepartamento, Estado: $this->estado";
     }
+
+    #[ArrayShape([
+        'id' => "int|null",
+        'nombre' => "string",
+        'departamento_id' => "array",
+        'acortado' => "string",
+        'estado' => "string",
+        'created_at' => "string",
+        'updated_at' => "string",
+        'deleted_at' => "string"
+    ])]
+
+
 
     /**
      * Specify data which should be serialized to JSON

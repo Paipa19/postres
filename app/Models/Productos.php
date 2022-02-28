@@ -113,7 +113,7 @@ class Productos extends AbstractDBConnection implements Model
     }
 
     /**
-     * @param string $estado
+     * @param string |  $estado
      */
     public function setEstadoProducto(null|string|EstadoProducto $estado): void
     {

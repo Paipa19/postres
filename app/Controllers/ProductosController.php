@@ -94,10 +94,10 @@ class ProductosController{
         }
     }
 
-    static public function inactivate (int $id){
+    static public function inactivate (int $idProducto){
         try {
-            $ObjProducto = Productos::searchForId($id);
-            $ObjProducto->setEstadoProducto("NoDisponible");
+            $ObjProducto = Productos::searchForId($idProducto);
+            $ObjProducto->setEstadoProducto("Disponible");
             if($ObjProducto->update()){
                 header("Location: ../../views/modules/productos/index.php");
             }else{

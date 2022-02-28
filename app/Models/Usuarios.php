@@ -314,11 +314,11 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
     {
         try {
             if ($idUsuario > 0) {
-                $tmpUsuario = new Usuario();
+                $tmpUsuario = new Usuarios();
                 $tmpUsuario->Connect();
                 $getrow = $tmpUsuario->getRow("SELECT * FROM postres.usuario WHERE idUsuario =?", array($idUsuario));
                 $tmpUsuario->Disconnect();
-                return ($getrow) ? new Usuario($getrow) : null;
+                return ($getrow) ? new Usuarios($getrow) : null;
             } else {
                 throw new Exception('Id de usuario Invalido');
             }
@@ -330,7 +330,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
 
     static function getAll(): ?array
     {
-        return Usuario::search("SELECT * FROM postres.usuario");
+        return Usuarios::search("SELECT * FROM postres.usuario");
     }
 
     /**

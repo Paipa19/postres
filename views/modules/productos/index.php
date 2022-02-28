@@ -1,15 +1,17 @@
 <?php
 
 
-require_once("../../../app/Controllers/productosController.php");
+require_once("../../../app/Controllers/ProductosController.php");
 require_once("../../partials/routes.php");
 require_once("../../partials/check_login.php");
 
 use App\Controllers\CategoriasController;
+use App\Controllers\ProductosController;
 use App\Models\GeneralFunctions;
 use App\Models\Categorias;
+use App\Models\Productos;
 
-$nameModel = "productos";
+$nameModel = "producto";
 $pluralModel = $nameModel.'s';
 $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
 ?>
@@ -38,7 +40,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1> POSTRES </h1>
+                        <h1> DESSERT STORE </h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -100,17 +102,17 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             </thead>
                                             <tbody>
                                             <?php
-                                            $arrCategorias = CategoriasController::getAll();
-                                            /* @var $arrCategorias Categorias[] */
-                                            foreach ($arrCategorias as $producto) {
+                                            $arrProductos = ProductosController::getAll();
+                                            /* @var $arrProductos Productos[] */
+                                            foreach ($arrProductos as $producto) {
                                                 ?>
                                                 <tr>
                                                     <td><?= $producto->getIdProducto(); ?></td>
                                                     <td><?= $producto->getNombre(); ?></td>
                                                     <td><?= $producto->getDescripcion(); ?></td>
                                                     <td><?= $producto->getValorUnitario(); ?></td>
-                                                    <td><?= $producto->getEstado(); ?></td>
-                                                    <td><?= $producto->getStock(); ?></td>
+                                                    <td><?= $producto->getEstadoProducto(); ?></td>
+                                                   <td><?= $producto->getStock(); ?></td>
                                                     <td>
                                                         <a href="edit.php?id=<?= $producto->getIdProducto(); ?>"
                                                            type="button" data-toggle="tooltip" title="Actualizar"
@@ -124,7 +126,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                            type="button" data-toggle="tooltip" title="Ver Productos"
                                                            class="btn docs-tooltip btn-success btn-xs"><i
                                                                     class="fa fa-sitemap"></i></a>
-                                                        <?php if ($producto->getEstado() != "Activo") { ?>
+                                                        <?php if ($producto->getEstadoProducto() != "Disponible") { ?>
                                                             <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=activate&id=<?= $producto->getIdProducto(); ?>"
                                                                type="button" data-toggle="tooltip" title="Activar"
                                                                class="btn docs-tooltip btn-success btn-xs"><i

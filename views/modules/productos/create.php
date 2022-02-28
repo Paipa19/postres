@@ -6,7 +6,7 @@ require_once("../../partials/check_login.php");
 use App\Models\GeneralFunctions;
 use Carbon\Carbon;
 
-$nameModel = "Productos";
+$nameModel = "Producto";
 $nameForm = 'frmCreate'.$nameModel;
 $pluralModel = $nameModel.'s';
 $frmSession = $_SESSION[$nameForm] ?? NULL;
@@ -32,7 +32,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Crear una nueva <?= $nameModel ?></h1>
+                        <h1>Crear un Nuevo <?= $nameModel ?></h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -85,6 +85,30 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                       placeholder="Ingrese una descripción"><?= $frmSession['descripcion'] ?? '' ?></textarea>
                                         </div>
                                     </div>
+
+
+                                    <div class="form-group row">
+                                        <label for="estado" class="col-sm-2 col-form-label">Estado</label>
+                                        <div class="col-sm-10">
+                                            <select required id="estado" name="estado" class="custom-select">
+                                                <option <?= (!empty($frmSession['estado']) && $frmSession['estado'] == "Disponible") ? "selected" : ""; ?> value="Disponible">Disponible</option>
+                                                <option <?= (!empty($frmSession['estado']) && $frmSession['estado'] == "No Disponible") ? "selected" : ""; ?> value="No Disponible">No Disponible</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="valorUnitario" class="col-sm-2 col-form-label">Valor Unitario</label>
+                                        <div class="col-sm-10">
+                                            <input required type="text" class="form-control" id="valorUnitario" name="valorUnitario"
+                                                   placeholder="Ingrese valor unitario" value="<?= $frmSession['valorUnitario'] ?? '' ?>">
+                                        </div>
+
+
+
+
+
+
                                     <hr>
                                     <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>
                                     <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
