@@ -3,11 +3,10 @@ require("../../partials/routes.php");
 require_once("../../partials/check_login.php");
 require("../../../app/Controllers/ProductosController.php");
 
-use App\Controllers\DepartamentosController;
-use App\Controllers\MunicipiosController;
-use App\Controllers\UsuariosController;
+
+use App\Controllers\ProductosController;
 use App\Models\GeneralFunctions;
-use App\Models\Usuarios;
+use App\Models\Producto;
 use Carbon\Carbon;
 
 $nameModel = "Producto";
@@ -53,7 +52,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
         <section class="content">
             <!-- Generar Mensajes de alerta -->
             <?= (!empty($_GET['respuesta'])) ? GeneralFunctions::getAlertDialog($_GET['respuesta'], $_GET['mensaje']) : ""; ?>
-            <?= (empty($_GET['id'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
+            <?= (empty($_GET['idProducto'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
@@ -72,12 +71,12 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                 </div>
                             </div>
                             <!-- /.card-header -->
-                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) { ?>
+                            <?php if (!empty($_GET["idProducto"]) && isset($_GET["idProducto"])) { ?>
                                 <p>
                                 <?php
 
-                                $Producto = ProductosController::searchForID(["id" => $_GET["id"]]);
-                                /* @var $Producto Usuarios */
+                                $Producto = ProductosController::searchForID(["idProducto" => $_GET["idProducto"]]);
+                                /* @var $Producto Productos */
                                 if (!empty($Producto)) {
                                     ?>
                                     <!-- form start -->

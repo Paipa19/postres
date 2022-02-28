@@ -71,11 +71,11 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                 </div>
                             </div>
                             <!-- /.card-header -->
-                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) { ?>
+                            <?php if (!empty($_GET["idPago"]) && isset($_GET["idPago"])) { ?>
                                 <p>
                                 <?php
 
-                                $DataPago = PagosController::searchForID(["id" => $_GET["id"]]);
+                                $DataPago = PagosController::searchForIdPago(["idPago" => $_GET["idPago"]]);
                                 /* @var $DataPago Pagos */
                                 if (!empty($DataPago)) {
                                     ?>
@@ -129,8 +129,8 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                             <label for="estado" class="col-sm-2 col-form-label">Estado</label>
                                                             <div class="col-sm-10">
                                                                 <select required id="estado" name="estado" class="custom-select">
-                                                                    <option <?= ($DataPago->getEstado() == "Cancelado") ? "selected" : ""; ?> value="Cancelado">Cancelado</option>
-                                                                    <option <?= ($DataPago->getEstado() == "Pendiente") ? "selected" : ""; ?> value="Pendiente">Pendiente</option>
+                                                                    <option <?= ($DataPago->getEstadoPago() == "Cancelado") ? "selected" : ""; ?> value="Cancelado">Cancelado</option>
+                                                                    <option <?= ($DataPago->getEstadoPago() == "Pendiente") ? "selected" : ""; ?> value="Pendiente">Pendiente</option>
                                                                 </select>
                                                             </div>
                                                         </div>

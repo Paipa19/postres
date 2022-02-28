@@ -251,16 +251,7 @@ final class Departamentos extends AbstractDBConnection implements Model
         return "Nombre: $this->nombre, MunicipiosDepartamento: $this->MunicipiosDepartamento, Estado: $this->estado";
     }
 
-    #[ArrayShape([
-        'id' => "int|null",
-        'nombre' => "string",
-        'departamento_id' => "array",
-        'acortado' => "string",
-        'estado' => "string",
-        'created_at' => "string",
-        'updated_at' => "string",
-        'deleted_at' => "string"
-    ])]
+
 
 
 

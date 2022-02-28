@@ -37,7 +37,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Pagina Principal</h1>
+                        <h1>DESSERT STORE</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -95,8 +95,6 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                 <th>Fecha de pago</th>
                                                 <th>Descuento</th>
                                                 <th>Estado</th>
-
-
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -112,11 +110,6 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                     <td><?= $pagos->getFechaPago(); ?></td>
                                                     <td><?= $pagos->getDescuento(); ?></td>
                                                     <td><?= $pagos->getEstadoPago(); ?></td>
-
-                                                    <td>
-
-                                                    </td>
-                                                    <td><?= $pagos->getEstadoPago(); ?></td>
                                                     <td>
                                                         <a href="edit.php?id=<?php echo $pagos->getIdPago(); ?>"
                                                            type="button" data-toggle="tooltip" title="Actualizar"
@@ -126,18 +119,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                            type="button" data-toggle="tooltip" title="Ver"
                                                            class="btn docs-tooltip btn-warning btn-xs"><i
                                                                 class="fa fa-eye"></i></a>
-                                                        <?php if ($pagos->getEstado() != "Cancelado") { ?>
-                                                            <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=activate&id=<?= $usuario->getIdUsuario(); ?>"
-                                                               type="button" data-toggle="tooltip" title="Cancelado"
-                                                               class="btn docs-tooltip btn-success btn-xs"><i
-                                                                    class="fa fa-check-square"></i></a>
-                                                        <?php } else { ?>
-                                                            <a type="button"
-                                                               href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=inactivate&id=<?= $usuario->getIdUsuario(); ?>"
-                                                               data-toggle="tooltip" title="Pendiente"
-                                                               class="btn docs-tooltip btn-danger btn-xs"><i
-                                                                    class="fa fa-times-circle"></i></a>
-                                                        <?php } ?>
+
                                                     </td>
                                                 </tr>
                                             <?php } ?>
@@ -151,7 +133,6 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                 <th>Fecha de pago</th>
                                                 <th>Descuento</th>
                                                 <th>Estado</th>
-
                                             </tr>
                                             </tfoot>
                                         </table>

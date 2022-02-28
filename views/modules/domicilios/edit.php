@@ -71,11 +71,11 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                     </div>
                                 </div>
                                 <!-- /.card-header -->
-                                <?php if (!empty($_GET["id"]) && isset($_GET["id"])) { ?>
+                                <?php if (!empty($_GET["idDomicilio"]) && isset($_GET["idDomicilio"])) { ?>
                                     <p>
                                     <?php
 
-                                    $DataDomicilio = DomiciliosController::searchForID(["id" => $_GET["id"]]);
+                                    $DataDomicilio = DomiciliosController::searchForIdDomicilio(["idDomicilio" => $_GET["idDomicilio"]]);
                                     /* @var $DataDomicilio Domicilios */
                                     if (!empty($DataDomicilio)) {
                                         ?>

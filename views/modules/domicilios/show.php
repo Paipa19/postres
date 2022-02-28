@@ -52,14 +52,14 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
         <section class="content">
             <!-- Generar Mensajes de alerta -->
             <?= (!empty($_GET['respuesta'])) ? GeneralFunctions::getAlertDialog($_GET['respuesta'], $_GET['mensaje']) : ""; ?>
-            <?= (empty($_GET['id'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
+            <?= (empty($_GET['idDomicilio'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Horizontal Form -->
                         <div class="card card-green">
-                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) {
-                                $DataDomicilio = DomiciliosController::searchForID(["id" => $_GET["id"]]);
+                            <?php if (!empty($_GET["idDomicilio"]) && isset($_GET["idDomicilio"])) {
+                                $DataDomicilio = DomiciliosController::searchForIdDomicilio(["idDomicilio" => $_GET["id"]]);
                                 /* @var $DataDomicilio Domicilios */
                                 if (!empty($DataDomicilio)) {
                                     ?>

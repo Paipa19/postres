@@ -94,13 +94,14 @@ class ProductosController{
         }
     }
 
-    static public function inactivate (int $idProducto){
+    static public function inactivate(int $idProducto)
+    {
         try {
             $ObjProducto = Productos::searchForId($idProducto);
-            $ObjProducto->setEstadoProducto("Disponible");
-            if($ObjProducto->update()){
+            $ObjProducto->setEstadoProducto("No Disponible");
+            if ($ObjProducto->update()) {
                 header("Location: ../../views/modules/productos/index.php");
-            }else{
+            } else {
                 header("Location: ../../views/modules/productos/index.php?respuesta=error&mensaje=Error al guardar");
             }
         } catch (\Exception $e) {

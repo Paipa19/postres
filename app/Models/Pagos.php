@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-
-
-use App\Enums\Estado;
 use App\Enums\EstadoPago;
-use Carbon\Carbon;
-use Psr\Log\NullLogger;
 
-class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
+
+use Carbon\Carbon;
+
+
+class Pagos extends AbstractDBConnection
 {
 
     private ?int $idPago;
-    private int $abono;
-    private int $saldo;
+    private string $abono;
+    private string $saldo;
     private Carbon $fechaPago;
     private string $descuento;
     private EstadoPago $estado;
@@ -30,7 +29,7 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
 
     /**
      * @param int $idPago
-     * @param int $abono
+     * @param string $abono
      * @param string $saldo
      * @param Carbon $fechaPago
      * @param string $descuento
@@ -44,7 +43,7 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
         parent::__construct();
         $this->setIdPago($pago['idPago'] ?? null);
         $this->setAbono($pago['abono'] ?? 0);
-        $this->setSaldo($pago['saldo'] ?? 12);
+        $this->setSaldo($pago['saldo'] ?? 0);
         $this->setFechaPago(!empty($pago['fechaPago'])?
             carbon::parse($pago['fechaPago']) : new carbon());
         $this->setDescuento($pago['descuento'] ?? 0);
@@ -78,17 +77,17 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getAbono(): int
+    public function getAbono(): string
     {
         return $this->abono;
     }
 
     /**
-     * @param int $abono
+     * @param string $abono
      */
-    public function setAbono(int $abono): void
+    public function setAbono(string $abono): void
     {
         $this->abono = $abono;
     }
@@ -96,15 +95,15 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
     /**
      * @return string
      */
-    public function getSaldo(): int
+    public function getSaldo(): string
     {
         return $this->saldo;
     }
 
     /**
-     * @param int $saldo
+     * @param string $saldo
      */
-    public function setSaldo(int $saldo): void
+    public function setSaldo(string $saldo): void
     {
         $this->saldo = $saldo;
     }
@@ -298,18 +297,18 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
     }
 
     /**
-     * @param $idPagos
+     * @param int $idPago
      * @return Pagos
      * @throws Exception
      * @throws e
      */
-    static function searchForId(int $idPagos): ?Pagos
+    static function searchForIdPago(int $idPago): ?Pagos
     {
         try {
-            if ($idPagos > 0) {
+            if ($idPago > 0) {
                 $tmpPago = new Pagos();
                 $tmpPago->Connect();
-                $getrow = $tmpPago->getRow("SELECT * FROM postres.pago WHERE idPago =?", array($idPagos));
+                $getrow = $tmpPago->getRow("SELECT * FROM postres.pago WHERE idPago =?", array($idPago));
                 $tmpPago->Disconnect();
                 return ($getrow) ? new Pagos($getrow) : null;
             } else {
@@ -358,7 +357,7 @@ class Pagos extends AbstractDBConnection implements \App\Interfaces\Model
             'saldo' => $this->getSaldo(),
             'fechaPago' => $this->getFechaPago(),
             'descuento' => $this->getDescuento(),
-            'estado' => $this->getEstado(),
+            'estado' => $this->getEstadoPago(),
             'Venta_IdVenta'=>$this->getVentaIdVenta(),
             'Usuario_IdUsuario'=>$this->getUsuarioIdUsuario(),
 

@@ -51,7 +51,7 @@ class DomiciliosController{
     }
     static public function searchForID (array $data){
         try {
-            $result = Domicilios::searchForId($data['idDomicilios']);
+            $result = Domicilios::searchForIdDomicilio($data['idDomicilios']);
             if (!empty($data['request']) and $data['request'] === 'ajax' and !empty($result)) {
                 header('Content-type: application/json; charset=utf-8');
                 $result = json_encode($result->jsonSerialize());

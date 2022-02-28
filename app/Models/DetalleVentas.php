@@ -19,7 +19,7 @@ class DetalleVentas  extends AbstractDBConnection implements Model
 
     /**
      * @param int|null $idDetalleVenta
-     * @param string $cantidad
+     * @param int $cantidad
      * @param carbon $fechaVencimiento
      */
     public function __construct(array $DetalleVenta = [])
@@ -161,8 +161,6 @@ class DetalleVentas  extends AbstractDBConnection implements Model
         ];
 
         $this->Connect();
-        var_dump($query, $arrData);
-        die();
         $result = $this->insertRow($query, $arrData);
         $this->Disconnect();
         return $result;
@@ -174,7 +172,8 @@ class DetalleVentas  extends AbstractDBConnection implements Model
     function insert(): ?bool
     {
         $query = "INSERT INTO postres.detalleventa SET(
-        :idDetalleVenta, :cantidad, :fechaVencimiento,:numDetalleVenta, :Venta_idVenta, :Producto_idProducto) ";
+        :idDetalleVenta, :cantidad, :fechaVencimiento,:numDetalleVenta,
+         :Venta_idVenta, :Producto_idProducto)";
 
         return $this->save($query);
 
@@ -185,7 +184,7 @@ class DetalleVentas  extends AbstractDBConnection implements Model
     {
 
         $query = "UPDATE postres.detalleventa SET
-        cantidad = :cantidad, fechaVencimiento = :fechaVencimiento,numDetalleVenta =:numDetalleVenta, Venta_idVenta = :Venta_idVenta, Producto_idProducto = :Producto_idProducto
+        cantidad = :cantidad, fechaVencimiento = :fechaVencimiento, numDetalleVenta =:numDetalleVenta, Venta_idVenta = :Venta_idVenta, Producto_idProducto = :Producto_idProducto,
         WHERE idDetalleVenta = :idDetalleVenta";
         return $this -> save($query);
 
@@ -273,7 +272,7 @@ class DetalleVentas  extends AbstractDBConnection implements Model
             'idDetalleVenta' => $this->getIdDetalleVenta(),
             'cantidad' => $this->getCantidad(),
             'fechaVencimiento' => $this->getFechaVencimiento(),
-            'numDetalleVenta' =>$this->getIdDetalleVenta(),
+            'numDetalleVenta' =>$this->getNumDetalleVenta(),
             'Venta_idVenta' => $this->getVentaIdVenta(),
             'Producto_idProducto' => $this->getProductoIdProducto(),
 

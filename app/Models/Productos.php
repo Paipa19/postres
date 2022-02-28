@@ -184,7 +184,7 @@ class Productos extends AbstractDBConnection implements Model
     public function update(): bool
     {
         $query = "UPDATE postres.producto SET 
-            idProducto = :idProducto, nombre = :nombre, descripcion = :descripcion,valorUnitario= :valorUnitario,estado= :estado ,stock= :stock
+             nombre = :nombre, descripcion = :descripcion, valorUnitario= :valorUnitario,estado= :estado ,stock= :stock,
               WHERE idproducto = :idproducto";
         return $this->save($query);
     }
@@ -226,25 +226,25 @@ class Productos extends AbstractDBConnection implements Model
     }
 
     /**
-     * @param $idProductos
+     * @param int $idProducto
      * @return Productos
      * @throws Exception
      * @throws e
      */
-    public static function searchForId($idProductos): ?Productos
+    public static function searchForId(int $idProducto): ?Productos
     {
         try {
-            if ($idProductos > 0) {
-                $Producto = new Productos();
-                $Producto->Connect();
-                $getrow = $Producto->getRow("SELECT * FROM postres.producto WHERE id =?", array($idProductos));
-                $Producto->Disconnect();
+            if ($idProducto > 0) {
+                $tmpProducto = new Productos();
+                $tmpProducto->Connect();
+                $getrow = $tmpProducto->getRow("SELECT * FROM postres.producto WHERE idProducto =?", array($idProducto));
+                $tmpProducto->Disconnect();
                 return ($getrow) ? new Productos($getrow) : null;
             } else {
                 throw new Exception('Id de producto Invalido');
             }
         } catch (Exception $e) {
-            \App\Models\GeneralFunctions::logFile('Exeption', $e, 'error');
+           GeneralFunctions::logFile('Exeption', $e, 'error');
         }
         return null;
     }

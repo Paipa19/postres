@@ -57,7 +57,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
         $this->setTelefono($usuario['telefono'] ?? 0);
         $this->setCorreo($usuario['correo'] ?? '');
         $this->setRol($usuario['rol'] ?? Rol::EMPLEADO);
-        $this->setContrasena($usuario['contrasena'] ?? null);
+        $this->setContrasena($usuario['contrasena'] ?? '');
         $this->setEstado($usuario['estado'] ?? Estado::ACTIVO);
 
     }
@@ -186,7 +186,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
     }
 
     /**
-     * @return string|null
+     * @return mixed|string
      */
     public function getContrasena(): ?string
     {
@@ -194,7 +194,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
     }
 
     /**
-     * @param string|null $contrasena
+     * @param mixed|string $contrasena
      */
     public function setContrasena(?string $contrasena): void
     {
@@ -224,7 +224,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
 
     protected function save(string $query): ?bool
     {
-        $hashPassword = password_hash($this->contrasena, self::HASH, ['cost' => self::COST]);
+        $hashcontrasena = password_hash($this->contrasena, self::HASH, ['cost' => self::COST]);
         $arrData = [
 
             ':idUsuario' => $this->getIdUsuario(),
@@ -234,7 +234,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
             ':telefono' => $this->getTelefono(),
             ':correo' => $this->getCorreo(),
             ':rol' => $this->getRol(),
-            ':contrasena' => $hashPassword,
+            ':contrasena' => $hashcontrasena,
             ':estado' => $this->getEstado()
 
         ];
@@ -356,22 +356,23 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
 
     public function __toString(): string
     {
-        return "Nombre: $this->nombre, 
-                Apellido: $this->apellido, 
-                nombreIdentificacion: $this->numeroIdentificacion, 
+        return "numeroIdentificacion: $this->numeroIdentificacion, 
+                nombre: $this->nombre, 
+                apellido: $this->apellido, 
                 Telefono: $this->telefono, 
                 correo: $this->correo, 
                 rol: $this->rol, 
+                contrasena: $this->contrasena,
                 estado:$this->estado";
     }
-    public function login($user, $password): Usuario|String|null
+    public function login($user, $contrasena): Usuario|String|null
     {
 
         try {
             $resultUsuario = Usuario::search("SELECT * FROM usuario WHERE user = '$user'");
             /* @var $resultUsuario Usuario[] */
             if (!empty($resultUsuario) && count($resultUsuario) >= 1) {
-                if (password_verify($password, $resultUsuario[0]->getContrasena())) {
+                if (password_verify($contrasena, $resultUsuario[0]->getContrasena())) {
                     if ($resultUsuario[0]->getEstado() == 'Activo') {
                         return $resultUsuario[0];
                     } else {

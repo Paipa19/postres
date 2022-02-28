@@ -16,7 +16,7 @@ class DomiciliosTest extends TestCase
                 'idDomicilio' => null,
                 'direccion' => 'Cra17con1',
                 'telefono' => '3137737082',
-                'municipios_id' => 5021,
+                'municipios_id' => 99775,
                 'Usuario_idUsuario' => 1,
                ]
         );

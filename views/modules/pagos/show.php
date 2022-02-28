@@ -56,14 +56,14 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                     <div class="col-md-12">
                         <!-- Horizontal Form -->
                         <div class="card card-green">
-                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) {
-                                $DataPago = PagosController::searchForID(["id" => $_GET["id"]]);
+                            <?php if (!empty($_GET["idPago"]) && isset($_GET["idPago"])) {
+                                $DataPago = PagosController::searchForIdPago(["idPago" => $_GET["idPago"]]);
                                 /* @var $DataPago Pagos */
                                 if (!empty($DataPago)) {
                                     ?>
                                     <div class="card-header">
                                         <h3 class="card-title"><i class="fas fa-info"></i> &nbsp; Ver Información
-                                            de <?= $DataUsuario->getNombre() ?></h3>
+                                            de <?= $DataPago->getNombre() ?></h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="card-refresh"
                                                     data-source="show.php" data-source-selector="#card-refresh-content"
@@ -96,7 +96,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                                 <p class="text-muted"><?= $DataPago->getDescuento() . ": " . $DataPago->getDescuento() ?></p>
 
                                                 <strong><i class="far fa-file-alt mr-1"></i> Estado</strong>
-                                                <p class="text-muted"><?= $DataUsuario->getEstado()  ?></p>
+                                                <p class="text-muted"><?= $DataPago->getEstadoPago()  ?></p>
                                                 </p>
                                             </div>
 

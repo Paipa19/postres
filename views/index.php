@@ -22,7 +22,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Diarma</h1>
+                        <h1>DESSERT STORE</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -40,7 +40,7 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Bienvenidos</h3>
+                    <h3 class="card-title">¡Bienvenidos!</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -50,15 +50,16 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tortor condimentum lacinia quis vel eros donec ac odio tempor. Vel eros donec ac odio tempor orci. Et ligula ullamcorper malesuada proin libero. Scelerisque viverra mauris in aliquam sem fringilla. Sed ullamcorper morbi tincidunt ornare. Nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit. Aenean sed adipiscing diam donec adipiscing tristique risus nec feugiat. Mauris vitae ultricies leo integer malesuada nunc. Id nibh tortor id aliquet lectus. Orci nulla pellentesque dignissim enim sit amet venenatis urna. Enim nunc faucibus a pellentesque sit amet porttitor. Volutpat commodo sed egestas egestas. Imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor. Ac auctor augue mauris augue. Facilisi etiam dignissim diam quis enim lobortis scelerisque fermentum dui.
+                    Te damos la bienvenida al sistema de inventarios de la empresa DESSERT STORE, esperamos sea gratificante el uso de este sistema.
+
                     <br>
                     <br>
-                    <center><img src="postres/views/public/img/OIP.jpg" width="300"
+                    <center><img src="postres/views/public/img/user.png" width="300"
                                  height="201"></center>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    Gracias por ingresar a nuestro Programa
+                    Gracias por ingresar a nuestro sistema
                 </div>
                 <!-- /.card-footer-->
             </div>
