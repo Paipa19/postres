@@ -21,7 +21,7 @@ class VentasTest extends TestCase
                 'total' => '120000',
                 'costoDomicilio' => '20000',
                 'estado'=> EstadoVenta::APROBADA,
-                'domicilio_idDomicilio'=>52,
+                'domicilio_idDomicilio'=>2,
                 'Usuario_idUsuario' => 1
             ]
         );

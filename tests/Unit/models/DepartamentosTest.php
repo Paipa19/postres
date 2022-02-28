@@ -17,8 +17,9 @@ class DepartamentosTest extends TestCase
 
     public function testInsert()
     {
-        $Departamento = new Departamentos(['id' => null,
-                'nombre' => 'Magdalena',
+        $Departamento = new Departamentos([
+                 'id' => 34,
+                'nombre' => 'FINLANDIA',
                 'region' => 'Caribe',
                 'estado' => Estado::ACTIVO,
                 'created_at' => Carbon::parse('02-12-21')->format('d-m-Y'),
@@ -28,7 +29,7 @@ class DepartamentosTest extends TestCase
         );
 
         $Departamento->insert();
-        $this->assertSame(true, $Departamento->departamentoRegistrado('Magdalena'));
+        $this->assertSame(true, $Departamento->departamentoRegistrado('FINLANDIA'));
     }
 
 }

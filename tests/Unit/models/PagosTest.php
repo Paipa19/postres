@@ -19,7 +19,7 @@ class PagosTest extends TestCase
             'fechaPago' => Carbon::parse('02-12-21')->format('d-m-Y'),
             'descuento' => 500,
                  'estado' =>EstadoPago::CANCELADO,
-                 'Venta_idVenta'=> 1,
+                 'Venta_idVenta'=> 2,
                  'Usuario_idUsuario' =>1,
         ]
         );

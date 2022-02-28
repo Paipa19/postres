@@ -1,11 +1,15 @@
 <?php
 
-use App\Models\GeneralFunctions;
+namespace App\Models;
 
-class DetalleVentas implements Model
+
+use App\Interfaces\Model;
+use Carbon\Carbon;
+
+class DetalleVentas  extends AbstractDBConnection implements Model
 {
     private ?int $idDetalleVenta;
-    private string $cantidad;
+    private int $cantidad;
     private carbon $fechaVencimiento;
     private int $numDetalleVenta;
     private int $Venta_idVenta;
@@ -23,11 +27,12 @@ class DetalleVentas implements Model
     {
         parent::__construct();
         $this->setIdDetalleVenta($DetalleVenta ['IdDetalleVenta'] ?? null);
-        $this->setcantidad( $DetalleVenta['cantidad'] ?? 0);
-        $this->setfechaVencimiento( $DetalleVenta ['fechaVencimiento'] ?? '');
+        $this->setCantidad( $DetalleVenta['cantidad'] ?? 0);
+        $this->setFechaVencimiento(!empty($DetalleVenta['fechaVencimiento'])?
+            carbon::parse($DetalleVenta['fechaVencimiento']) : new carbon());
         $this->setNumDetalleVenta($DetalleVenta['numDetalleVenta']??0);
-        $this->setVentaidVenta($DetalleVenta ['Venta_idVenta'] ?? '');
-        $this->setProductoidProducto($DetalleVenta ['Producto_idProducto'] ?? '');
+        $this->setVentaidVenta($DetalleVenta ['Venta_idVenta'] ?? 0);
+        $this->setProductoidProducto($DetalleVenta ['Producto_idProducto'] ?? 0);
 
     }
 
@@ -35,6 +40,7 @@ class DetalleVentas implements Model
         if ($this->isConnected()){
             $this->Disconnect();
         }
+
     }
 
 
@@ -55,17 +61,17 @@ class DetalleVentas implements Model
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getCantidad(): string
+    public function getCantidad(): int
     {
         return $this->cantidad;
     }
 
     /**
-     * @param string $cantidad
+     * @param int $cantidad
      */
-    public function setCantidad(string $cantidad): void
+    public function setCantidad(int $cantidad): void
     {
         $this->cantidad = $cantidad;
     }
@@ -75,7 +81,7 @@ class DetalleVentas implements Model
      */
     public function getFechaVencimiento(): carbon
     {
-        return $this->fechaVencimiento;
+        return $this->fechaVencimiento->locale('es');
     }
 
     /**
@@ -84,6 +90,7 @@ class DetalleVentas implements Model
     public function setFechaVencimiento(carbon $fechaVencimiento): void
     {
         $this->fechaVencimiento = $fechaVencimiento;
+
     }
 
     /**
@@ -114,7 +121,7 @@ class DetalleVentas implements Model
     /**
      * @param int $Venta_idVenta
      */
-    public function setVentaIdVenta(int $Venta_idVenta): void
+    public function setVentaidVenta(int $Venta_idVenta): void
     {
         $this->Venta_idVenta = $Venta_idVenta;
     }
@@ -146,13 +153,16 @@ class DetalleVentas implements Model
         $arrData = [
             ':idDetalleVenta' => $this->getIdDetalleVenta(),
             ':cantidad' => $this->getCantidad(),
-            ':fechaVencimiento' => $this->getFechaVencimiento(),
+            ':fechaVencimiento' => $this->getFechaVencimiento()->toDateString(),
             ':numDetalleVenta' =>$this->getIdDetalleVenta(),
             ':Venta_idVenta' => $this->getVentaIdVenta(),
             ':Producto_idProducto' => $this->getProductoIdProducto(),
+
         ];
 
-        $this->Connet();
+        $this->Connect();
+        var_dump($query, $arrData);
+        die();
         $result = $this->insertRow($query, $arrData);
         $this->Disconnect();
         return $result;
@@ -163,10 +173,8 @@ class DetalleVentas implements Model
 
     function insert(): ?bool
     {
-        // TODO: Implement insert() method.
-
-        $query = "INSERT INTO postres.detalleVentas SET
-        :idDetalleVentas, :cantidad, :fechaVencimiento,:numDetalleVenta :Venta_idVenta, :Producto_idProducto,)";
+        $query = "INSERT INTO postres.detalleventa SET(
+        :idDetalleVenta, :cantidad, :fechaVencimiento,:numDetalleVenta, :Venta_idVenta, :Producto_idProducto) ";
 
         return $this->save($query);
 
@@ -175,9 +183,8 @@ class DetalleVentas implements Model
 
     function update(): ?bool
     {
-        // TODO: Implement update() method.
 
-        $query = "UPDATE postres.detalleVentas SET
+        $query = "UPDATE postres.detalleventa SET
         cantidad = :cantidad, fechaVencimiento = :fechaVencimiento,numDetalleVenta =:numDetalleVenta, Venta_idVenta = :Venta_idVenta, Producto_idProducto = :Producto_idProducto
         WHERE idDetalleVenta = :idDetalleVenta";
         return $this -> save($query);
@@ -188,7 +195,6 @@ class DetalleVentas implements Model
 
     function deleted(): ?bool
     {
-        // TODO: Implement deleted() method.
         return null;
     }
 
@@ -223,7 +229,7 @@ class DetalleVentas implements Model
             if ($idDetalleVenta > 0) {
                 $tmpDetalleVenta = new DetalleVentas();
                 $tmpDetalleVenta->Connect();
-                $getrow = $tmpDetalleVenta->getRow("SELECT * FROM postres.DetalleVentas WHERE idDetalleVentas =?", array($idDetalleVenta));
+                $getrow = $tmpDetalleVenta->getRow("SELECT * FROM postres.detalleventa WHERE idDetalleVentas =?", array($idDetalleVenta));
                 $tmpDetalleVenta->Disconnect();
                 return ($getrow) ? new DetalleVentas($getrow) : null;
             } else {
@@ -237,7 +243,7 @@ class DetalleVentas implements Model
 
     static function getAll(): ?array
     {
-        return DetalleVentas::search("SELECT * FROM postres.DetalleVentas");
+        return DetalleVentas::search("SELECT * FROM postres.detalleventa");
     }
 
     /**
@@ -246,9 +252,9 @@ class DetalleVentas implements Model
      * @throws Exception
      */
 
-    public static function detalleVentaRegistrado ($numDetalleventa): bool
+    public static function detalleVentaRegistrado ($cantidad): bool
     {
-        $result = DetalleVentas::search("SELECT * FROM postres.detalleventa where cantidad = " . $numDetalleventa);
+        $result = DetalleVentas::search("SELECT * FROM postres.detalleventa where cantidad ='" . $cantidad . "'");
         if (!empty($result) && count($result)>0) {
             return true;
         } else {
