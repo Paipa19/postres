@@ -365,16 +365,16 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
                 contrasena: $this->contrasena,
                 estado:$this->estado";
     }
-    public function login($user, $contrasena): Usuario|String|null
+    public function login($user, $contrasena): Usuarios|String|null
     {
 
         try {
-            $resultUsuario = Usuario::search("SELECT * FROM usuario WHERE user = '$user'");
-            /* @var $resultUsuario Usuario[] */
-            if (!empty($resultUsuario) && count($resultUsuario) >= 1) {
-                if (password_verify($contrasena, $resultUsuario[0]->getContrasena())) {
-                    if ($resultUsuario[0]->getEstado() == 'Activo') {
-                        return $resultUsuario[0];
+            $resultUsuarios = Usuarios::search("SELECT * FROM usuario WHERE user = '$user'");
+            /* @var $resultUsuarios Usuarios[] */
+            if (!empty($resultUsuarios) && count($resultUsuarios) >= 1) {
+                if (password_verify($contrasena, $resultUsuarios[0]->getContrasena())) {
+                    if ($resultUsuarios[0]->getEstado() == 'Activo') {
+                        return $resultUsuarios[0];
                     } else {
                         return "Usuario Inactivo";
                     }

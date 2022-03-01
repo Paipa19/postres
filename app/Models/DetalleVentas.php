@@ -15,8 +15,9 @@ class DetalleVentas  extends AbstractDBConnection implements Model
     private int $Venta_idVenta;
     private int $Producto_idProducto;
 
-    //Relaciones
-
+  //RELACIONES
+    private ?Ventas $Venta;
+    private ?Productos $Producto;
     /**
      * @param int|null $idDetalleVenta
      * @param int $cantidad
@@ -26,7 +27,7 @@ class DetalleVentas  extends AbstractDBConnection implements Model
 
     {
         parent::__construct();
-        $this->setIdDetalleVenta($DetalleVenta ['IdDetalleVenta'] ?? null);
+        $this->setIdDetalleVenta($DetalleVenta ['idDetalleVenta'] ?? null);
         $this->setCantidad( $DetalleVenta['cantidad'] ?? 0);
         $this->setFechaVencimiento(!empty($DetalleVenta['fechaVencimiento'])?
             carbon::parse($DetalleVenta['fechaVencimiento']) : new carbon());
@@ -142,8 +143,27 @@ class DetalleVentas  extends AbstractDBConnection implements Model
         $this->Producto_idProducto = $Producto_idProducto;
     }
 
+    /**
+     * @return array|null
+     */
+    public function getVenta(): Ventas|null
+    {
+        if (!empty($this->Venta_idVenta)) {
+            return Ventas::searchForId($this->Venta_idVenta) ?? new Ventas();
+        }
+        return null;
+    }
 
-
+    /**
+     * @return array|null
+     */
+    public function getProducto(): Productos|null
+    {
+        if (!empty($this->Producto_idProducto)) {
+            return Productos::searchForId($this->Producto_idProducto) ?? new Productos();
+        }
+        return null;
+    }
 
 
 
@@ -154,13 +174,15 @@ class DetalleVentas  extends AbstractDBConnection implements Model
             ':idDetalleVenta' => $this->getIdDetalleVenta(),
             ':cantidad' => $this->getCantidad(),
             ':fechaVencimiento' => $this->getFechaVencimiento()->toDateString(),
-            ':numDetalleVenta' =>$this->getIdDetalleVenta(),
+            ':numDetalleVenta' =>$this->getNumDetalleVenta(),
             ':Venta_idVenta' => $this->getVentaIdVenta(),
             ':Producto_idProducto' => $this->getProductoIdProducto(),
 
         ];
 
         $this->Connect();
+        var_dump($query, $arrData);
+        die();
         $result = $this->insertRow($query, $arrData);
         $this->Disconnect();
         return $result;
@@ -228,7 +250,7 @@ class DetalleVentas  extends AbstractDBConnection implements Model
             if ($idDetalleVenta > 0) {
                 $tmpDetalleVenta = new DetalleVentas();
                 $tmpDetalleVenta->Connect();
-                $getrow = $tmpDetalleVenta->getRow("SELECT * FROM postres.detalleventa WHERE idDetalleVentas =?", array($idDetalleVenta));
+                $getrow = $tmpDetalleVenta->getRow("SELECT * FROM postres.detalleventa WHERE idDetalleVenta =?", array($idDetalleVenta));
                 $tmpDetalleVenta->Disconnect();
                 return ($getrow) ? new DetalleVentas($getrow) : null;
             } else {
@@ -246,7 +268,7 @@ class DetalleVentas  extends AbstractDBConnection implements Model
     }
 
     /**
-     * @param $numDetalleventa
+     * @param $cantidad
      * @return bool
      * @throws Exception
      */

@@ -2,7 +2,7 @@
 <?php  require("partials/check_login.php"); ?>
 
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title><?= $_ENV['TITLE_SITE'] ?> | Inicio</title>
     <?php require("partials/head_imports.php"); ?>
@@ -22,7 +22,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DESSERT STORE</h1>
+                        <h1>Dessert Store</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -38,11 +38,11 @@
         <section class="content">
 
             <!-- Default box -->
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">¡Bienvenidos!</h3>
+                           <div class="card">
+                               <div class="card-header">
+                                   <h4 class="card-text"><strong>¡Bienvenidos!</strong> </h4>
+                                   <div class="card-tools">
 
-                    <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                             <i class="fas fa-minus"></i></button>
                         <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
@@ -50,16 +50,19 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    Te damos la bienvenida al sistema de inventarios de la empresa DESSERT STORE, esperamos sea gratificante el uso de este sistema.
+                    <h5>Te damos la bienvenida al sistema de inventarios de la empresa <strong>DESSERT STORE</strong>, esperamos sea gratificante el uso de este sistema. </h5>
 
-                    <br>
-                    <br>
-                    <center><img src="postres/views/public/img/user.png" width="300"
-                                 height="201"></center>
+                    <center>
+                    <div class="image fa-align-center">
+                        <img src="<?= $baseURL ?>/views/public/img/logo.jpg" class="img-circle elevation-2" alt="Imgen princial">
+                    </div>
+                    </center>
+
                 </div>
+
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    Gracias por ingresar a nuestro sistema
+                    <h4> Gracias por ingresar a nuestro sistema.</h4>
                 </div>
                 <!-- /.card-footer-->
             </div>

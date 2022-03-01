@@ -50,7 +50,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
         <section class="content">
             <!-- Generar Mensajes de alerta -->
             <?= (!empty($_GET['respuesta'])) ? GeneralFunctions::getAlertDialog($_GET['respuesta'], $_GET['mensaje']) : ""; ?>
-            <?= (empty($_GET['id'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
+            <?= (empty($_GET['idUsuario'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
@@ -83,8 +83,8 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                             <div class="col-sm-10">
                                                 </p>
                                                 <hr>
-                                                <strong><i class="fas fa-user mr-1"></i> Numero de Identificacion</strong>
-                                                <p class="text-muted"><?= $DataUsuario->getNumeroIdentificacion() . ": " . $DataUsuario->getNumeroIdentificacion() ?></p>
+                                                <strong><i class="fas fa-user mr-1"></i> Numero de identificacion</strong>
+                                                <p class="text-muted"><?= $DataUsuario->getNumeroIdentificacion() . ": " . $DataUsuario->getDocumento() ?></p>
                                                 <hr>
                                                 <p>
                                                     <strong><i class="fas fa-book mr-1"></i> Nombres y

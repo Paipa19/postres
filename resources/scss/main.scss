@@ -11,16 +11,16 @@ $verde : #18F483;
 }
 
 .login-page, .register-page {
-  background-image: url("../img/2.jpg");
+  background-image: url("../img/login.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .login-logo {
-  text-shadow: 0px 0px 15px rgba(0,0,0,1);
+  text-shadow: 0px 0px 15px rgb(255, 77, 246);
 }
 
 .login-logo a {
-  color: black;
+  color: #FF4DF6FF;
 }

@@ -9,7 +9,7 @@ use App\Enums\RegionDepartamento;
 use App\Controllers\DepartamentosController;
 use App\Interfaces\Model;
 use Carbon\Carbon;
-use phpDocumentor\Reflection\Types\String_;
+
 
 final class Departamentos extends AbstractDBConnection implements Model
 {
