@@ -60,7 +60,7 @@
 
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    <h4> Gracias por ingresar a nuestro sistema.</h4>
+                    <h5> Gracias por ingresar a nuestro sistema.</h5>
                 </div>
                 <!-- /.card-footer-->
             </div>

@@ -78,10 +78,10 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
 
                                             <div class="col-sm-10">
                                                 <div class="form-group row">
-                                                    <label for="numeroVenta" class="col-sm-2 col-form-label">Numero de venta</label>
+                                                    <label for="numeroVenta" class="col-sm-2 col-form-label">Número de venta</label>
                                                     <div class="col-sm-10">
                                                         <input required type="number" class="form-control" id="numeroVenta" name="numeroVenta"
-                                                               placeholder="Ingrese su numero de venta" value="<?= $frmSession['numeroVenta'] ?? '' ?>">
+                                                               placeholder="Ingrese su número de venta" value="<?= $frmSession['numeroVenta'] ?? '' ?>">
                                                     </div>
                                                 </div>
 
