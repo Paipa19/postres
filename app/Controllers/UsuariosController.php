@@ -45,14 +45,11 @@ class UsuariosController
     {
 
         try {
-
-
-            $usuario = new Usuarios($this->dataUsuario);
-            if($usuario->update()){
+            $user = new Usuarios($this->dataUsuario);
+            if($user->update()){
                 unset($_SESSION['frmUsuarios']);
             }
-
-            header("Location: ../../views/modules/usuarios/show.php?id=" . $usuario->getIdUsuario() . "&respuesta=success&mensaje=Usuario Actualizado");
+            header("Location: ../../views/modules/usuarios/show.php?id=" . $user->getIdUsuario() . "&respuesta=success&mensaje=Usuario Actualizado");
         } catch (\Exception $e) {
             GeneralFunctions::logFile('Exception',$e, 'error');
         }

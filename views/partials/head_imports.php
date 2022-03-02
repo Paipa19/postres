@@ -18,8 +18,8 @@
     <link href="<?= $baseURL ?>/node_modules/bootstrap-imageupload/dist/css/bootstrap-imageupload.min.css" rel="stylesheet">
     <!-- Custom CSS User -->
     <link rel="stylesheet" href="<?= $baseURL ?>/views/public/css/main.css">
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="<?= $baseURL ?>/views/public/img/favicon-32x32.png">
+    <!-- logo -->
+    <link rel="icon" type="image/jpg" sizes="32x32" href="<?= $baseURL ?>/views/public/img/logo.jpg">
     <!-- Social Buttons Bootstrap -->
     <link href="<?= $baseURL ?>/node_modules/bootstrap-social/bootstrap-social.css" rel="stylesheet" >
 <!-- End Importaciones CSS -->

@@ -46,7 +46,7 @@ class DetalleVentasController
     public function edit()
     {
         try {
-            $arrDetalleVenta = DetalleVentas::search("SELECT * FROM detalle_ventas WHERE venta_id = ".$this->dataDetalleVenta['venta_id']." and producto_id = ".$this->dataDetalleVenta['producto_id']);
+            $arrDetalleVenta = DetalleVentas::search("SELECT * FROM detalleventa WHERE venta_id = ".$this->dataDetalleVenta['venta_id']." and producto_id = ".$this->dataDetalleVenta['producto_id']);
             /* @var $arrDetalleVenta DetalleVentas[] */
             $DetalleVenta = $arrDetalleVenta[0];
             $OldCantidad = $DetalleVenta->getCantidad();

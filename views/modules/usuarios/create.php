@@ -70,20 +70,8 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <!-- form start -->
-                                <form class="form-horizontal" enctype="multipart/form-data" method="post" id="<?= $nameForm ?>"
-                                      name="<?= $nameForm ?>"
+                                <form class="form-horizontal" method="post" id="<?= $nameForm ?>" name="<?= $nameForm ?>"
                                       action="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=create">
-                                    <div class="row">
-
-                                        <div class="col-sm-10">
-                                            <div class="form-group row">
-                                                <label for="numeroIdentificacion" class="col-sm-2 col-form-label">Numero de identificacion</label>
-                                                <div class="col-sm-10">
-                                                    <input required type="number" class="form-control" id="numeroIdentificacion" name="numeroIdentificacion"
-                                                           placeholder="Ingrese su numero de idetificacion" value="<?= $frmSession['numeroIdentificacion'] ?? '' ?>">
-                                                </div>
-                                            </div>
 
                                         <div class="col-sm-10">
                                             <div class="form-group row">
@@ -93,6 +81,14 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                            placeholder="Ingrese su nombre" value="<?= $frmSession['nombre'] ?? '' ?>">
                                                 </div>
                                             </div>
+                                            <div class="col-sm-10">
+                                                <div class="form-group row">
+                                                    <label for="numeroIdentificacion" class="col-sm-2 col-form-label">No° Documento</label>
+                                                    <div class="col-sm-10">
+                                                        <input required type="text" class="form-control" id="numeroIdentificacion" name="numeroIdentificacion"
+                                                               placeholder="Ingrese el numero de identificacion" value="<?= $frmSession['numeroIdentificacion'] ?? '' ?>">
+                                                    </div>
+                                                </div>
                                             <div class="form-group row">
                                                 <label for="apellido" class="col-sm-2 col-form-label">Apellido</label>
                                                 <div class="col-sm-10">

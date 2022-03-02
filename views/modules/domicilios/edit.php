@@ -84,7 +84,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                             <form class="form-horizontal" enctype="multipart/form-data" method="post" id="<?= $nameForm ?>"
                                                   name="<?= $nameForm ?>"
                                                   action="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=edit">
-                                                <input id="id" name="id" value="<?= $DataDomicilio->getId(); ?>" hidden
+                                                <input id="id" name="id" value="<?= $DataDomicilio->getIdDomicilio(); ?>" hidden
                                                        required="required" type="text">
                                                 <div class="row">
                                                     <div class="col-sm-10">

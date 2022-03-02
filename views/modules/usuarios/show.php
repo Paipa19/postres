@@ -50,14 +50,14 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
         <section class="content">
             <!-- Generar Mensajes de alerta -->
             <?= (!empty($_GET['respuesta'])) ? GeneralFunctions::getAlertDialog($_GET['respuesta'], $_GET['mensaje']) : ""; ?>
-            <?= (empty($_GET['idUsuario'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
+            <?= (empty($_GET['id'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Horizontal Form -->
                         <div class="card card-green">
-                            <?php if (!empty($_GET["idUsuario"]) && isset($_GET["idUsuario"])) {
-                                $DataUsuario = UsuariosController::searchForID(["idUsuario" => $_GET["idUsuario"]]);
+                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) {
+                                $DataUsuario = UsuariosController::searchForID(["idUsuario" => $_GET["id"]]);
                                 /* @var $DataUsuario Usuarios */
                                 if (!empty($DataUsuario)) {
                                     ?>

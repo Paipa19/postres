@@ -250,8 +250,8 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
 
     function insert(): ?bool
     {
-        $query = "INSERT INTO postres.usuario Values(
-           :idUsuario,:numeroIdentificacion,:nombre, :apellido,:telefono,
+        $query = "INSERT INTO postres.usuario Values (
+           :idUsuario,:numeroIdentificacion,:nombre,:apellido,:telefono,
            :correo,:rol,:contrasena,:estado)";
 
         return $this->save($query);
@@ -393,7 +393,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
     /**
      * @inheritDoc
      */
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
     {
         return [
             'idUsuario' => $this->getIdUsuario(),

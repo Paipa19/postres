@@ -72,11 +72,11 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                 </div>
                             </div>
                             <!-- /.card-header -->
-                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) { ?>
+                            <?php if (!empty($_GET["idDetalleVenta"]) && isset($_GET["idDetalleVenta"])) { ?>
                             <p>
                                 <?php
 
-                                $DataDetalleVenta = VentasController::searchForID(["id" => $_GET["id"]]);
+                                $DataDetalleVenta = VentasController::searchForID(["idDetalleVenta" => $_GET["idDetalleVenta"]]);
                                 /* @var $DataDetalleVenta DetalleVentas */
                                 if (!empty($DataDetalleVenta)) {
                                 ?>

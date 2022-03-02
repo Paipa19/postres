@@ -38,7 +38,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>DESSERT STORE</h1>
+                            <h1><strong> Dessert Store </strong></h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -93,6 +93,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                     <th>#</th>
                                                     <th>Direccion</th>
                                                     <th>Telefono</th>
+                                                    <th>Acciones</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -102,22 +103,18 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                 foreach ($arrDomicilios as $Domicilio) {
                                                     ?>
                                                     <tr>
+                                                        <td><?= $Domicilio->getIdDomicilio(); ?></td>
                                                         <td><?= $Domicilio->getDireccion(); ?></td>
                                                         <td><?= $Domicilio->getTelefono(); ?></td>
                                                         <td>
-
-                                                        </td>
-
-                                                        <td>
-                                                            <a href="edit.php?id=<?= $Domicilio->getIdDomicilio(); ?>"
+                                                            <a href="edit.php?id=<?php echo $Domicilio->getIdDomicilio(); ?>"
                                                                type="button" data-toggle="tooltip" title="Actualizar"
                                                                class="btn docs-tooltip btn-primary btn-xs"><i
                                                                         class="fa fa-edit"></i></a>
-                                                            <a href="show.php?id=<?= $Domicilio->getIdDomicilio(); ?>"
+                                                            <a href="show.php?id=<?php echo $Domicilio->getIdDomicilio(); ?>"
                                                                type="button" data-toggle="tooltip" title="Ver"
                                                                class="btn docs-tooltip btn-warning btn-xs"><i
                                                                         class="fa fa-eye"></i></a>
-
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -128,6 +125,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                     <th>#</th>
                                                     <th>Direccion</th>
                                                     <th>Telefono</th>
+                                                    <th>Acciones</th>
                                                 </tr>
                                                 </tfoot>
                                             </table>
@@ -157,6 +155,4 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
     <?php require('../../partials/datatables_scripts.php'); ?>
 
     </body>
-    </html>
-
-<?php
+</html>

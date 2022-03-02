@@ -18,7 +18,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
 <!DOCTYPE html>
 <html>
 <head>
-    <title><?= $_ENV['TITLE_SITE'] ?> | Gestión de <?= $plproductos ?></title>
+    <title><?= $_ENV['TITLE_SITE'] ?> | Gestión de <?= $pluralModel ?></title>
     <?php require("../../partials/head_imports.php"); ?>
     <!-- DataTables -->
     <link rel="stylesheet" href="<?= $adminlteURL ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
@@ -40,7 +40,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1> DESSERT STORE </h1>
+                        <h1> <strong> Dessert Store </strong> </h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -98,6 +98,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                 <th>Valor Unitario</th>
                                                 <th>Estado</th>
                                                 <th>Stock</th>
+                                                <th>Acciones</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -122,10 +123,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                            type="button" data-toggle="tooltip" title="Ver"
                                                            class="btn docs-tooltip btn-warning btn-xs"><i
                                                                     class="fa fa-eye"></i></a>
-                                                        <a href="../productos/index.php?idCategoria=<?= $producto->getIdProducto(); ?>"
-                                                           type="button" data-toggle="tooltip" title="Ver Productos"
-                                                           class="btn docs-tooltip btn-success btn-xs"><i
-                                                                    class="fa fa-sitemap"></i></a>
+
                                                         <?php if ($producto->getEstadoProducto() != "Disponible") { ?>
                                                             <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=activate&id=<?= $producto->getIdProducto(); ?>"
                                                                type="button" data-toggle="tooltip" title="Activar"
@@ -151,6 +149,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                 <th>Valor Unitario</th>
                                                 <th>Estado</th>
                                                 <th>Stock</th>
+                                                <th>Acciones</th>
                                             </tr>
                                             </tfoot>
                                         </table>

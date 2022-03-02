@@ -36,7 +36,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DESSERT STORE</h1>
+                        <h1> <strong> Dessert Store </strong> </h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -95,10 +95,8 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                 <th>Telefono</th>
                                                 <th>Correo</th>
                                                 <th>Rol</th>
-                                                <th>Contraseña</th>
                                                 <th>Estado</th>
-
-
+                                                <th>Acciones</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -115,30 +113,27 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                     <td><?= $usuario->getTelefono(); ?></td>
                                                     <td><?= $usuario->getCorreo(); ?></td>
                                                     <td><?= $usuario->getRol(); ?></td>
-                                                    <td>
-
-                                                    </td>
                                                     <td><?= $usuario->getEstado(); ?></td>
                                                     <td>
-                                                        <a href="edit.php?id=<?php echo $usuario->getIdUsuario(); ?>"
+                                                        <a href="edit.php?id=<?= $usuario->getIdUsuario(); ?>"
                                                            type="button" data-toggle="tooltip" title="Actualizar"
                                                            class="btn docs-tooltip btn-primary btn-xs"><i
-                                                                class="fa fa-edit"></i></a>
-                                                        <a href="show.php?id=<?php echo $usuario->getIdUsuario(); ?>"
+                                                                    class="fa fa-edit"></i></a>
+                                                        <a href="show.php?id=<?= $usuario->getIdUsuario(); ?>"
                                                            type="button" data-toggle="tooltip" title="Ver"
                                                            class="btn docs-tooltip btn-warning btn-xs"><i
-                                                                class="fa fa-eye"></i></a>
+                                                                    class="fa fa-eye"></i></a>
                                                         <?php if ($usuario->getEstado() != "Activo") { ?>
                                                             <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=activate&id=<?= $usuario->getIdUsuario(); ?>"
                                                                type="button" data-toggle="tooltip" title="Activar"
                                                                class="btn docs-tooltip btn-success btn-xs"><i
-                                                                    class="fa fa-check-square"></i></a>
+                                                                        class="fa fa-check-square"></i></a>
                                                         <?php } else { ?>
                                                             <a type="button"
                                                                href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=inactivate&id=<?= $usuario->getIdUsuario(); ?>"
                                                                data-toggle="tooltip" title="Inactivar"
                                                                class="btn docs-tooltip btn-danger btn-xs"><i
-                                                                    class="fa fa-times-circle"></i></a>
+                                                                        class="fa fa-times-circle"></i></a>
                                                         <?php } ?>
                                                     </td>
                                                 </tr>
@@ -154,9 +149,8 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                 <th>Telefono</th>
                                                 <th>Correo</th>
                                                 <th>Rol</th>
-                                                <th>Contraseña</th>
                                                 <th>Estado</th>
-
+                                                <th>Acciones</th>
                                             </tr>
                                             </tfoot>
                                         </table>

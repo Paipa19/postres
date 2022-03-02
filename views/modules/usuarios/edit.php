@@ -53,7 +53,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
         <section class="content">
             <!-- Generar Mensajes de alerta -->
             <?= (!empty($_GET['respuesta'])) ? GeneralFunctions::getAlertDialog($_GET['respuesta'], $_GET['mensaje']) : ""; ?>
-            <?= (empty($_GET['idUsuario'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
+            <?= (empty($_GET['id'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
@@ -72,11 +72,11 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                 </div>
                             </div>
                             <!-- /.card-header -->
-                            <?php if (!empty($_GET["idUsuario"]) && isset($_GET["idUsuario"])) { ?>
+                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) { ?>
                                 <p>
                                 <?php
 
-                                $DataUsuario = UsuariosController::searchForID(["idUsuario" => $_GET["idUsuario"]]);
+                                $DataUsuario = UsuariosController::searchForID(["idUsuario" => $_GET["id"]]);
                                 /* @var $DataUsuario Usuarios */
                                 if (!empty($DataUsuario)) {
                                     ?>
@@ -85,9 +85,18 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                         <form class="form-horizontal" enctype="multipart/form-data" method="post" id="<?= $nameForm ?>"
                                               name="<?= $nameForm ?>"
                                               action="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=edit">
-                                            <input id="id" name="id" value="<?= $DataUsuario->getIdUsuario(); ?>" hidden
-                                                   required="required" type="text">
+                                            <input id="idUsuario" name="idUsuario" value="<?= $DataUsuario->getIdUsuario(); ?>"
+                                                   hidden required="required" type="text">
                                             <div class="row">
+                                                <div class="col-sm-10">
+                                                    <div class="form-group row">
+                                                        <label for="numeroIdentificacion" class="col-sm-2 col-form-label">Documento</label>
+                                                        <div class="col-sm-10">
+                                                            <input required type="text" class="form-control" id="numeroIdentificacion"
+                                                                   name="numeroIdentificacion" value="<?= $DataUsuario->getNumeroIdentificacion(); ?>"
+                                                                   placeholder="Ingrese su nombre">
+                                                        </div>
+                                                    </div>
                                                 <div class="col-sm-10">
                                                     <div class="form-group row">
                                                         <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
@@ -123,15 +132,16 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                                    placeholder="Ingrese su correo">
                                                         </div>
                                                     </div>
-
-
-                                                        <div class="form-group row">
-                                                            <label for="contrasena" class="col-sm-2 col-form-label">Contraseña</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="password" class="form-control"
-                                                                       id="contrasena" name="password" value="" placeholder="Ingrese su contrseña">
-                                                            </div>
+                                                    <div class="form-group row">
+                                                        <label for="contrasena" class="col-sm-2 col-form-label">Contraseña</label>
+                                                        <div class="col-sm-10">
+                                                            <input required type="text" class="form-control" id="contrasena"
+                                                                   name="contrasena" value="<?= $DataUsuario->getContrasena(); ?>"
+                                                                   placeholder="Ingrese su contraseña">
                                                         </div>
+                                                    </div>
+
+
 
                                                         <div class="form-group row">
                                                             <label for="estado" class="col-sm-2 col-form-label">Estado</label>

@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="right main-sidebar sidebar-light-primary bg-pink elevation-4">
+<aside class="top-right main-sidebar sidebar-dark-primary bg-red elevation-4">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
         <img src="<?= $baseURL ?>/views/public/img/nuev.png"
