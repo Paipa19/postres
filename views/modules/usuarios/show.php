@@ -84,7 +84,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                                 </p>
                                                 <hr>
                                                 <strong><i class="fas fa-user mr-1"></i> Numero de identificacion</strong>
-                                                <p class="text-muted"><?= $DataUsuario->getNumeroIdentificacion() . ": " . $DataUsuario->getDocumento() ?></p>
+                                                <p class="text-muted"><?= $DataUsuario->getNumeroIdentificacion() . ": " . $DataUsuario->getNumeroIdentificacion() ?></p>
                                                 <hr>
                                                 <p>
                                                     <strong><i class="fas fa-book mr-1"></i> Nombres y
@@ -103,10 +103,6 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                                         class="text-muted"><?= $DataUsuario->getCorreo() ?></p>
                                                 <p>
                                                 <hr>
-                                                <strong><i class="fas fa-phone mr-1"></i> Contraseña</strong>
-                                                <p
-                                                        class="text-muted"><?= $DataUsuario->getContrasena() ?></p>
-                                                <p>
 
                                                 <strong><i class="far fa-file-alt mr-1"></i> Estado y Rol</strong>
                                                 <p class="text-muted"><?= $DataUsuario->getEstado() . " - " . $DataUsuario->getRol() ?></p>

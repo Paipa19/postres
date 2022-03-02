@@ -7,7 +7,7 @@
     <title><?= $_ENV['TITLE_SITE'] ?> | Inicio</title>
     <?php require("partials/head_imports.php"); ?>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini sidebar-collapse ">
 
 <!-- Site wrapper -->
 <div class="wrapper">
@@ -53,9 +53,7 @@
                     <h5>Te damos la bienvenida al sistema de inventarios de la empresa <strong>DESSERT STORE</strong>, esperamos sea gratificante el uso de este sistema. </h5>
 
                     <center>
-                    <div class="image fa-align-center">
                         <img src="<?= $baseURL ?>/views/public/img/logo.jpg" class="img-circle elevation-2" alt="Imgen princial">
-                    </div>
                     </center>
 
                 </div>

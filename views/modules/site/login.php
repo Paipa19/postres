@@ -23,7 +23,7 @@ require_once("../../partials/routes.php");
             <p class="login-box-msg">Ingrese sus datos para iniciar sesión</p>
             <form action="../../../app/Controllers/MainController.php?controller=Usuarios&action=login" method="post">
                 <div class="input-group mb-3">
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="User">
+                    <input type="number" id="numeroIdentificacion" name="numeroIdentificacion" class="form-control" placeholder="Numero de Documento">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
@@ -31,7 +31,7 @@ require_once("../../partials/routes.php");
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                    <input type="password" id="contrasena" name="contrasena" class="form-control" placeholder="Password">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>

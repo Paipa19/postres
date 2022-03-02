@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="right main-sidebar sidebar-light-primary bg-pink elevation-4">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
         <img src="<?= $baseURL ?>/views/public/img/nuev.png"
@@ -18,7 +18,7 @@
             </div>
             <div class="d-flex flex-column">
                 <div class="info">
-                    <a href="<?= "$baseURL/views/modules/usuarios/show.php?id=" .$_SESSION['UserInSession']['idUsuario']?>" class="d-block">
+                    <a href="<?= "$baseURL/views/modules/usuarios/show.php?idUsuario=" .$_SESSION['UserInSession']['idUsuario']?>" class="d-block">
                         <?= $_SESSION['UserInSession']['nombre'] ?>
                     </a>
                 </div>
@@ -44,6 +44,7 @@
                     </a>
                 </li>
                 <li class="nav-header">Menú</li>
+                <?php if ($_SESSION['UserInSession']['rol'] == "Administrador"){ ?>
                 <li class="nav-item has-treeview <?= strpos($_SERVER['REQUEST_URI'],'usuarios') ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= strpos($_SERVER['REQUEST_URI'],'usuarios') ? 'active' : '' ?>">
                         <i class="nav-icon far fa-user"></i>
@@ -67,7 +68,7 @@
                         </li>
                     </ul>
                 </li>
-
+                <?php } ?>
                 <li class="nav-item has-treeview <?= strpos($_SERVER['REQUEST_URI'],'productos') ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= strpos($_SERVER['REQUEST_URI'],'productos') ? 'active' : '' ?>">
                         <i class="nav-icon fas fa-dolly"></i>

@@ -61,7 +61,7 @@ class UsuariosController
     static public function searchForID(array $data)
     {
         try {
-            $result = Usuarios::searchForId($data['id']);
+            $result = Usuarios::searchForId($data['idUsuario']);
             if (!empty($data['request']) and $data['request'] === 'ajax' and !empty($result)) {
                 header('Content-type: application/json; charset=utf-8');
                 $result = json_encode($result->jsonSerialize());
@@ -163,9 +163,9 @@ class UsuariosController
 
     public static function login (){
         try {
-            if(!empty($_POST['user']) && !empty($_POST['password'])){
+            if(!empty($_POST['numeroIdentificacion']) && !empty($_POST['contrasena'])){
                 $tmpUser = new Usuarios();
-                $respuesta = $tmpUser->login($_POST['user'], $_POST['password']);
+                $respuesta = $tmpUser->login($_POST['numeroIdentificacion'], $_POST['contrasena']);
                 if (is_a($respuesta,"App\Models\Usuarios")) {
                     $_SESSION['UserInSession'] = $respuesta->jsonSerialize();
                     header("Location: ../../views/index.php");

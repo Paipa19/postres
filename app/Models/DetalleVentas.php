@@ -181,8 +181,6 @@ class DetalleVentas  extends AbstractDBConnection implements Model
         ];
 
         $this->Connect();
-        var_dump($query, $arrData);
-        die();
         $result = $this->insertRow($query, $arrData);
         $this->Disconnect();
         return $result;
@@ -193,7 +191,7 @@ class DetalleVentas  extends AbstractDBConnection implements Model
 
     function insert(): ?bool
     {
-        $query = "INSERT INTO postres.detalleventa SET(
+        $query = "INSERT INTO postres.detalleventa values (
         :idDetalleVenta, :cantidad, :fechaVencimiento,:numDetalleVenta,
          :Venta_idVenta, :Producto_idProducto)";
 

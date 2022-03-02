@@ -365,11 +365,11 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
                 contrasena: $this->contrasena,
                 estado:$this->estado";
     }
-    public function login($user, $contrasena): Usuarios|String|null
+    public function login($numeroIdentificacion, $contrasena): Usuarios|String|null
     {
 
         try {
-            $resultUsuarios = Usuarios::search("SELECT * FROM usuario WHERE user = '$user'");
+            $resultUsuarios = Usuarios::search("SELECT * FROM usuario WHERE numeroIdentificacion = '$numeroIdentificacion'");
             /* @var $resultUsuarios Usuarios[] */
             if (!empty($resultUsuarios) && count($resultUsuarios) >= 1) {
                 if (password_verify($contrasena, $resultUsuarios[0]->getContrasena())) {
