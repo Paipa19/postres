@@ -103,6 +103,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             <?php
                                             $arrUsuarios = UsuariosController::getAll();
                                             /* @var $arrUsuarios Usuarios[] */
+                                            if(is_array($arrUsuarios))
                                             foreach ($arrUsuarios as $usuario) {
                                                 ?>
                                                 <tr>

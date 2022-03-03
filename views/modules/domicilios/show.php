@@ -52,14 +52,14 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
         <section class="content">
             <!-- Generar Mensajes de alerta -->
             <?= (!empty($_GET['respuesta'])) ? GeneralFunctions::getAlertDialog($_GET['respuesta'], $_GET['mensaje']) : ""; ?>
-            <?= (empty($_GET['idDomicilio'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
+            <?= (empty($_GET['id'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Horizontal Form -->
                         <div class="card card-green">
-                            <?php if (!empty($_GET["idDomicilio"]) && isset($_GET["idDomicilio"])) {
-                                $DataDomicilio = DomiciliosController::searchForIdDomicilio(["idDomicilio" => $_GET["id"]]);
+                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) {
+                                $DataDomicilio = DomiciliosController::searchForID(["idDomicilio" => $_GET["id"]]);
                                 /* @var $DataDomicilio Domicilios */
                                 if (!empty($DataDomicilio)) {
                                     ?>
@@ -86,12 +86,15 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
 
                                                 <strong><i class="fas fa-map-marker-alt mr-1"></i> Direccion</strong>
                                                 <p class="text-muted"><?= $DataDomicilio->getDireccion() ?>
-                                                    , <?= $DataDomicilio->getMunicipio()->getNombre() ?>
-                                                    - <?= $DataDomicilio->getMunicipio()->getDepartamento()->getDireccion() ?></p>
+
+                                                <hr>
 
                                                 <strong><i class="fas fa-phone mr-1"></i> Telefono</strong>
                                                 <p class="text-muted"><?= $DataDomicilio->getTelefono() ?></p>
-                                                <hr>
+
+                                                <strong><i class="fas fa-map-marker-alt mr-1"></i>Departamento - Municipio</strong>
+                                                <p class="text-muted"><?= $DataDomicilio->getMunicipio()->getDepartamento()->getNombre().", ". $DataDomicilio->getMunicipio()->getNombre() ?>
+
                                             </div>
 
                                         </div>

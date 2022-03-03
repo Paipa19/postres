@@ -93,6 +93,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                     <th>#</th>
                                                     <th>Direccion</th>
                                                     <th>Telefono</th>
+                                                    <th>Municipio</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                                 </thead>
@@ -100,12 +101,14 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                 <?php
                                                 $arrDomicilios = DomiciliosController::getAll();
                                                 /* @var $arrDomicilios Domicilios[] */
+                                                if(is_array($arrDomicilios))
                                                 foreach ($arrDomicilios as $Domicilio) {
                                                     ?>
                                                     <tr>
                                                         <td><?= $Domicilio->getIdDomicilio(); ?></td>
                                                         <td><?= $Domicilio->getDireccion(); ?></td>
                                                         <td><?= $Domicilio->getTelefono(); ?></td>
+                                                        <td><?= $Domicilio->getMunicipiosId(); ?></td>
                                                         <td>
                                                             <a href="edit.php?id=<?php echo $Domicilio->getIdDomicilio(); ?>"
                                                                type="button" data-toggle="tooltip" title="Actualizar"
@@ -125,6 +128,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                     <th>#</th>
                                                     <th>Direccion</th>
                                                     <th>Telefono</th>
+                                                    <th>Municipio</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                                 </tfoot>

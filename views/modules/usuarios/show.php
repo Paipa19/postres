@@ -84,7 +84,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                                 </p>
                                                 <hr>
                                                 <strong><i class="fas fa-user mr-1"></i> Numero de identificacion</strong>
-                                                <p class="text-muted"><?= $DataUsuario->getNumeroIdentificacion() . ": " . $DataUsuario->getNumeroIdentificacion() ?></p>
+                                                <p class="text-muted"><?= $DataUsuario->getNumeroIdentificacion() ?></p>
                                                 <hr>
                                                 <p>
                                                     <strong><i class="fas fa-book mr-1"></i> Nombres y

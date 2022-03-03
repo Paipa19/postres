@@ -74,11 +74,11 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                 </div>
                             </div>
                             <!-- /.card-header -->
-                            <?php if (!empty($_GET["idVenta"]) && isset($_GET["idVenta"])) { ?>
+                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) { ?>
                                 <p>
                                 <?php
 
-                                $DataVenta = VentasController::searchForID(["idVenta" => $_GET["idVenta"]]);
+                                $DataVenta = VentasController::searchForID(["idVenta" => $_GET["id"]]);
                                 /* @var $DataVenta Ventas */
                                 if (!empty($DataVenta)) {
                                     ?>
@@ -116,15 +116,15 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                         <label for="estado" class="col-sm-2 col-form-label">Estado</label>
                                                         <div class="col-sm-10">
                                                             <select required id="estado" name="estado" class="custom-select">
-                                                                <option <?= ($DataVenta->getEstado() == "Aprobada") ? "selected" : ""; ?> value="Aprobada">Aprobada</option>
-                                                                <option <?= ($DataVenta->getEstado() == "No aprobada") ? "selected" : ""; ?> value="No aprobada">No aprobada</option>
+                                                                <option <?= ($DataVenta->getEstadoVenta() == "Aprobada") ? "selected" : ""; ?> value="Aprobada">Aprobada</option>
+                                                                <option <?= ($DataVenta->getEstadoVenta() == "No aprobada") ? "selected" : ""; ?> value="No aprobada">No aprobada</option>
                                                             </select>
                                                         </div>
                                                     </div>
 
-                                                    <hr>
-                                                    <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>
-                                                    <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
+                            <hr>
+                            <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>
+                            <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
                                         </form>
                                     </div>
                                     <!-- /.card-body -->

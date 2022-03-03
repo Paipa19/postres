@@ -15,7 +15,7 @@ require_once("../../partials/routes.php");
 
 <div class="login-box">
     <div class="login-logo">
-        <a  background++href="login.php"><strong>Dessert Store</strong></a>
+        <a href="login.php"><strong>Dessert Store</strong></a>
     </div>
     <!-- /.login-logo -->
     <div class="card">

@@ -22,7 +22,7 @@ class Productos extends AbstractDBConnection implements Model
     public function __construct(array $producto = [])
     {
         parent::__construct();
-        $this->setIdProducto($producto['idproducto'] ?? null);
+        $this->setIdProducto($producto['idProducto'] ?? null);
         $this->setNombre($producto['nombre'] ?? '');
         $this->setDescripcion($producto['descripcion'] ?? '');
         $this->setValorUnitario($producto['valorUnitario'] ?? 0);
@@ -109,18 +109,18 @@ class Productos extends AbstractDBConnection implements Model
      */
     public function getEstadoProducto(): string
     {
-        return $this->estado->toString();
+        return $this->estadoProducto->toString();
     }
 
     /**
-     * @param string |  $estado
+     * @param string |  $estadoProducto
      */
-    public function setEstadoProducto(null|string|EstadoProducto $estado): void
+    public function setEstadoProducto(null|string|EstadoProducto $estadoProducto): void
     {
-        if(is_string($estado)){
-            $this->estado = EstadoProducto::from($estado);
+        if(is_string( $estadoProducto)){
+            $this->estadoProducto = EstadoProducto::from( $estadoProducto);
         }else{
-            $this->estado = $estado;
+            $this->estadoProducto =  $estadoProducto;
         }
     }
 
@@ -184,8 +184,8 @@ class Productos extends AbstractDBConnection implements Model
     public function update(): bool
     {
         $query = "UPDATE postres.producto SET 
-             nombre = :nombre, descripcion = :descripcion, valorUnitario= :valorUnitario,estado= :estado ,stock= :stock,
-              WHERE idproducto = :idproducto";
+             nombre = :nombre, descripcion = :descripcion, valorUnitario= :valorUnitario,estado= :estado ,stock= :stock
+              WHERE idProducto = :idProducto";
         return $this->save($query);
     }
 
@@ -195,7 +195,7 @@ class Productos extends AbstractDBConnection implements Model
      */
     public function deleted(): bool
     {
-        $this->setEstado("Inactivo");
+        $this->setEstadoProducto("No Disponible");
         return $this->update();
     }
 
@@ -231,7 +231,7 @@ class Productos extends AbstractDBConnection implements Model
      * @throws Exception
      * @throws e
      */
-    public static function searchForId(int $idProducto): ?Productos
+    public static function searchForID(int $idProducto): ?Productos
     {
         try {
             if ($idProducto > 0) {
@@ -277,7 +277,11 @@ class Productos extends AbstractDBConnection implements Model
 
     public function __toString(): string
     {
-        return "direccion: $this->direccion, telefono: $this->telefono, valorUnitario: $this->valorUnitario, estado: $this->estado, Stock: $this->stock";
+        return "nombre $this->nombre,
+          descripcion: $this->descripcion,
+          valorUnitario: $this->valorUnitario,
+          estado: ".$this->getEstadoProducto().";
+          stock: $this->stock";
     }
 
     public function substractStock(int $quantity)

@@ -261,7 +261,7 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
     {
         $query = "UPDATE postres.usuario SET
         numeroIdentificacion = :numeroIdentificacion, nombre = :nombre, apellido = :apellido,
-        telefono = :telefono, correo = :correo, rol = :rol, contrasena = :contrasena, estado= :estado,
+        telefono = :telefono, correo = :correo, rol = :rol, contrasena = :contrasena, estado= :estado
         WHERE idUsuario = :idUsuario";
 
         return $this->save($query);
@@ -361,9 +361,9 @@ class Usuarios extends AbstractDBConnection implements \App\Interfaces\Model
                 apellido: $this->apellido, 
                 Telefono: $this->telefono, 
                 correo: $this->correo, 
-                rol: $this->rol, 
+                rol: ".$this->getRol().", 
                 contrasena: $this->contrasena,
-                estado:$this->estado";
+                estado: ".$this->getEstado();
     }
     public function login($numeroIdentificacion, $contrasena): Usuarios|String|null
     {

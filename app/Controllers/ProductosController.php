@@ -54,7 +54,7 @@ class ProductosController{
 
     static public function searchForID (array $data){
         try {
-            $result = Productos::searchForId($data['id']);
+            $result = Productos::searchForId($data['idProducto']);
             if (!empty($data['request']) and $data['request'] === 'ajax' and !empty($result)) {
                 header('Content-type: application/json; charset=utf-8');
                 $result = json_encode($result->jsonSerialize());
@@ -123,7 +123,7 @@ class ProductosController{
 
         $arrProducto = array();
         if($params['where'] != ""){
-            $base = "SELECT * FROM productos WHERE ";
+            $base = "SELECT * FROM producto WHERE ";
             $arrProducto = Productos::search($base.$params['where']);
         }else{
             $arrProducto = Productos::getAll();

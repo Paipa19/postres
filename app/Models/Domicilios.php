@@ -130,8 +130,8 @@ class Domicilios extends AbstractDBConnection implements Model
      */
     public function getMunicipio(): Municipios|null
     {
-        if (!empty($this->municipio_id)) {
-            return Municipios::searchForId($this->municipio_id) ?? new Municipios();
+        if (!empty($this->municipios_id)) {
+            return Municipios::searchForId($this->municipios_id) ?? new Municipios();
         }
         return null;
     }
@@ -149,14 +149,12 @@ class Domicilios extends AbstractDBConnection implements Model
 
     protected function save(string $query): ?bool
     {
-
         $arrData = [
             ':idDomicilio' => $this->getIdDomicilio(),
             ':direccion' => $this->getDireccion(),
             ':telefono' => $this->getTelefono(),
             ':municipios_id' => $this->getMunicipiosId(),
-            ':Usuario_idUsuario' => $this->getUsuarioIdUsuario(),
-
+            ':Usuario_idUsuario' => $this->getUsuarioIdUsuario()
         ];
         $this->Connect();
         $result = $this->insertRow($query, $arrData);
@@ -176,7 +174,7 @@ class Domicilios extends AbstractDBConnection implements Model
     {
 
         $query = "UPDATE postres.domicilio SET
-           idDomicilio = :idDomicilio, direccion = :direccion, telefono = :telefono,
+           direccion = :direccion, telefono = :telefono,
            municipios_id = :municipios_id, Usuario_idUsuario = :Usuario_idUsuario WHERE idDomicilio = :idDomicilio";
         return $this ->save($query);
 
@@ -215,14 +213,14 @@ class Domicilios extends AbstractDBConnection implements Model
         return null;
     }
 
-    static function searchForId(int $idDomicilios): ?Domicilios
+    static function searchForId(int $idDomicilio): ?Domicilios
     {
         try {
-            if ($idDomicilios > 0) {
-                $tmpDomicilios = new Domicilios();
-                $tmpDomicilios->Connect();
-                $getrow = $tmpDomicilios->getrow("SELECT * FROM postres.domicilio WHERE idDomicilio =?", array($idDomicilios));
-                $tmpDomicilios->Disconnet();
+            if ($idDomicilio > 0) {
+                $Domicilio = new Domicilios();
+                $Domicilio->Connect();
+                $getrow = $Domicilio->getrow("SELECT * FROM postres.domicilio WHERE idDomicilio =?", array($idDomicilio));
+                $Domicilio->Disconnect();
                 return ($getrow) ? new Domicilios($getrow) : null;
             } else {
                 throw new  Exception('Id de Domicilios invalida');
@@ -243,9 +241,9 @@ class Domicilios extends AbstractDBConnection implements Model
      * @return bool
      * @throws Exception
      */
-    public static function domicilioRegistrado($telefono): bool
+    public static function domicilioRegistrado($direccion): bool
     {
-        $result = Domicilios::search("SELECT * FROM postres.domicilio where telefono = " . $telefono);
+        $result = Domicilios::search("SELECT * FROM postres.domicilio where direccion = '" . $direccion."'");
         if (!empty($result) && count($result)>0) {
             return true;
         } else {
@@ -254,7 +252,9 @@ class Domicilios extends AbstractDBConnection implements Model
     }
     public function __toString(): string
     {
-        return "nombre: $this->nombre, descripcion: $this->descripcion, municipios_id: $this->municipios_id
+        return "direccion: $this->direccion, 
+                telefono: $this->telefono, 
+                municipios_id: $this->municipios_id
                 Usuario_idUsuario: $this->Usuario_idUsuario";
     }
     /**

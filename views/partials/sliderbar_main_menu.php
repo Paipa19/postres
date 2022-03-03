@@ -18,7 +18,7 @@
             </div>
             <div class="d-flex flex-column">
                 <div class="info">
-                    <a href="<?= "$baseURL/views/modules/usuarios/show.php?idUsuario=" .$_SESSION['UserInSession']['idUsuario']?>" class="d-block">
+                    <a href="<?= "$baseURL/views/modules/usuarios/show.php?id=" .$_SESSION['UserInSession']['idUsuario']?>" class="d-block">
                         <?= $_SESSION['UserInSession']['nombre'] ?>
                     </a>
                 </div>

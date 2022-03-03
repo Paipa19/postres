@@ -7,14 +7,14 @@ enum EstadoProducto: String
 {
 
     case DISPONIBLE = 'Disponible';
-    case NODISPONIBLE = 'NoDisponible';
+    case NODISPONIBLE = 'No Disponible';
 
     public  function toString(): string
     {
 
         return match ($this) {
             self::DISPONIBLE =>'Disponible',
-            self::NODISPONIBLE=>'NoDisponible',
+            self::NODISPONIBLE=>'No Disponible',
         };
     }
 }

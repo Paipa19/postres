@@ -56,14 +56,14 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                     <div class="col-md-12">
                         <!-- Horizontal Form -->
                         <div class="card card-green">
-                            <?php if (!empty($_GET["idPago"]) && isset($_GET["idPago"])) {
-                                $DataPago = PagosController::searchForIdPago(["idPago" => $_GET["idPago"]]);
+                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) {
+                                $DataPago = PagosController::searchForId(["idPago" => $_GET["id"]]);
                                 /* @var $DataPago Pagos */
                                 if (!empty($DataPago)) {
                                     ?>
                                     <div class="card-header">
                                         <h3 class="card-title"><i class="fas fa-info"></i> &nbsp; Ver Información
-                                            de <?= $DataPago->getNombre() ?></h3>
+                                            de <?= $DataPago->getAbono() ?></h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="card-refresh"
                                                     data-source="show.php" data-source-selector="#card-refresh-content"
@@ -82,14 +82,14 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                         <div class="row">
                                             <div class="col-sm-10">
                                                 <strong><i class="fas fa-user mr-1"></i> Abono </strong>
-                                                <p class="text-muted"><?= $DataPago->getAbono() . ": " . $DataPago->getAbono() ?></p>
+                                                <p class="text-muted"><?= $DataPago->getAbono() ?></p>
 
                                                 <strong><i class="fas fa-user mr-1"></i> Saldo</strong>
-                                                <p class="text-muted"><?= $DataPago->getSaldo() . ": " . $DataPago->getSaldo() ?></p>
+                                                <p class="text-muted"><?= $DataPago->getSaldo()  ?></p>
 
                                                 <hr>
                                                 <strong><i class="fas fa-calendar-check mr-1"></i> Fecha de pago</strong>
-                                                <p class="text-muted"><?= $DataPago->getCreatedat()->toDateTimeString(); ?></p>
+                                                <p class="text-muted"><?= $DataPago->getFechaPago()->toDateTimeString(); ?></p>
                                                 <hr>
 
                                                 <strong><i class="fas fa-user mr-1"></i> Descuento</strong>
@@ -110,7 +110,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                                 </a>
                                             </div>
                                             <div class="col-auto">
-                                                <a role="button" href="edit.php?id=<?= $DataUsuario->getId(); ?>"
+                                                <a role="button" href="edit.php?id=<?= $DataPago->getIdPago(); ?>"
                                                    class="btn btn-primary float-right"
                                                    style="margin-right: 5px;">
                                                     <i class="fas fa-edit"></i> Editar <?= $nameModel ?>

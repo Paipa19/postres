@@ -43,7 +43,6 @@ class UsuariosController
 
     public function edit($withFiles = null)
     {
-
         try {
             $user = new Usuarios($this->dataUsuario);
             if($user->update()){
@@ -129,7 +128,7 @@ class UsuariosController
 
         $arrUsuarios = array();
         if ($params['where'] != "") {
-            $base = "SELECT * FROM usuarios WHERE ";
+            $base = "SELECT * FROM usuario WHERE ";
             $arrUsuarios = Usuarios::search($base . ' ' . $params['where']);
         } else {
             $arrUsuarios = Usuarios::getAll();

@@ -3,6 +3,8 @@
 require("../../partials/routes.php");
 require_once("../../partials/check_login.php");
 
+use App\Controllers\DomiciliosController;
+use App\Controllers\UsuariosController;
 use App\Controllers\VentasController;
 use App\Models\GeneralFunctions;
 use Carbon\Carbon;
@@ -94,6 +96,20 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
+                                                        <label for="fecha" class="col-sm-2 col-form-label">Cliente </label>
+                                                        <div class="col-sm-10">
+                                                            <?= UsuariosController::selectUsuario(
+                                                                array(
+                                                                    'id' => 'Usuario_idUsuario',
+                                                                    'name' => 'Usuario_idUsuario',
+                                                                    'class' => 'form-control select2bs4 select2-info',
+                                                                    'where' => "estado = 'Activo'"
+                                                                )
+                                                            )
+                                                            ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
                                                         <label for="total" class="col-sm-2 col-form-label">Total </label>
                                                         <div class="col-sm-10">
                                                             <input required type="number" class="form-control" id="total"
@@ -101,7 +117,20 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                                    value="<?= $frmSession['total'] ?? '' ?>">
                                                         </div>
                                                     </div>
-
+                                                    <div class="form-group row">
+                                                        <label for="fecha" class="col-sm-2 col-form-label">Domicilio </label>
+                                                        <div class="col-sm-10">
+                                                            <?= DomiciliosController::selectDomicilios(
+                                                                array(
+                                                                    'id' => 'domicilio_idDomicilio',
+                                                                    'name' => 'domicilio_idDomicilio',
+                                                                    'class' => 'form-control select2bs4 select2-info',
+                                                                    'where' => 'idDomicilio = 0'
+                                                                )
+                                                            )
+                                                            ?>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group row">
                                                         <label for="costoDomicilio" class="col-sm-2 col-form-label">Costo Domicilio</label>
                                                         <div class="col-sm-10">
@@ -146,7 +175,27 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
     </div>
     <!-- ./wrapper -->
     <?php require('../../partials/scripts.php'); ?>
-
+    <script>
+        $(function() {
+            $('#Usuario_idUsuario').on('change', function() {
+                $.post("../../../app/Controllers/MainController.php?controller=Domicilios&action=selectDomicilios", {
+                    isMultiple: false,
+                    isRequired: true,
+                    id: "domicilio_idDomicilio",
+                    nombre: "domicilio_idDomicilio",
+                    defaultValue: "",
+                    class: "form-control select2bs4 select2-info",
+                    where: "Usuario_idUsuario = "+$('#Usuario_idUsuario').val()+" ",
+                    request: 'ajax'
+                }, function(e) {
+                    if (e)
+                        console.log(e);
+                    $("#domicilio_idDomicilio").html(e).select2({ height: '100px'});
+                });
+            });
+            $('.btn-file span').html('Seleccionar');
+        });
+    </script>
     </body>
     </html>
 <?php

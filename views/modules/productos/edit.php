@@ -52,7 +52,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
         <section class="content">
             <!-- Generar Mensajes de alerta -->
             <?= (!empty($_GET['respuesta'])) ? GeneralFunctions::getAlertDialog($_GET['respuesta'], $_GET['mensaje']) : ""; ?>
-            <?= (empty($_GET['idProducto'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
+            <?= (empty($_GET['id'])) ? GeneralFunctions::getAlertDialog('error', 'Faltan Criterios de Búsqueda') : ""; ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
@@ -71,11 +71,11 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                 </div>
                             </div>
                             <!-- /.card-header -->
-                            <?php if (!empty($_GET["idProducto"]) && isset($_GET["idProducto"])) { ?>
+                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) { ?>
                                 <p>
                                 <?php
 
-                                $Producto = ProductosController::searchForID(["idProducto" => $_GET["idProducto"]]);
+                                $Producto = ProductosController::searchForID(["id" => $_GET["id"]]);
                                 /* @var $Producto Productos */
                                 if (!empty($Producto)) {
                                     ?>
@@ -84,7 +84,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                         <form class="form-horizontal" enctype="multipart/form-data" method="post" id="<?= $nameForm ?>"
                                               name="<?= $nameForm ?>"
                                               action="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=edit">
-                                            <input id="id" name="id" value="<?= $Producto->getIdProducto(); ?>" hidden
+                                            <input id="idProducto" name="idProducto" value="<?= $Producto->getIdProducto(); ?>" hidden
                                                    required="required" type="text">
                                             <div class="row">
                                                 <div class="col-sm-10">

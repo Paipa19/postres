@@ -103,6 +103,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             </thead>
                                             <tbody>
                                             <?php
+
                                             $arrProductos = ProductosController::getAll();
                                             /* @var $arrProductos Productos[] */
                                             foreach ($arrProductos as $producto) {
@@ -123,6 +124,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                            type="button" data-toggle="tooltip" title="Ver"
                                                            class="btn docs-tooltip btn-warning btn-xs"><i
                                                                     class="fa fa-eye"></i></a>
+
 
                                                         <?php if ($producto->getEstadoProducto() != "Disponible") { ?>
                                                             <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=activate&id=<?= $producto->getIdProducto(); ?>"

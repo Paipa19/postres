@@ -274,8 +274,7 @@ class Ventas extends AbstractDBConnection implements Model
     function insert(): ?bool
     {
         $query = "INSERT INTO postres.venta VALUES (
-        :idVenta, :numeroVenta, :fecha, :total, :costoDomicilio, :estado, :Usuario_idUsuario,:domicilio_idDomicilio                         
-      )";
+        :idVenta, :numeroVenta, :fecha, :total, :costoDomicilio, :estado, :Usuario_idUsuario,:domicilio_idDomicilio )";
         return $this->save($query);
     }
 
@@ -320,14 +319,14 @@ class Ventas extends AbstractDBConnection implements Model
         return null;
     }
 
-    static function searchForId(int $idVentas): ?object
+    static function searchForId(int $idVenta): ?object
     {
         try {
-            if ($idVentas > 0) {
+            if ($idVenta > 0) {
                 $tmpVentas = new Ventas();
                 $tmpVentas->Connect();
-                $getrow = $tmpVentas->getrow("SELECT * FROM postres.venta WHERE idVentas =?", array($idVentas));
-                $tmpVentas->Disconnet();
+                $getrow = $tmpVentas->getrow("SELECT * FROM postres.venta WHERE idVenta =?", array($idVenta));
+                $tmpVentas->Disconnect();
                 return ($getrow) ? new Ventas($getrow) : null;
             } else {
                 throw new  Exception('Id de ventas invalida');
@@ -373,7 +372,7 @@ class Ventas extends AbstractDBConnection implements Model
             fecha => $this->fecha,
             total' => $this->total,
             costoDomicilio => $this->costoDomicilio,
-            estado => $this->estado,
+            estado: ".$this->getEstadoVenta().";
             domicilio_idDomicilio => $this->domicilio_idDomicilio,
             Usuario_idUsuario => $this->Usuario_idUsuario";
     }

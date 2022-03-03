@@ -1,9 +1,9 @@
 <?php
 require("../../partials/routes.php");
 require_once("../../partials/check_login.php");
-require("../../../app/Controllers/VentasController");
+require("../../../app/Controllers/VentasController.php");
 
-use App\Controllers\UsuariosController;
+use App\Controllers\VentasController;
 use App\Models\GeneralFunctions;
 use App\Models\Usuarios;
 
@@ -57,13 +57,13 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                         <!-- Horizontal Form -->
                         <div class="card card-green">
                             <?php if (!empty($_GET["id"]) && isset($_GET["id"])) {
-                            $DataVenta = VentasController::searchForID(["id" => $_GET["id"]]);
+                            $DataVenta = VentasController::searchForID(["idVenta" => $_GET["id"]]);
                             /* @var $DataVenta Ventas */
                             if (!empty($DataVenta)) {
                             ?>
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fas fa-info"></i> &nbsp; Ver Información
-                                    de <?= $DataVenta->getFecha() ?></h3>
+                                    de <?= $DataVenta->getNumeroVenta() ?></h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="card-refresh"
                                             data-source="show.php" data-source-selector="#card-refresh-content"
@@ -88,8 +88,8 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                         <hr>
 
                                         <hr>
-                                        <strong><i class="fas fa-phone mr-1"></i> Fecha</strong>
-                                        <p class="text-muted"><?= $DataVenta->getFecha() ?></p>
+                                        <strong><i class="fas fa-calendar-check mr-1"></i> Fecha de venta</strong>
+                                        <p class="text-muted"><?= $DataVenta->getFecha()->toDateTimeString(); ?></p>
                                         <hr>
                                         <p>
                                         <hr>

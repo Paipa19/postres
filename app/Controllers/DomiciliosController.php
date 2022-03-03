@@ -14,7 +14,7 @@ class DomiciliosController{
     public function __construct(array $_FORM)
     {
         $this->dataDomicilio = array();
-        $this->dataDomicilio['ididDomicilio'] = $_FORM['idDomicilio'] ?? NULL;
+        $this->dataDomicilio['idDomicilio'] = $_FORM['idDomicilio'] ?? NULL;
         $this->dataDomicilio['direccion'] = $_FORM['direccion'] ?? '';
         $this->dataDomicilio['telefono'] = $_FORM['telefono'] ?? 0;
         $this->dataDomicilio['municipios_id'] = $_FORM['municipios_id'] ?? 0;
@@ -22,14 +22,14 @@ class DomiciliosController{
     }
     public function create() {
         try {
-            if (!empty($this->dataDomicilio['nombre']) && !Domicilios::domicilioRegistrado($this->dataDomicilio['direccion'])) {
+            if (!empty($this->dataDomicilio['direccion']) && !Domicilios::domicilioRegistrado($this->dataDomicilio['direccion'])) {
                 $Domicilio = new Domicilios ($this->dataDomicilio);
                 if ($Domicilio->insert()) {
                     unset($_SESSION['frmDomicilios']);
                     header("Location: ../../views/modules/domicilios/index.php?respuesta=success&mensaje=Domicilio Registrado!");
                 }
             } else {
-                header("Location: ../../views/modules/productos/create.php?respuesta=error&mensaje=Domicilio ya registrado");
+                header("Location: ../../views/modules/domicilios/create.php?respuesta=error&mensaje=Domicilio ya registrado");
             }
         } catch (\Exception $e) {
             GeneralFunctions::logFile('Exception',$e, 'error');
@@ -40,18 +40,19 @@ class DomiciliosController{
     {
         try {
             $domicilio = new Domicilios($this->dataDomicilio);
+
             if($domicilio->update()){
                 unset($_SESSION['frmDomicilios']);
             }
-
             header("Location: ../../views/modules/domicilios/show.php?id=" . $domicilio->getIdDomicilio() . "&respuesta=success&mensaje=Domicilio Actualizado");
         } catch (\Exception $e) {
             GeneralFunctions::logFile('Exception',$e, 'error');
         }
     }
-    static public function searchForID (array $data){
+    static public function searchForId (array $data)
+    {
         try {
-            $result = Domicilios::searchForIdDomicilio($data['idDomicilios']);
+            $result = Domicilios::searchForId($data['idDomicilio']);
             if (!empty($data['request']) and $data['request'] === 'ajax' and !empty($result)) {
                 header('Content-type: application/json; charset=utf-8');
                 $result = json_encode($result->jsonSerialize());
@@ -77,7 +78,7 @@ class DomiciliosController{
         return null;
     }
 
-    static public function selectProducto (array $params = [])
+    static public function selectDomicilios (array $params = [])
     {
 
         $params['isMultiple'] = $params['isMultiple'] ?? false;
@@ -93,7 +94,7 @@ class DomiciliosController{
 
         $arrDomicilio = array();
         if ($params['where'] != "") {
-            $base = "SELECT * FROM domicilios WHERE ";
+            $base = "SELECT * FROM domicilio WHERE ";
             $arrDomicilio = Domicilios::search($base . $params['where']);
         } else {
             $arrDomicilio = Domicilios::getAll();

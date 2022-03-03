@@ -6,6 +6,7 @@ require_once("../../partials/check_login.php");
 use App\Controllers\DomiciliosController;
 use App\Controllers\MunicipiosController;
 use App\Controllers\DepartamentosController;
+use App\Controllers\UsuariosController;
 use App\Models\GeneralFunctions;
 use Carbon\Carbon;
 
@@ -93,7 +94,20 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                                value="<?= $frmSession['telefono'] ?? '' ?>">
                                                     </div>
                                                 </div>
-
+                                                <div class="form-group row">
+                                                    <label for="fecha" class="col-sm-2 col-form-label">Cliente </label>
+                                                    <div class="col-sm-10">
+                                                        <?= UsuariosController::selectUsuario(
+                                                            array(
+                                                                'id' => 'Usuario_idUsuario',
+                                                                'name' => 'Usuario_idUsuario',
+                                                                'class' => 'form-control select2bs4 select2-info',
+                                                                'where' => "estado = 'Activo'"
+                                                            )
+                                                        )
+                                                        ?>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group row">
                                                     <label for="municipio_id" class="col-sm-2 col-form-label">Municipio</label>
                                                     <div class="col-sm-5">
@@ -110,8 +124,8 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                     </div>
                                                     <div class="col-sm-5 ">
                                                         <?= MunicipiosController::selectMunicipios(array (
-                                                            'id' => 'municipio_id',
-                                                            'name' => 'municipio_id',
+                                                            'id' => 'municipios_id',
+                                                            'name' => 'municipios_id    ',
                                                             'defaultValue' => (!empty($frmSession['municipio_id'])) ? $frmSession['municipio_id'] : '',
                                                             'class' => 'form-control select2bs4 select2-info',
                                                             'where' => "departamento_id = 15 and estado = 'Activo'"))

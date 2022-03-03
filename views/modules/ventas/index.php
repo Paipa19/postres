@@ -101,6 +101,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             <?php
                                             $arrVentas = VentasController::getAll();
                                             /* @var $arrVentas Ventas[] */
+                                            if(is_array($arrVentas))
                                             foreach ($arrVentas as $venta) {
                                                 ?>
                                                 <tr>
@@ -119,6 +120,11 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                            type="button" data-toggle="tooltip" title="Ver"
                                                            class="btn docs-tooltip btn-warning btn-xs"><i
                                                                 class="fa fa-eye"></i></a>
+                                                        <a href="../detalleVentas/index.php?ido=<?= $venta->getIdVenta(); ?>"
+                                                           type="button" data-toggle="tooltip" title="Gestionar detalle venta"
+                                                           class="btn docs-tooltip btn-success btn-xs"><i
+                                                                    class="fa fa-photo-video"></i></a>
+
                                                         <?php if ($venta->getEstadoVenta() != "Aprobada") { ?>
                                                             <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=activate&id=<?= $venta->getIdVenta(); ?>"
                                                                type="button" data-toggle="tooltip" title="Activar"

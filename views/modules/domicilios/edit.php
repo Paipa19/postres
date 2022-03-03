@@ -6,6 +6,7 @@ require("../../../app/Controllers/DomiciliosController.php");
 use App\Controllers\DepartamentosController;
 use App\Controllers\MunicipiosController;
 use App\Controllers\DomiciliosController;
+use App\Controllers\UsuariosController;
 use App\Models\GeneralFunctions;
 use App\Models\Domicilios;
 
@@ -71,11 +72,11 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                     </div>
                                 </div>
                                 <!-- /.card-header -->
-                                <?php if (!empty($_GET["idDomicilio"]) && isset($_GET["idDomicilio"])) { ?>
+                                <?php if (!empty($_GET["id"]) && isset($_GET["id"])) { ?>
                                     <p>
                                     <?php
 
-                                    $DataDomicilio = DomiciliosController::searchForIdDomicilio(["idDomicilio" => $_GET["idDomicilio"]]);
+                                    $DataDomicilio = DomiciliosController::searchForId(["idDomicilio" => $_GET["id"]]);
                                     /* @var $DataDomicilio Domicilios */
                                     if (!empty($DataDomicilio)) {
                                         ?>
@@ -84,10 +85,26 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                             <form class="form-horizontal" enctype="multipart/form-data" method="post" id="<?= $nameForm ?>"
                                                   name="<?= $nameForm ?>"
                                                   action="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=edit">
-                                                <input id="id" name="id" value="<?= $DataDomicilio->getIdDomicilio(); ?>" hidden
+                                                <input id="idDomicilio" name="idDomicilio" value="<?= $DataDomicilio->getIdDomicilio(); ?>" hidden
                                                        required="required" type="text">
                                                 <div class="row">
                                                     <div class="col-sm-10">
+                                                        <div class="form-group row">
+                                                            <label for="fecha" class="col-sm-2 col-form-label">Cliente </label>
+                                                            <div class="col-sm-10">
+                                                                <?= UsuariosController::selectUsuario(
+                                                                    array(
+                                                                        'id' => 'Usuario_idUsuario',
+                                                                        'name' => 'Usuario_idUsuario',
+                                                                        'defaultValue' => (!empty($DataDomicilio)) ? $DataDomicilio->getUsuario()->getIdUsuario() : '',
+                                                                        'class' => 'form-control select2bs4 select2-info',
+                                                                        'where' => "estado = 'Activo'"
+                                                                    )
+                                                                )
+                                                                ?>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="form-group row">
                                                             <label for="direccion" class="col-sm-2 col-form-label">Direccion</label>
                                                             <div class="col-sm-10">
@@ -115,7 +132,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                                     array(
                                                                         'id' => 'departamento_id',
                                                                         'name' => 'departamento_id',
-                                                                        'defaultValue' => (!empty($DataUsuario)) ? $DataUsuario->getMunicipio()->getDepartamento()->getId() : '15',
+                                                                        'defaultValue' => (!empty($DataDomicilio)) ? $DataDomicilio->getMunicipio()->getDepartamento()->getId() : '15',
                                                                         'class' => 'form-control select2bs4 select2-info',
                                                                         'where' => "estado = 'Activo'"
                                                                     )
@@ -125,11 +142,11 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                             <div class="col-sm-5 ">
                                                                 <?= MunicipiosController::selectMunicipios(
                                                                     array (
-                                                                        'id' => 'municipio_id',
-                                                                        'name' => 'municipio_id',
-                                                                        'defaultValue' => (!empty($DataUsuario)) ? $DataUsuario->getMunicipioId() : '',
+                                                                        'id' => 'municipios_id',
+                                                                        'name' => 'municipios_id',
+                                                                        'defaultValue' => (!empty($DataDomicilio)) ? $DataDomicilio->getMunicipio()->getId() : '',
                                                                         'class' => 'form-control select2bs4 select2-info',
-                                                                        'where' => "departamento_id = ".$DataUsuario->getMunicipio()->getDepartamento()->getId()." and estado = 'Activo'")
+                                                                        'where' => "departamento_id = ".$DataDomicilio->getMunicipio()->getDepartamento()->getId()." and estado = 'Activo'")
                                                                 )
                                                                 ?>
                                                             </div>
@@ -175,8 +192,8 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                 $.post("../../../app/Controllers/MainController.php?controller=Municipios&action=selectMunicipios", {
                     isMultiple: false,
                     isRequired: true,
-                    id: "municipio_id",
-                    nombre: "municipio_id",
+                    id: "municipios_id",
+                    nombre: "municipios_id",
                     defaultValue: "",
                     class: "form-control select2bs4 select2-info",
                     where: "departamento_id = "+$('#departamento_id').val()+" and estado = 'Activo'",
@@ -184,11 +201,8 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                 }, function(e) {
                     if (e)
                         console.log(e);
-                    $("#municipio_id").html(e).select2({ height: '100px'});
+                    $("#municipios_id").html(e).select2({ height: '100px'});
                 })
-            });
-            $('#foto').on("change", function(){
-                $( "#thumbFoto" ).remove();
             });
         });
     </script>

@@ -4,6 +4,8 @@ require("../../partials/routes.php");
 require_once("../../partials/check_login.php");
 
 use App\Controllers\DetalleVentasController;
+use App\Controllers\ProductosController;
+use App\Controllers\VentasController;
 use App\Models\GeneralFunctions;
 use Carbon\Carbon;
 
@@ -77,25 +79,56 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                         <div class="row">
 
                                             <div class="col-sm-10">
+                                                <label for="fecha" class="col-sm-2 col-form-label">N° Venta </label>
                                                 <div class="form-group row">
+                                                    <?= VentasController::selectVentas(
+                                                        array(
+                                                            'id' => 'Venta_idVenta',
+                                                            'name' => 'Venta_idVenta',
+                                                            'class' => 'form-control select2bs4 select2-info',
+                                                            'where' => "estado = 'Aprobada'"
+                                                        )
+                                                    )
+                                                    ?>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-10">
+                                                <label for="fecha" class="col-sm-2 col-form-label">Productos </label>
+                                                <div class="form-group row">
+                                                    <?= ProductosController::selectProducto(
+                                                        array(
+                                                            'id' => 'Producto_idProducto',
+                                                            'name' => 'Producto_idProducto',
+                                                            'class' => 'form-control select2bs4 select2-info',
+                                                            'where' => "estado = 'Disponible'"
+                                                        )
+                                                    )
+                                                    ?>
+                                                </div>
+                                            </div>
+
+
+
+                                                <div class="col-sm-10">
                                                     <label for="cantidad" class="col-sm-2 col-form-label">Cantidad</label>
-                                                    <div class="col-sm-10">
+                                                    <div class="form-group row">
                                                         <input required type="number" class="form-control" id="numeroVenta" name="cantidad"
                                                                placeholder="cantidad" value="<?= $frmSession['cantidad'] ?? '' ?>">
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-10">
-                                                    <div class="form-group row">
+
+                                                    <div class="col-sm-10">
                                                         <label for="fechaVencimiento" class="col-sm-2 col-form-label">Fecha Vencimiento </label>
-                                                        <div class="col-sm-10">
+                                                        <div class="form-group row">
                                                             <input required type="date" class="form-control" id="fecha" name="fechaVencimiento"
                                                                    placeholder="Ingrese fecha de vencimiento" value="<?= $frmSession['fechaVencimiento'] ?? '' ?>">
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row">
+                                                    <div class="col-sm-10">
                                                         <label for="numDetalleVenta" class="col-sm-2 col-form-label">Numero Detalle Venta </label>
-                                                        <div class="col-sm-10">
+                                                        <div class="form-group row">
                                                             <input required type="number" class="form-control" id="numDetalleVenta"
                                                                    name="total" placeholder="Numero Detalle Venta"
                                                                    value="<?= $frmSession['numDetalleVenta'] ?? '' ?>">
@@ -104,9 +137,10 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
 
 
 
-                                                    <hr>
-                                                    <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>
-                                                    <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
+
+                                            <hr>
+                                            <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>
+                                            <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
                                                     <!-- /.card-footer -->
                                     </form>
                                 </div>

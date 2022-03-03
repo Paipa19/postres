@@ -3,6 +3,7 @@ require("../../partials/routes.php");
 require_once("../../partials/check_login.php");
 require("../../../app/Controllers/ProductosController.php");
 
+use App\Controllers\ProductosController;
 use App\Controllers\UsuariosController;
 use App\Models\GeneralFunctions;
 use App\Models\Usuarios;
@@ -57,8 +58,8 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                         <!-- Horizontal Form -->
                         <div class="card card-green">
                             <?php if (!empty($_GET["id"]) && isset($_GET["id"])) {
-                            $DataProducto = ProductosController::searchForID(["id" => $_GET["id"]]);
-                            /* @var $DataProducto Productos */
+                            $DataProducto = ProductosController::searchForID(["idProducto" => $_GET["id"]]);
+                            /* @var $DataProducto \App\Models\Productos */
                             if (!empty($DataProducto)) {
                             ?>
                             <div class="card-header">

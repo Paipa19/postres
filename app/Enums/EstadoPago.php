@@ -6,14 +6,14 @@ enum EstadoPago: String
 {
 
     case CANCELADO = 'Cancelado';
-    case DEBE = 'Debe';
+    case PENDIENTE = 'Pendiente';
 
     public  function toString(): string
     {
 
         return match ($this) {
             self::CANCELADO =>'Cancelado',
-            self::DEBE=>'Debe',
+            self::PENDIENTE=>'Pendiente',
         };
     }
 }

@@ -71,11 +71,11 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                 </div>
                             </div>
                             <!-- /.card-header -->
-                            <?php if (!empty($_GET["idPago"]) && isset($_GET["idPago"])) { ?>
+                            <?php if (!empty($_GET["id"]) && isset($_GET["id"])) { ?>
                                 <p>
                                 <?php
 
-                                $DataPago = PagosController::searchForIdPago(["idPago" => $_GET["idPago"]]);
+                                $DataPago = PagosController::searchForId(["idPago" => $_GET["id"]]);
                                 /* @var $DataPago Pagos */
                                 if (!empty($DataPago)) {
                                     ?>
@@ -84,7 +84,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                         <form class="form-horizontal" enctype="multipart/form-data" method="post" id="<?= $nameForm ?>"
                                               name="<?= $nameForm ?>"
                                               action="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=edit">
-                                            <input id="id" name="id" value="<?= $DataPago->getIdPago(); ?>" hidden
+                                            <input id="idPago" name="idPago" value="<?= $DataPago->getIdPago(); ?>" hidden
                                                    required="required" type="text">
                                             <div class="row">
                                                 <div class="col-sm-10">

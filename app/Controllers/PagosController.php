@@ -42,20 +42,22 @@ class PagosController{
 
     public function edit()
     {
+        var_dump($this->dataPagos);
         try {
             $Pago = new Pagos($this->dataPagos);
             if($Pago->update()){
                 unset($_SESSION['frmPagos']);
             }
+
             header("Location: ../../views/modules/pagos/show.php?id=" . $Pago->getIdPago() . "&respuesta=success&mensaje=Pago Actualizado");
         } catch (\Exception $e) {
             GeneralFunctions::logFile('Exception',$e, 'error');
             //header("Location: ../../views/modules/ventas/edit.php?respuesta=error");
         }
     }
-    static public function searchForIdPago (array $data){
+    static public function searchForId (array $data){
         try {
-            $result = Pagos::searchForIdPago($data['idPago']);
+            $result = Pagos::searchForId($data['idPago']);
             if (!empty($data['request']) and $data['request'] === 'ajax' and !empty($result)) {
                 header('Content-type: application/json; charset=utf-8');
                 $result = json_encode($result->jsonSerialize());

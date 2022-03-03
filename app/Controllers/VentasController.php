@@ -59,7 +59,7 @@ class VentasController{
 
     static public function searchForID (array $data){
         try {
-            $result = Ventas::searchForId($data['id']);
+            $result = Ventas::searchForId($data['idVenta']);
             if (!empty($data['request']) and $data['request'] === 'ajax' and !empty($result)) {
                 header('Content-type: application/json; charset=utf-8');
                 $result = json_encode($result->jsonSerialize());
@@ -114,7 +114,7 @@ class VentasController{
 
         $arrVentas = array();
         if($params['where'] != ""){
-            $base = "SELECT * FROM ventas WHERE ";
+            $base = "SELECT * FROM venta WHERE ";
             $arrVentas = Ventas::search($base.$params['where']);
         }else{
             $arrVentas = Ventas::getAll();

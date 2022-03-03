@@ -132,16 +132,6 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                                    placeholder="Ingrese su correo">
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <label for="contrasena" class="col-sm-2 col-form-label">Contraseña</label>
-                                                        <div class="col-sm-10">
-                                                            <input required type="text" class="form-control" id="contrasena"
-                                                                   name="contrasena" value="<?= $DataUsuario->getContrasena(); ?>"
-                                                                   placeholder="Ingrese su contraseña">
-                                                        </div>
-                                                    </div>
-
-
 
                                                         <div class="form-group row">
                                                             <label for="estado" class="col-sm-2 col-form-label">Estado</label>
