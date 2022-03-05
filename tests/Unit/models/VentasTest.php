@@ -15,7 +15,7 @@ class VentasTest extends TestCase
     public function testInsert()
     {
         $Venta = new Ventas([
-                'IdVenta' => null,
+                'idVenta' => null,
                 'numeroVenta' => 1,
                 'fecha' => Carbon::parse('02-12-21')->format('d-m-Y'),
                 'total' => '120000',
@@ -27,7 +27,7 @@ class VentasTest extends TestCase
         );
 
         $Venta->insert();
-        $this->assertSame(true, $Venta->ventaRegistrada(1));
+        $this->assertSame(true, $Venta->ventaRegistrada(null));
     }
 
 }

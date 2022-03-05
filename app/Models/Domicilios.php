@@ -254,7 +254,7 @@ class Domicilios extends AbstractDBConnection implements Model
     {
         return "direccion: $this->direccion, 
                 telefono: $this->telefono, 
-                municipios_id: $this->municipios_id
+                municipios_id: $this->municipios_id,
                 Usuario_idUsuario: $this->Usuario_idUsuario";
     }
     /**

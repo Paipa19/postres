@@ -14,7 +14,7 @@ class DetalleVentasTest extends TestCase
     public function testInsert()
     {
         $DetalleVenta = new DetalleVentas([
-                'idDetalleVenta' => null,
+                'idDetalleVenta' => 2,
                 'cantidad' => 3,
                 'fechaVencimiento' => Carbon::parse('22-12-21')->format('d-m-Y'),
                 'numDetalleVenta' => 1,

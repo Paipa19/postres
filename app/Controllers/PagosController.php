@@ -21,7 +21,7 @@ class PagosController{
         $this->dataPagos['descuento'] = $_FORM['descuento'] ?? 0;
         $this->dataPagos['estado'] = $_FORM['estado'] ?? 'Pendiente';
         $this->dataPagos['Venta_idVenta'] = $_FORM['Venta_idVenta'] ?? 0;
-        $this->dataPagos['Usuario_idUsuario'] = $_FORM['Usuario_idUsuario'] ?? 0;
+
 
     }
     public function create($withFiles = null) {
@@ -42,7 +42,7 @@ class PagosController{
 
     public function edit()
     {
-        var_dump($this->dataPagos);
+
         try {
             $Pago = new Pagos($this->dataPagos);
             if($Pago->update()){
@@ -85,7 +85,7 @@ class PagosController{
 
     static public function cancel(){
         try {
-            $ObjPago = Pagos::searchForIdPago($_GET['IdPago']);
+            $ObjPago = Pagos::searchForId($_GET['Id']);
             $ObjPago->setEstadoPago("Cancelado");
             if($ObjPago->update()){
                 header("Location: ../../views/modules/pagos/index.php");

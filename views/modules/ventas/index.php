@@ -89,6 +89,8 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>Cliente</th>
+                                                <th>Domicilio</th>
                                                 <th>Número de Venta</th>
                                                 <th>Fecha</th>
                                                 <th>Total</th>
@@ -105,6 +107,9 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             foreach ($arrVentas as $venta) {
                                                 ?>
                                                 <tr>
+
+                                                    <td><?= $venta->getUsuarioIdUsuario(); ?></td>
+                                                    <td><?= $venta->getDomicilioIdDomicilio(); ?></td>
                                                     <td><?= $venta->getIdVenta(); ?></td>
                                                     <td><?= $venta->getNumeroVenta(); ?></td>
                                                     <td><?= $venta->getFecha(); ?></td>
@@ -112,11 +117,11 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                     <td><?= $venta->getCostoDomicilio(); ?></td>
                                                     <td><?= $venta->getEstadoVenta(); ?></td>
                                                     <td>
-                                                        <a href="edit.php?id=<?php echo $venta->getIdVenta(); ?>"
+                                                        <a href="edit.php?id=<?php  $venta->getIdVenta(); ?>"
                                                            type="button" data-toggle="tooltip" title="Actualizar"
                                                            class="btn docs-tooltip btn-primary btn-xs"><i
                                                                 class="fa fa-edit"></i></a>
-                                                        <a href="show.php?id=<?php echo $venta->getIdVenta(); ?>"
+                                                        <a href="show.php?id=<?php  $venta->getIdVenta(); ?>"
                                                            type="button" data-toggle="tooltip" title="Ver"
                                                            class="btn docs-tooltip btn-warning btn-xs"><i
                                                                 class="fa fa-eye"></i></a>
@@ -145,6 +150,8 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             <tfoot>
                                             <tr>
                                                 <th>#</th>
+                                                <th>Cliente</th>
+                                                <th>Domicilio</th>
                                                 <th>Número de Venta</th>
                                                 <th>Fecha</th>
                                                 <th>Total</th>

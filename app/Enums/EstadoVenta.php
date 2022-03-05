@@ -7,14 +7,16 @@ enum EstadoVenta: String
 {
 
     case APROBADA= 'Aprobada';
-    case NO_APROBADA = 'No_aprobada';
+    case EN_PROCESO= 'En proceso';
+    case NO_APROBADA = 'No aprobada';
 
     public  function toString(): string
     {
 
         return match ($this) {
             self::APROBADA =>'Aprobada',
-            self::NO_APROBADA=>'No_aprobada',
+            self::EN_PROCESO =>'En proceso',
+            self::NO_APROBADA=>'No aprobada',
         };
     }
 }

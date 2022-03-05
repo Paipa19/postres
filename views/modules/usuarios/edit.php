@@ -90,7 +90,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                             <div class="row">
                                                 <div class="col-sm-10">
                                                     <div class="form-group row">
-                                                        <label for="numeroIdentificacion" class="col-sm-2 col-form-label">Documento</label>
+                                                        <label for="numeroIdentificacion" class="col-sm-2 col-form-label">Numero identificación </label>
                                                         <div class="col-sm-10">
                                                             <input required type="text" class="form-control" id="numeroIdentificacion"
                                                                    name="numeroIdentificacion" value="<?= $DataUsuario->getNumeroIdentificacion(); ?>"

@@ -84,12 +84,12 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                         </p>
                                         <hr>
                                         <strong><i class="fas fa-user mr-1"></i> Numero de venta</strong>
-                                        <p class="text-muted"><?= $DataVenta->getNumeroVenta() . ": " . $DataVenta->getNumeroVenta() ?></p>
+                                        <p class="text-muted"><?= $DataVenta->getNumeroVenta()  ?></p>
                                         <hr>
 
                                         <hr>
-                                        <strong><i class="fas fa-calendar-check mr-1"></i> Fecha de venta</strong>
-                                        <p class="text-muted"><?= $DataVenta->getFecha()->toDateTimeString(); ?></p>
+                                        <strong><i class="fas fa-calendar-check mr-1"></i> Fecha</strong>
+                                        <p class="text-muted"><?= $DataVenta->getFecha() ?></p>
                                         <hr>
                                         <p>
                                         <hr>
@@ -108,7 +108,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                         <hr>
                                         <strong><i class="fas fa-phone mr-1"></i> Estado</strong>
                                         <p
-                                            class="text-muted"><?= $DataVenta->getEstado() ?></p>
+                                            class="text-muted"><?= $DataVenta->getEstadoVenta() ?></p>
                                         <p>
                                         <hr>
                                         </p>

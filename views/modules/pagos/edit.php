@@ -5,6 +5,7 @@ require("../../../app/Controllers/PagosController.php");
 
 use App\Controllers\ProductosController;
 use App\Controllers\PagosController;
+use App\Controllers\VentasController;
 use App\Models\GeneralFunctions;
 use App\Models\Pagos;
 use Carbon\Carbon;
@@ -134,6 +135,20 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                                 </select>
                                                             </div>
                                                         </div>
+                                                    <div class="form-group row">
+                                                        <label for="Venta_idVenta" class="col-sm-2 col-form-label">Venta </label>
+                                                        <div class="col-sm-10">
+                                                            <?= VentasController::selectVentas(
+                                                                array(
+                                                                    'id' => 'Venta_idVenta',
+                                                                    'name' => 'Venta_idVenta',
+                                                                    'class' => 'form-control select2bs4 select2-info',
+                                                                    'where' => ''
+                                                                )
+                                                            )
+                                                            ?>
+                                                        </div>
+                                                    </div>
 
                                             <hr>
                                             <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>

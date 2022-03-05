@@ -63,7 +63,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                     ?>
                                     <div class="card-header">
                                         <h3 class="card-title"><i class="fas fa-info"></i> &nbsp; Ver Información
-                                            de <?= $DataPago->getAbono() ?></h3>
+                                            de <?= $DataPago->getIdPago() ?></h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="card-refresh"
                                                     data-source="show.php" data-source-selector="#card-refresh-content"
@@ -89,15 +89,16 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
 
                                                 <hr>
                                                 <strong><i class="fas fa-calendar-check mr-1"></i> Fecha de pago</strong>
-                                                <p class="text-muted"><?= $DataPago->getFechaPago()->toDateTimeString(); ?></p>
+                                                <p class="text-muted"><?= $DataPago->getFechaPago() ?></p>
                                                 <hr>
 
                                                 <strong><i class="fas fa-user mr-1"></i> Descuento</strong>
-                                                <p class="text-muted"><?= $DataPago->getDescuento() . ": " . $DataPago->getDescuento() ?></p>
+                                                <p class="text-muted"><?= $DataPago->getDescuento()  ?></p>
 
                                                 <strong><i class="far fa-file-alt mr-1"></i> Estado</strong>
                                                 <p class="text-muted"><?= $DataPago->getEstadoPago()  ?></p>
                                                 </p>
+
                                             </div>
 
                                     </div>

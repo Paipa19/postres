@@ -15,11 +15,11 @@ class VentasController{
     {
         $this->dataVenta = array();
         $this->dataVenta['idVenta'] = $_FORM['idVenta'] ?? NULL;
-        $this->dataVenta['numeroVenta'] = $_FORM['numeroVenta'] ?? '';
+        $this->dataVenta['numeroVenta'] = $_FORM['numeroVenta'] ?? NULL;
         $this->dataVenta['fecha'] = !empty($_FORM['fecha']) ? Carbon::parse($_FORM['fecha']) : new Carbon();
         $this->dataVenta['total'] = $_FORM['total'] ?? 0;
         $this->dataVenta['costoDomicilio'] = $_FORM['costoDomicilio'] ?? 0;
-        $this->dataVenta['estado'] = $_FORM['estado'] ?? 'En progreso';
+        $this->dataVenta['estado'] = $_FORM['estado'] ?? 'En proceso';
         $this->dataVenta['Usuario_idUsuario'] = $_FORM['Usuario_idUsuario'] ?? 0;
         $this->dataVenta['domicilio_idDomicilio'] = $_FORM['domicilio_idDomicilio'] ?? 0;
 
@@ -33,7 +33,7 @@ class VentasController{
             if ($Venta->insert()) {
                 unset($_SESSION['frmVentas']);
                 $Venta->Connect();
-                $id = $Venta->getLastId('ventas');
+                $id = $Venta->getLastId('venta','idVenta');
                 $Venta->Disconnect();
                 header("Location: ../../views/modules/ventas/create.php?id=" . $id . "");
             }

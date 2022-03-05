@@ -143,6 +143,12 @@ class DetalleVentas  extends AbstractDBConnection implements Model
         $this->Producto_idProducto = $Producto_idProducto;
     }
 
+    public function getTotalProducto() : float
+    {
+        return $this->getProducto()->getValorUnitario() * $this->getCantidad();
+    }
+
+
     /**
      * @return array|null
      */

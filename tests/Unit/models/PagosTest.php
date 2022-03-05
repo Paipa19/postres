@@ -20,7 +20,7 @@ class PagosTest extends TestCase
             'descuento' => 500,
                  'estado' =>EstadoPago::CANCELADO,
                  'Venta_idVenta'=> 2,
-                 'Usuario_idUsuario' =>1,
+
         ]
         );
         $Pago->insert();

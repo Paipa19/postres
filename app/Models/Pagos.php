@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use App\Enums\EstadoPago;
-
-
+use App\Interfaces\Model;
 use Carbon\Carbon;
 
 
-class Pagos extends AbstractDBConnection
+class Pagos extends AbstractDBConnection implements Model
 {
 
     private ?int $idPago;
@@ -212,8 +211,6 @@ class Pagos extends AbstractDBConnection
     $this->Connect();
     $result = $this->insertRow($query, $arrData);
     $this->Disconnect();
-    var_dump($query, $arrData);
-    die();
     return $result;
 }
     function insert(): ?bool
@@ -310,7 +307,7 @@ class Pagos extends AbstractDBConnection
                 saldo: $this->saldo, 
                 fechaPago: $this->fechaPago, 
                 descuento: $this->descuento, 
-                estado: $this->estado";
+                estado: ".$this->getEstadoPago();
 
 
     }
@@ -328,7 +325,7 @@ class Pagos extends AbstractDBConnection
             'fechaPago' => $this->getFechaPago(),
             'descuento' => $this->getDescuento(),
             'estado' => $this->getEstadoPago(),
-            'Venta_IdVenta'=>$this->getVentaIdVenta(),
+            'Venta_idVenta'=>$this->getVentaIdVenta(),
 
 
         ];

@@ -102,6 +102,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             <?php
                                             $arrPagos = PagosController::getAll();
                                             /* @var $arrPagos Pagos[] */
+                                            if(is_array($arrPagos))
                                             foreach ($arrPagos as $pagos) {
                                                 ?>
                                                 <tr>
@@ -121,6 +122,18 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                            class="btn docs-tooltip btn-warning btn-xs"><i
                                                                 class="fa fa-eye"></i></a>
 
+                                                        <?php if ($pagos->getEstadoPago() != "Cancelado") { ?>
+                                                            <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=activate&id=<?= $pagos->getIdPago(); ?>"
+                                                               type="button" data-toggle="tooltip" title="Activar"
+                                                               class="btn docs-tooltip btn-success btn-xs"><i
+                                                                        class="fa fa-check-square"></i></a>
+                                                        <?php } else { ?>
+                                                            <a type="button"
+                                                               href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=inactivate&id=<?= $pagos->getIdPago(); ?>"
+                                                               data-toggle="tooltip" title="Inactivar"
+                                                               class="btn docs-tooltip btn-danger btn-xs"><i
+                                                                        class="fa fa-times-circle"></i></a>
+                                                        <?php } ?>
                                                     </td>
                                                 </tr>
                                             <?php } ?>
@@ -165,4 +178,3 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
 
 </body>
 </html>
-
