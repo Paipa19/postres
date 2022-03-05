@@ -102,7 +102,7 @@ if (!empty($_GET['id'])) {
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="empleado_id" class="col-sm-4 col-form-label">Empleado</label>
+                                        <label for="empleado_id" class="col-sm-4 col-form-label">Usuario</label>
                                         <div class="col-sm-8">
                                             <?= UsuariosController::selectUsuario(
                                                 array (
@@ -184,11 +184,11 @@ if (!empty($_GET['id'])) {
                                     <div class="row">
                                         <div class="col-auto mr-auto"></div>
                                         <div class="col-auto">
-                                            <a role="button" href="#" data-toggle="modal" data-target="#modal-add-producto"
+                                            <button id="new-producto"
                                                class="btn btn-primary float-right"
                                                style="margin-right: 5px;">
                                                 <i class="fas fa-plus"></i> Añadir Producto
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                 <?php } ?>
@@ -199,10 +199,9 @@ if (!empty($_GET['id'])) {
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Producto</th>
                                                 <th>Cantidad</th>
-                                                <th>Precio</th>
-                                                <th>Total</th>
+                                                <th>Fecha Vencimiento</th>
+                                                <th>N° Detalle Venta</th>
                                                 <th>Acciones</th>
                                             </tr>
                                             </thead>
@@ -222,7 +221,7 @@ if (!empty($_GET['id'])) {
                                                             <td><?= GeneralFunctions::formatCurrency($detalleVenta->getTotalProducto()); ?></td>
                                                             <td>
                                                                 <a type="button"
-                                                                   href="../../../app/Controllers/MainController.php?controller=DetalleVentas&action=deleted&id=<?= $detalleVenta->getId(); ?>"
+                                                                   href="../../../app/Controllers/MainController.php?controller=DetalleVentas&action=deleted&id=<?= $detalleVenta->getIdDetalleVenta(); ?>"
                                                                    data-toggle="tooltip" title="Eliminar"
                                                                    class="btn docs-tooltip btn-danger btn-xs"><i
                                                                             class="fa fa-times-circle"></i></a>
@@ -236,12 +235,10 @@ if (!empty($_GET['id'])) {
                                             <tfoot>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Producto</th>
                                                 <th>Cantidad</th>
-                                                <th>Precio</th>
-                                                <th>Total</th>
+                                                <th>Fecha Vencimiento</th>
+                                                <th>N° Detalle Venta</th>
                                                 <th>Acciones</th>
-                                            </tr>
                                             </tfoot>
                                         </table>
                                     </div>
@@ -270,28 +267,24 @@ if (!empty($_GET['id'])) {
                     </div>
                     <form action="../../../app/Controllers/MainController.php?controller=DetalleVentas&action=create" method="post">
                         <div class="modal-body">
-                            <input id="idVenta" name="idVenta" value="<?= !empty($dataVenta) ? $dataVenta->getId() : ''; ?>" hidden
+                            <input id="Venta_idVenta" name="Venta_idVenta" value="<?= !empty($dataVenta) ? $dataVenta->getIdVenta() : ''; ?>" hidden
                                    required="required" type="text">
                             <div class="form-group row">
                                 <label for="producto_id" class="col-sm-4 col-form-label">Producto</label>
                                 <div class="col-sm-8">
                                     <?= ProductosController::selectProducto(
                                         array (
-                                            'id' => 'producto_id',
-                                            'name' => 'producto_id',
+                                            'id' => 'Producto_idProducto',
+                                            'name' => 'Producto_idProducto',
                                             'defaultValue' => '',
                                             'class' => 'form-control select2bs4 select2-info',
-                                            'where' => "estado = 'Activo' and stock > 0"
+                                            'where' => "estado = 'Disponible' and stock > 0"
                                         )
                                     )
                                     ?>
                                     <div id="divResultProducto">
-                                        <span class="text-muted">Precio Base: </span> <span id="spPrecio"></span>,
                                         <span class="text-muted">Precio Venta: </span> <span id="spPrecioVenta"></span>,
                                         <span class="text-muted">Stock: </span> <span id="spStock"></span>.
-                                        <span class="badge badge-info" id="spFoto" data-toggle="tooltip" data-html="true"
-                                              title="<img class='img-thumbnail' src='../../public/uploadFiles/photos/products/'>">Foto
-                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -305,7 +298,7 @@ if (!empty($_GET['id'])) {
                             <div class="form-group row">
                                 <label for="precio_venta" class="col-sm-4 col-form-label">Precio Unitario</label>
                                 <div class="col-sm-8">
-                                    <input required readonly type="number" min="1" class="form-control" id="precio_venta" name="precio_venta"
+                                    <input required readonly type="number" min="1" class="form-control" id="precioVenta" name="precioVenta"
                                            placeholder="0.0">
                                 </div>
                             </div>
@@ -339,16 +332,19 @@ if (!empty($_GET['id'])) {
 <script>
 
     $(function () {
+        $('#new-producto').on('click', function (){
+           $('#modal-add-producto').modal('show');
+        });
 
         $("#divResultProducto").hide();
 
-        $('#producto_id').on('select2:select', function (e) {
-            var dataSelect = e.params.data;
+        $('#Producto_idProducto').on('change', function () {
+            var id = $(this).val();
             var dataProducto = null;
-            if(dataSelect.id !== ""){
+            if(id > 0){
                 $.post("../../../app/Controllers/MainController.php?controller=Productos&action=searchForID",
                     {
-                        id: dataSelect.id,
+                        idProducto: $(this).val(),
                         request: 'ajax'
                     }, "json"
                 )
@@ -369,24 +365,22 @@ if (!empty($_GET['id'])) {
         function updateDataProducto(dataProducto){
             if(dataProducto !== null){
                 $("#divResultProducto").slideDown();
-                $("#spPrecio").html("$"+dataProducto.precio);
-                $("#spPrecioVenta").html("$"+dataProducto.precio_venta);
+                $("#spPrecioVenta").html("$"+dataProducto.valorUnitario);
                 $("#spStock").html(dataProducto.stock+" Unidad(es)");
                 $("#cantidad").attr("max",dataProducto.stock);
-                $("#precio_venta").val(dataProducto.precio_venta);
+                $("#precioVenta").val(dataProducto.valorUnitario);
             }else{
                 $("#divResultProducto").slideUp();
-                $("#spPrecio").html("");
                 $("#spPrecioVenta").html("");
                 $("#spStock").html("");
                 $("#cantidad").removeAttr("max").val('0');
-                $("#precio_venta").val('0.0');
+                $("#precioVenta").val('0.0');
                 $("#total_producto").val('0.0');
             }
         }
 
         $( "#cantidad" ).on( "change keyup focusout", function() {
-            $("#total_producto").val($( "#cantidad" ).val() *  $("#precio_venta").val());
+            $("#total_producto").val($( "#cantidad" ).val() *  $("#precioVenta").val());
         });
 
     });

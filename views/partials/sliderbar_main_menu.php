@@ -139,31 +139,6 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item has-treeview <?= strpos($_SERVER['REQUEST_URI'],'detalleVentas') ? 'menu-open' : '' ?>">
-                    <a href="#" class="nav-link <?= strpos($_SERVER['REQUEST_URI'],'detalleVentas') ? 'active' : '' ?>">
-                        <i class="nav-icon fas fa-shopping-basket"></i>
-                        <p>
-                            Detalle Ventas
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="<?= $baseURL ?>/views/modules/detalleVentas/index.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Gestionar</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?= $baseURL ?>/views/modules/detalleVentas/create.php" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Registrar</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-
 
                 <li class="nav-item has-treeview <?= strpos($_SERVER['REQUEST_URI'],'pagos') ? 'menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= strpos($_SERVER['REQUEST_URI'],'pagos') ? 'active' : '' ?>">

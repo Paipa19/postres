@@ -16,8 +16,7 @@ class DetalleVentasController
         $this->dataDetalleVenta = array();
         $this->dataDetalleVenta['idDetalleVenta'] = $_FORM['idDetalleVenta'] ?? NULL;
         $this->dataDetalleVenta['cantidad'] = $_FORM['cantidad'] ?? '';
-        $this->dataDetalleVenta['fechaVencimiento'] = $_FORM['fechaVencimiento'] ?? '';
-        $this->dataDetalleVenta['numDetalleVenta'] = $_FORM['numDetalleVenta'] ?? '';
+        $this->dataDetalleVenta['precioVenta'] = $_FORM['precioVenta'] ?? '';
         $this->dataDetalleVenta['Venta_idVenta'] = $_FORM['Venta_idVenta'] ?? '';
         $this->dataDetalleVenta['Producto_idProducto'] = $_FORM['Producto_idProducto'] ?? '';
     }
@@ -25,18 +24,18 @@ class DetalleVentasController
     public function create()
     {
         try {
-            if (!empty($this->dataDetalleVenta['venta_id']) and !empty($this->dataDetalleVenta['producto_id'])) {
-                if(DetalleVentas::productoEnFactura($this->dataDetalleVenta['venta_id'], $this->dataDetalleVenta['producto_id'])){
+            if (!empty($this->dataDetalleVenta['Venta_idVenta']) and !empty($this->dataDetalleVenta['Producto_idProducto'])) {
+                if(DetalleVentas::productoEnFactura($this->dataDetalleVenta['Venta_idVenta'], $this->dataDetalleVenta['Producto_idProducto'])){
                     $this->edit();
                 }else{
                     $DetalleVenta = new DetalleVentas($this->dataDetalleVenta);
                     if ($DetalleVenta->insert()) {
                         unset($_SESSION['frmDetalleVentas']);
-                        header("Location: ../../views/modules/ventas/create.php?id=".$this->dataDetalleVenta['venta_id']."&respuesta=success&mensaje=Producto Agregado");
+                        header("Location: ../../views/modules/ventas/create.php?id=".$this->dataDetalleVenta['Venta_idVenta']."&respuesta=success&mensaje=Producto Agregado");
                     }
                 }
             } else {
-                header("Location: ../../views/modules/ventas/create.php?id=".$this->dataDetalleVenta['venta_id']."&respuesta=error&mensaje=Faltan parametros");
+                header("Location: ../../views/modules/ventas/create.php?id=".$this->dataDetalleVenta['Venta_idVenta']."&respuesta=error&mensaje=Faltan parametros");
             }
         } catch (\Exception $e) {
             GeneralFunctions::logFile('Exception',$e, 'error');
@@ -46,7 +45,7 @@ class DetalleVentasController
     public function edit()
     {
         try {
-            $arrDetalleVenta = DetalleVentas::search("SELECT * FROM detalleventa WHERE venta_id = ".$this->dataDetalleVenta['venta_id']." and producto_id = ".$this->dataDetalleVenta['producto_id']);
+            $arrDetalleVenta = DetalleVentas::search("SELECT * FROM detalleventa WHERE Venta_idVenta = ".$this->dataDetalleVenta['Venta_idVenta']." and Producto_idProducto = ".$this->dataDetalleVenta['Producto_idProducto']);
             /* @var $arrDetalleVenta DetalleVentas[] */
             $DetalleVenta = $arrDetalleVenta[0];
             $OldCantidad = $DetalleVenta->getCantidad();
@@ -54,22 +53,22 @@ class DetalleVentasController
             if ($DetalleVenta->update()) {
                 $DetalleVenta->getProducto()->substractStock($this->dataDetalleVenta['cantidad']);
                 unset($_SESSION['frmDetalleVentas']);
-                header("Location: ../../views/modules/ventas/create.php?id=".$this->dataDetalleVenta['venta_id']."&respuesta=success&mensaje=Producto Actualizado");
+                header("Location: ../../views/modules/ventas/create.php?id=".$this->dataDetalleVenta['Venta_idVenta']."&respuesta=success&mensaje=Producto Actualizado");
             }
         } catch (\Exception $e) {
             GeneralFunctions::logFile('Exception',$e, 'error');
         }
     }
 
-    public function deleted (int $id){
+    public function deleted (int $idDetalleVenta){
         try {
-            $ObjDetalleVenta = DetalleVentas::searchForId($id);
+            $ObjDetalleVenta = DetalleVentas::searchForId($idDetalleVenta);
             $objProducto = $ObjDetalleVenta->getProducto();
             if($ObjDetalleVenta->deleted()){
                 $objProducto->addStock($ObjDetalleVenta->getCantidad());
-                header("Location: ../../views/modules/ventas/create.php?id=".$ObjDetalleVenta->getVentasId()."&respuesta=success&mensaje=Producto Eliminado");
+                header("Location: ../../views/modules/ventas/create.php?id=".$ObjDetalleVenta->getVentaIdVenta()."&respuesta=success&mensaje=Producto Eliminado");
             }else{
-                header("Location: ../../views/modules/ventas/create.php?id=".$ObjDetalleVenta->getVentasId()."&respuesta=error&mensaje=Error al eliminar");
+                header("Location: ../../views/modules/ventas/create.php?id=".$ObjDetalleVenta->getVentaIdVenta()."&respuesta=error&mensaje=Error al eliminar");
             }
         } catch (\Exception $e) {
             GeneralFunctions::logFile('Exception',$e, 'error');

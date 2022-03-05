@@ -125,7 +125,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                            type="button" data-toggle="tooltip" title="Ver"
                                                            class="btn docs-tooltip btn-warning btn-xs"><i
                                                                 class="fa fa-eye"></i></a>
-                                                        <a href="../detalleVentas/index.php?ido=<?= $venta->getIdVenta(); ?>"
+                                                        <a href="../ventas/create.php?id=<?= $venta->getIdVenta(); ?>"
                                                            type="button" data-toggle="tooltip" title="Gestionar detalle venta"
                                                            class="btn docs-tooltip btn-success btn-xs"><i
                                                                     class="fa fa-photo-video"></i></a>
@@ -134,13 +134,14 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                             <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=activate&id=<?= $venta->getIdVenta(); ?>"
                                                                type="button" data-toggle="tooltip" title="Activar"
                                                                class="btn docs-tooltip btn-success btn-xs"><i
-                                                                    class="fa fa-check-square"></i></a>
+                                                                        class="fa fa-check-square"></i></a>
                                                         <?php } else { ?>
                                                             <a type="button"
                                                                href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=inactivate&id=<?= $venta->getIdVenta(); ?>"
-                                                               data-toggle="tooltip" title="Inactivar"
+                                                               data-toggle="tooltip" title="No aprobada"
                                                                class="btn docs-tooltip btn-danger btn-xs"><i
-                                                                    class="fa fa-times-circle"></i></a>
+                                                                        class="fa fa-times-circle"></i></a>
+
                                                         <?php } ?>
                                                     </td>
                                                 </tr>

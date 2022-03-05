@@ -17,7 +17,7 @@ class DomiciliosController{
         $this->dataDomicilio['idDomicilio'] = $_FORM['idDomicilio'] ?? NULL;
         $this->dataDomicilio['direccion'] = $_FORM['direccion'] ?? '';
         $this->dataDomicilio['telefono'] = $_FORM['telefono'] ?? 0;
-        $this->dataDomicilio['municipios_id'] = $_FORM['municipios_id'] ?? 0;
+        $this->dataDomicilio['municipios_id'] = $_FORM['idMunicipio'] ?? 0;
         $this->dataDomicilio['Usuario_idUsuario'] = $_FORM['Usuario_idUsuario'] ?? 0;
     }
     public function create() {

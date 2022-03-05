@@ -124,13 +124,13 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
 
                                                         <?php if ($pagos->getEstadoPago() != "Cancelado") { ?>
                                                             <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=activate&id=<?= $pagos->getIdPago(); ?>"
-                                                               type="button" data-toggle="tooltip" title="Activar"
+                                                               type="button" data-toggle="tooltip" title="Cancelado"
                                                                class="btn docs-tooltip btn-success btn-xs"><i
                                                                         class="fa fa-check-square"></i></a>
                                                         <?php } else { ?>
                                                             <a type="button"
                                                                href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=inactivate&id=<?= $pagos->getIdPago(); ?>"
-                                                               data-toggle="tooltip" title="Inactivar"
+                                                               data-toggle="tooltip" title="Pendiente"
                                                                class="btn docs-tooltip btn-danger btn-xs"><i
                                                                         class="fa fa-times-circle"></i></a>
                                                         <?php } ?>

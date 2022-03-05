@@ -95,7 +95,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="fecha" class="col-sm-2 col-form-label">Cliente </label>
+                                                    <label for="Usuario_idUsuario" class="col-sm-2 col-form-label">Usuario </label>
                                                     <div class="col-sm-10">
                                                         <?= UsuariosController::selectUsuario(
                                                             array(
@@ -113,8 +113,8 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                     <div class="col-sm-5">
                                                         <?= DepartamentosController::selectDepartamentos(
                                                             array(
-                                                                'id' => 'departamento_id',
-                                                                'name' => 'departamento_id',
+                                                                'id' => 'id',
+                                                                'name' => 'id',
                                                                 'defaultValue' => '15', //Boyacá
                                                                 'class' => 'form-control select2bs4 select2-info',
                                                                 'where' => "estado = 'Activo'"
@@ -124,9 +124,9 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                     </div>
                                                     <div class="col-sm-5 ">
                                                         <?= MunicipiosController::selectMunicipios(array (
-                                                            'id' => 'municipios_id',
-                                                            'name' => 'municipios_id    ',
-                                                            'defaultValue' => (!empty($frmSession['municipio_id'])) ? $frmSession['municipio_id'] : '',
+                                                            'id' => 'idMunicipio',
+                                                            'name' => 'idMunicipio',
+                                                            'defaultValue' => (!empty($frmSession['idMunicipio'])) ? $frmSession['idMunicipio'] : '',
                                                             'class' => 'form-control select2bs4 select2-info',
                                                             'where' => "departamento_id = 15 and estado = 'Activo'"))
                                                         ?>
@@ -159,20 +159,18 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
     <?php require('../../partials/scripts.php'); ?>
     <script>
         $(function() {
-            $('#departamento_id').on('change', function() {
+            $('#id').on('change', function() {
                 $.post("../../../app/Controllers/MainController.php?controller=Municipios&action=selectMunicipios", {
                     isMultiple: false,
                     isRequired: true,
-                    id: "municipio_id",
-                    nombre: "municipio_id",
+                    id: "idMunicipio",
+                    nombre: "idMunicipio",
                     defaultValue: "",
                     class: "form-control select2bs4 select2-info",
-                    where: "departamento_id = "+$('#departamento_id').val()+" and estado = 'Activo'",
+                    where: "departamento_id = "+$('#id').val()+" and estado = 'Activo'",
                     request: 'ajax'
                 }, function(e) {
-                    if (e)
-                        console.log(e);
-                    $("#municipio_id").html(e).select2({ height: '100px'});
+                    $("#idMunicipio").html(e).select2({ height: '100px'});
                 });
             });
             $('.btn-file span').html('Seleccionar');

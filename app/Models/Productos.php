@@ -311,7 +311,7 @@ class Productos extends AbstractDBConnection implements Model
             'nombre' => $this->getNombre(),
             'descripcion' => $this->getDescripcion(),
             'valorUnitario' => $this->getValorUnitario(),
-            'estado' => $this->getEstado(),
+            'estado' => $this->getEstadoProducto(),
             'stock' => $this->getStock(),
         ];
     }

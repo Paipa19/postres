@@ -75,7 +75,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                 <p>
                                 <?php
 
-                                $Producto = ProductosController::searchForID(["id" => $_GET["id"]]);
+                                $Producto = ProductosController::searchForID(["idProducto" => $_GET["id"]]);
                                 /* @var $Producto Productos */
                                 if (!empty($Producto)) {
                                     ?>
