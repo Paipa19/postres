@@ -57,7 +57,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                         <!-- Horizontal Form -->
                         <div class="card card-green">
                             <?php if (!empty($_GET["id"]) && isset($_GET["id"])) {
-                            $DataVenta = VentasController::searchForID(["idVenta" => $_GET["id"]]);
+                            $DataVenta = VentasController::searchForID(["id" => $_GET["id"]]);
                             /* @var $DataVenta Ventas */
                             if (!empty($DataVenta)) {
                             ?>
@@ -83,7 +83,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                     <div class="col-sm-10">
                                         </p>
                                         <hr>
-                                        <strong><i class="fas fa-user mr-1"></i> Numero de venta</strong>
+                                        <strong><i class="fas fa-user mr-1"></i> Número de venta</strong>
                                         <p class="text-muted"><?= $DataVenta->getNumeroVenta()  ?></p>
                                         <hr>
 

@@ -89,11 +89,11 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Número de identificaión</th>
+                                                <th>Número de identificación</th>
                                                 <th>Nombre</th>
                                                 <th>Apellido</th>
-                                                <th>Telefono</th>
-                                                <th>Correo</th>
+                                                <th>Teléfono</th>
+                                nt                <th>Correo</th>
                                                 <th>Rol</th>
                                                 <th>Estado</th>
                                                 <th>Acciones</th>
@@ -144,10 +144,10 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                             <tfoot>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Número de identificaión</th>
+                                                <th>Número de identificación</th>
                                                 <th>Nombre</th>
                                                 <th>Apellido</th>
-                                                <th>Telefono</th>
+                                                <th>Teléfono</th>
                                                 <th>Correo</th>
                                                 <th>Rol</th>
                                                 <th>Estado</th>
@@ -160,7 +160,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                Pie de Página.
+
                             </div>
                             <!-- /.card-footer-->
                         </div>

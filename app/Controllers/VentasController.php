@@ -87,8 +87,8 @@ class VentasController{
 
     static public function cancel(){
         try {
-            $ObjVenta = Ventas::searchForId($_GET['Id']);
-            $ObjVenta->setEstadoVenta("No_aprobada");
+            $ObjVenta = Ventas::searchForId($_GET['IdVenta']);
+            $ObjVenta->setEstadoVenta("No aprobada");
             if($ObjVenta->update()){
                 header("Location: ../../views/modules/ventas/index.php");
             }else{

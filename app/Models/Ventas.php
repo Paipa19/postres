@@ -11,7 +11,7 @@ use App\Interfaces\Model;
 class Ventas extends AbstractDBConnection implements Model
 {
     private ?int $idVenta;
-    private int $numeroVenta;
+    private string $numeroVenta;
     private Carbon $fecha;
     private string $total;
     private string $costoDomicilio;
@@ -42,7 +42,7 @@ class Ventas extends AbstractDBConnection implements Model
     {
         parent::__construct();
         $this->setIdVenta($venta['idVenta'] ?? null);
-        $this->setNumeroVenta($venta['numeroVenta'] ?? 0);
+        $this->setNumeroVenta($venta['numeroVenta'] ?? '');
         $this->setFecha(!empty($venta['fecha']) ? Carbon::parse($venta['fecha']) : new Carbon());
         $this->setTotal($venta['total'] ?? 0);
         $this->setCostoDomicilio($venta['costoDomicilio'] ?? 0);
@@ -76,9 +76,9 @@ class Ventas extends AbstractDBConnection implements Model
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getNumeroVenta(): int
+    public function getNumeroVenta(): string
     {
         return $this->numeroVenta;
     }
@@ -86,11 +86,11 @@ class Ventas extends AbstractDBConnection implements Model
     /**
      * @param int $numeroVenta
      */
-    public function setNumeroVenta(int $numeroVenta = null): void
+    public function setNumeroVenta(string $numeroVenta = null): void
     {
         if(empty($numero_serie)){
             $this->Connect();
-            $this->numeroVenta = $this->countRowsTable('venta')+1;
+            $this->numeroVenta =  'FV-'.($this->countRowsTable('venta')+1).'-'.date('Y-m-d');
             $this->Disconnect();
         }else{
             $this->numeroVenta = $numeroVenta;

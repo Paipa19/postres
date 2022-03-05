@@ -78,7 +78,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                 <p>
                                 <?php
 
-                                $DataVenta = VentasController::searchForID(["idVenta" => $_GET["id"]]);
+                                $DataVenta = VentasController::searchForID(["id" => $_GET["id"]]);
                                 /* @var $DataVenta Ventas */
                                 if (!empty($DataVenta)) {
                                     ?>
@@ -87,7 +87,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                         <form class="form-horizontal" enctype="multipart/form-data" method="post" id="<?= $nameForm ?>"
                                               name="<?= $nameForm ?>"
                                               action="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=edit">
-                                            <input id="id" name="id" value="<?= $DataVenta->getIdVenta(); ?>" hidden
+                                            <input id="idVenta" name="idVenta" value="<?= $DataVenta->getIdVenta(); ?>" hidden
                                                    required="required" type="text">
 
                                                     </div>

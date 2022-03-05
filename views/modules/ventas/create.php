@@ -102,15 +102,14 @@ if (!empty($_GET['id'])) {
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="empleado_id" class="col-sm-4 col-form-label">Usuario</label>
+                                        <label for="Usuario_idUsuario" class="col-sm-4 col-form-label">Usuario </label>
                                         <div class="col-sm-8">
                                             <?= UsuariosController::selectUsuario(
-                                                array (
+                                                array(
                                                     'id' => 'Usuario_idUsuario',
                                                     'name' => 'Usuario_idUsuario',
-                                                    'defaultValue' => (!empty($dataVenta)) ? $dataVenta->getUsuario()->getIdUsuario() : '',
                                                     'class' => 'form-control select2bs4 select2-info',
-                                                    'where' => "rol = 'Empleado' and estado = 'Activo'"
+                                                    'where' => "estado = 'Activo'"
                                                 )
                                             )
                                             ?>
@@ -136,7 +135,7 @@ if (!empty($_GET['id'])) {
                                     if (!empty($dataVenta)) {
                                         ?>
                                         <div class="form-group row">
-                                            <label for="numero_serie" class="col-sm-4 col-form-label">Numero
+                                            <label for="numeroVenta" class="col-sm-4 col-form-label">Numero
                                                 Venta</label>
                                             <div class="col-sm-8">
                                                 <?= $dataVenta->getNumeroVenta() ?>
@@ -150,7 +149,7 @@ if (!empty($_GET['id'])) {
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="numero_serie" class="col-sm-4 col-form-label">Total</label>
+                                            <label for="total" class="col-sm-4 col-form-label">Total</label>
                                             <div class="col-sm-8">
                                                 <?= GeneralFunctions::formatCurrency($dataVenta->getTotal()) ?>
                                             </div>
@@ -199,10 +198,10 @@ if (!empty($_GET['id'])) {
                                             <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>Producto</th>
                                                 <th>Cantidad</th>
-                                                <th>Fecha Vencimiento</th>
-                                                <th>N° Detalle Venta</th>
-                                                <th>Acciones</th>
+                                                <th>Valor unitario</th>
+                                                <th>Precio final</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -235,10 +234,10 @@ if (!empty($_GET['id'])) {
                                             <tfoot>
                                             <tr>
                                                 <th>#</th>
+                                                <th>Producto</th>
                                                 <th>Cantidad</th>
-                                                <th>Fecha Vencimiento</th>
-                                                <th>N° Detalle Venta</th>
-                                                <th>Acciones</th>
+                                                <th>Valor unitario</th>
+                                                <th>Precio final</th>
                                             </tfoot>
                                         </table>
                                     </div>

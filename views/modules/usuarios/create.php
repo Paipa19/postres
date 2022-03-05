@@ -34,7 +34,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Crear un Nuevo <?= $nameModel ?></h1>
+                        <h1>Crear un nuevo <?= $nameModel ?></h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -80,7 +80,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                             <div class="form-group row">
                                                 <label for="numeroIdentificacion" class="col-sm-2 col-form-label">Número identificación</label>
                                                 <div class="col-sm-10">
-                                                    <input required type="text" class="form-control" id="numeroIdentificacion" name="numeroIdentificacion"
+                                                    <input required type="number" class="form-control" id="numeroIdentificacion" name="numeroIdentificacion"
                                                            placeholder="Ingrese su número de identificación" value="<?= $frmSession['numeroIdentificacion'] ?? '' ?>">
                                                 </div>
                                             </div>
@@ -103,10 +103,10 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="telefono" class="col-sm-2 col-form-label">Telefono</label>
+                                                <label for="telefono" class="col-sm-2 col-form-label">Teléfono</label>
                                                 <div class="col-sm-10">
-                                                    <input required type="number" minlength="10" class="form-control"
-                                                           id="telefono" name="telefono" placeholder="Ingrese su telefono"
+                                                    <input required type="number" minlength="10" maxlength="11" class="form-control"
+                                                           id="telefono" name="telefono" placeholder="Ingrese su teléfono"
                                                            value="<?= $frmSession['telefono'] ?? '' ?>">
                                                 </div>
                                             </div>

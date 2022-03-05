@@ -97,11 +97,11 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="descripcion" class="col-sm-2 col-form-label">Descripcion</label>
+                                                        <label for="descripcion" class="col-sm-2 col-form-label">Descripción</label>
                                                         <div class="col-sm-10">
                                                             <input required type="text" class="form-control" id="descripcion"
                                                                    name="descripcion" value="<?= $Producto->getDescripcion(); ?>"
-                                                                   placeholder="Ingrese descripcion">
+                                                                   placeholder="Ingrese la descripción del producto">
                                                         </div>
                                                     </div>
 
