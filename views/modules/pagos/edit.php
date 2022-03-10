@@ -58,7 +58,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Horizontal Form -->
-                        <div class="card card-info">
+                        <div class="card card-olive">
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fas fa-user"></i>&nbsp; Información del <?= $nameModel ?></h3>
                                 <div class="card-tools">
@@ -92,7 +92,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                     <div class="form-group row">
                                                         <label for="abono" class="col-sm-2 col-form-label">Abono</label>
                                                         <div class="col-sm-10">
-                                                            <input required type="text" class="form-control" id="nombres"
+                                                            <input required type="text" class="form-control" id="abono"
                                                                    name="abono" value="<?= $DataPago->getAbono(); ?>"
                                                                    placeholder="Ingrese el abono">
                                                         </div>
@@ -101,7 +101,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                         <label for="saldo" class="col-sm-2 col-form-label">Saldo</label>
                                                         <div class="col-sm-10">
                                                             <input required type="text" class="form-control" id="saldo"
-                                                                   name="apellidos" value="<?= $DataPago->getSaldo(); ?>"
+                                                                   name="saldo" value="<?= $DataPago->getSaldo(); ?>"
                                                                    placeholder="Ingrese el saldo">
                                                         </div>
                                                     </div>
@@ -151,7 +151,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                     </div>
 
                                             <hr>
-                                            <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>
+                                            <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-secondary">Enviar</button>
                                             <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
                                         </form>
                                     </div>

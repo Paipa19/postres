@@ -174,10 +174,6 @@ class Pagos extends AbstractDBConnection implements Model
 
 
 
-
-
-
-
     /**
      * @return Ventas|null
      */

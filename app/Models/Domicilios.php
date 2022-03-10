@@ -30,7 +30,7 @@ class Domicilios extends AbstractDBConnection implements Model
         parent::__construct();
         $this->setIdDomicilio($domicilio ['idDomicilio'] ?? null);
         $this->setDireccion($domicilio['direccion'] ?? '');
-        $this->setTelefono($domicilio['telefono'] ?? 0);
+        $this->setTelefono($domicilio['telefono'] ?? '');
         $this->setMunicipiosId($domicilio['municipios_id'] ?? 0);
         $this->setUsuarioIdUsuario($domicilio['Usuario_idUsuario'] ?? 0);
     }

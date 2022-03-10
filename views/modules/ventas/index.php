@@ -56,7 +56,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Default box -->
-                        <div class="card card-dark">
+                        <div class="card card-olive">
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fas fa-user"></i> &nbsp; Gestionar <?= $pluralModel ?></h3>
                                 <div class="card-tools">
@@ -77,7 +77,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                 <div class="row">
                                     <div class="col-auto mr-auto"></div>
                                     <div class="col-auto">
-                                        <a role="button" href="create.php" class="btn btn-primary float-right"
+                                        <a role="button" href="create.php" class="btn btn-secondary float-right"
                                            style="margin-right: 5px;">
                                             <i class="fas fa-plus"></i> Crear <?= $nameModel ?>
                                         </a>
@@ -118,7 +118,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                     <td>
                                                         <a href="edit.php?id=<?=  $venta->getIdVenta(); ?>"
                                                            type="button" data-toggle="tooltip" title="Actualizar"
-                                                           class="btn docs-tooltip btn-primary btn-xs"><i
+                                                           class="btn docs-tooltip btn-success btn-xs"><i
                                                                 class="fa fa-edit"></i></a>
                                                         <a href="show.php?id=<?=  $venta->getIdVenta(); ?>"
                                                            type="button" data-toggle="tooltip" title="Ver"
@@ -126,21 +126,21 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                                 class="fa fa-eye"></i></a>
                                                         <a href="../ventas/create.php?id=<?= $venta->getIdVenta(); ?>"
                                                            type="button" data-toggle="tooltip" title="Gestionar detalle venta"
-                                                           class="btn docs-tooltip btn-success btn-xs"><i
+                                                           class="btn docs-tooltip btn-dark btn-xs"><i
                                                                     class="fa fa-photo-video"></i></a>
 
                                                         <?php if ($venta->getEstadoVenta() != "Aprobada") { ?>
-                                                            <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=activate&id=<?= $venta->getIdVenta(); ?>"
-                                                               type="button" data-toggle="tooltip" title="Activar"
+                                                            <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=cancel&idVenta=<?= $venta->getIdVenta(); ?>"
+                                                               type="button" data-toggle="tooltip" title="Aprobada"
                                                                class="btn docs-tooltip btn-success btn-xs"><i
                                                                         class="fa fa-check-square"></i></a>
                                                         <?php } else { ?>
+
                                                             <a type="button"
-                                                               href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=inactivate&id=<?= $venta->getIdVenta(); ?>"
+                                                               href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=cancel&idVenta=<?= $venta->getIdVenta(); ?>"
                                                                data-toggle="tooltip" title="No aprobada"
                                                                class="btn docs-tooltip btn-danger btn-xs"><i
                                                                         class="fa fa-times-circle"></i></a>
-
                                                         <?php } ?>
                                                     </td>
                                                 </tr>

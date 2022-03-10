@@ -16,7 +16,7 @@ class DomiciliosController{
         $this->dataDomicilio = array();
         $this->dataDomicilio['idDomicilio'] = $_FORM['idDomicilio'] ?? NULL;
         $this->dataDomicilio['direccion'] = $_FORM['direccion'] ?? '';
-        $this->dataDomicilio['telefono'] = $_FORM['telefono'] ?? 0;
+        $this->dataDomicilio['telefono'] = $_FORM['telefono'] ?? '';
         $this->dataDomicilio['municipios_id'] = $_FORM['idMunicipio'] ?? 0;
         $this->dataDomicilio['Usuario_idUsuario'] = $_FORM['Usuario_idUsuario'] ?? 0;
     }
@@ -42,6 +42,7 @@ class DomiciliosController{
             $domicilio = new Domicilios($this->dataDomicilio);
 
             if($domicilio->update()){
+
                 unset($_SESSION['frmDomicilios']);
             }
             header("Location: ../../views/modules/domicilios/show.php?id=" . $domicilio->getIdDomicilio() . "&respuesta=success&mensaje=Domicilio Actualizado");

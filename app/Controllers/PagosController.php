@@ -15,11 +15,11 @@ class PagosController{
     {
         $this->dataPagos = array();
         $this->dataPagos['idPago'] = $_FORM['idPago'] ?? NULL;
-        $this->dataPagos['abono'] = $_FORM['abono'] ?? '';
+        $this->dataPagos['abono'] = $_FORM['abono'] ?? 0;
         $this->dataPagos['saldo'] = $_FORM['saldo'] ?? 0;
         $this->dataPagos['fechaPago'] = !empty($_FORM['fechaPago']) ? Carbon::parse($_FORM['fechaPago']) : new Carbon();
         $this->dataPagos['descuento'] = $_FORM['descuento'] ?? 0;
-        $this->dataPagos['estado'] = $_FORM['estado'] ?? 'Pendiente';
+        $this->dataPagos['estado'] = $_FORM['estado'] ?? 'Cancelado';
         $this->dataPagos['Venta_idVenta'] = $_FORM['Venta_idVenta'] ?? 0;
 
 
@@ -52,7 +52,7 @@ class PagosController{
             header("Location: ../../views/modules/pagos/show.php?id=" . $Pago->getIdPago() . "&respuesta=success&mensaje=Pago Actualizado");
         } catch (\Exception $e) {
             GeneralFunctions::logFile('Exception',$e, 'error');
-            //header("Location: ../../views/modules/ventas/edit.php?respuesta=error");
+            //header("Location: ../../views/modules/pagos/edit.php?respuesta=error");
         }
     }
     static public function searchForId (array $data){
@@ -85,7 +85,7 @@ class PagosController{
 
     static public function cancel(){
         try {
-            $ObjPago = Pagos::searchForId($_GET['Id']);
+            $ObjPago = Pagos::searchForID($_GET['idPago']);
             $ObjPago->setEstadoPago("Cancelado");
             if($ObjPago->update()){
                 header("Location: ../../views/modules/pagos/index.php");
@@ -112,7 +112,7 @@ class PagosController{
 
         $arrPagos = array();
         if($params['where'] != ""){
-            $base = "SELECT * FROM pagos WHERE ";
+            $base = "SELECT * FROM pago WHERE ";
             $arrPagos = Pagos::search($base.$params['where']);
         }else{
             $arrPagos = Pagos::getAll();

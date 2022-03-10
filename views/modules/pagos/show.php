@@ -55,7 +55,7 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Horizontal Form -->
-                        <div class="card card-green">
+                        <div class="card card-olive">
                             <?php if (!empty($_GET["id"]) && isset($_GET["id"])) {
                                 $DataPago = PagosController::searchForId(["idPago" => $_GET["id"]]);
                                 /* @var $DataPago Pagos */
@@ -105,14 +105,14 @@ $frmSession = $_SESSION['frm' . $pluralModel] ?? NULL;
                                     <div class="card-footer">
                                         <div class="row">
                                             <div class="col-auto mr-auto">
-                                                <a role="button" href="index.php" class="btn btn-success float-right"
+                                                <a role="button" href="index.php" class="btn btn-info float-right"
                                                    style="margin-right: 5px;">
                                                     <i class="fas fa-tasks"></i> Gestionar <?= $pluralModel ?>
                                                 </a>
                                             </div>
                                             <div class="col-auto">
                                                 <a role="button" href="edit.php?id=<?= $DataPago->getIdPago(); ?>"
-                                                   class="btn btn-primary float-right"
+                                                   class="btn btn-secondary float-right"
                                                    style="margin-right: 5px;">
                                                     <i class="fas fa-edit"></i> Editar <?= $nameModel ?>
                                                 </a>

@@ -58,7 +58,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                     <div class="row">
                         <div class="col-md-12">
                             <!-- Horizontal Form -->
-                            <div class="card card-info">
+                            <div class="card card-olive">
                                 <div class="card-header">
                                     <h3 class="card-title"><i class="fas fa-user"></i> &nbsp; Información del <?= $nameModel ?></h3>
                                     <div class="card-tools">
@@ -135,7 +135,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
 
 
                                         <hr>
-                                        <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>
+                                        <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-secondary">Enviar</button>
                                         <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
                                         <!-- /.card-footer -->
                                     </form>

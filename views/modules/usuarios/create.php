@@ -13,10 +13,22 @@ $pluralModel = $nameModel.'s';
 $frmSession = $_SESSION[$nameForm] ?? NULL;
 ?>
 <!DOCTYPE html>
+
+
+<script>
+
+
+
+</script>
+
+
+
 <html>
 <head>
     <title><?= $_ENV['TITLE_SITE'] ?> | Crear <?= $nameModel ?></title>
     <?php require("../../partials/head_imports.php"); ?>
+
+
 </head>
 <body class="hold-transition sidebar-mini">
 
@@ -55,9 +67,9 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Horizontal Form -->
-                        <div class="card card-info">
-                            <div class="card-header">
-                                <h3 class="card-title"><i class="fas fa-user"></i> &nbsp; Información del <?= $nameModel ?></h3>
+                        <div class="card card-olive ">
+                            <div class="card-header ">
+                                <h3 class="card-title"><i class="fas fa-user "></i> &nbsp; Información del <?= $nameModel ?></h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="card-refresh"
                                             data-source="create.php" data-source-selector="#card-refresh-content"
@@ -78,10 +90,12 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
 
                                         <div class="col-sm-10">
                                             <div class="form-group row">
+
                                                 <label for="numeroIdentificacion" class="col-sm-2 col-form-label">Número identificación</label>
                                                 <div class="col-sm-10">
                                                     <input required type="number" class="form-control" id="numeroIdentificacion" name="numeroIdentificacion"
                                                            placeholder="Ingrese su número de identificación" value="<?= $frmSession['numeroIdentificacion'] ?? '' ?>">
+
                                                 </div>
                                             </div>
 
@@ -154,7 +168,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
 
 
                                     <hr>
-                                    <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>
+                                    <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-secondary">Enviar</button>
                                     <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
                                     <!-- /.card-footer -->
                                 </form>

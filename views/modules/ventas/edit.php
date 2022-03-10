@@ -60,7 +60,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                 <div class="row">
                     <div class="col-md-12">
                         <!-- Horizontal Form -->
-                        <div class="card card-info">
+                        <div class="card card-olive">
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fas fa-user"></i>&nbsp; Información de la <?= $nameModel ?></h3>
                                 <div class="card-tools">
@@ -78,7 +78,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                 <p>
                                 <?php
 
-                                $DataVenta = VentasController::searchForID(["id" => $_GET["id"]]);
+                                $DataVenta = VentasController::searchForID(["idVenta" => $_GET["id"]]);
                                 /* @var $DataVenta Ventas */
                                 if (!empty($DataVenta)) {
                                     ?>
@@ -91,8 +91,6 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                    required="required" type="text">
 
                                                     </div>
-
-
                                                     <div class="form-group row">
                                                         <label for="total" class="col-sm-2 col-form-label">Total</label>
                                                         <div class="col-sm-10">
@@ -117,13 +115,14 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                         <div class="col-sm-10">
                                                             <select required id="estado" name="estado" class="custom-select">
                                                                 <option <?= ($DataVenta->getEstadoVenta() == "Aprobada") ? "selected" : ""; ?> value="Aprobada">Aprobada</option>
+                                                                <option <?= ($DataVenta->getEstadoVenta() == "En proceso") ? "selected" : ""; ?> value="En proceso">En proceso</option>
                                                                 <option <?= ($DataVenta->getEstadoVenta() == "No aprobada") ? "selected" : ""; ?> value="No aprobada">No aprobada</option>
                                                             </select>
                                                         </div>
                                                     </div>
 
                             <hr>
-                            <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-info">Enviar</button>
+                            <button id="frmName" name="frmName" value="<?= $nameForm ?>" type="submit" class="btn btn-secondary">Enviar</button>
                             <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
                                         </form>
                                     </div>

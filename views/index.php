@@ -15,6 +15,7 @@
 
     <?php require("partials/sliderbar_main_menu.php"); ?>
 
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -26,6 +27,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
+
                             <li class="breadcrumb-item"><a href="<?=$adminlteURL; ?>/views/index.php"><?= $_ENV['ALIASE_SITE'] ?></a></li>
                             <li class="breadcrumb-item active">Inicio</li>
                         </ol>
@@ -49,7 +51,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <h5>Te damos la bienvenida al sistema de inventarios de la empresa <strong>DESSERT STORE</strong>, este sistema esta diseñado con el fin de gestionar los diferentes aspectos que se destacan en la empresa, el software se diseño de una manera facil de comprender y poco compleja a la hora de ejecutar, esperamos sea gratificante el uso de este sistema, este esta conformado por 5 módulos los cuales se encontraran organizados de la siguiente manera. <strong><br>1-Usuarios <br>2-Productos <br>3-Ventas <br>4-Domicilios <br>5-Pagos</strong></h5>
+                    <h5>Te damos la bienvenida al sistema de inventarios de la empresa <strong>DESSERT STORE</strong>, este sistema esta diseñado con el fin de gestionar los diferentes aspectos que se destacan en la empresa, el software se diseño de una manera facil de comprender y poco compleja a la hora de ejecutar, esperamos sea gratificante el uso de este sistema. </h5>
 
 
                     <center>

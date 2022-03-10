@@ -75,7 +75,7 @@ if (!empty($_GET['id'])) {
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="card card-info">
+                        <div class="card card-olive">
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fas fa-shopping-cart"></i> &nbsp; Información de la
                                     <?= $nameModel ?></h3>
@@ -156,7 +156,7 @@ if (!empty($_GET['id'])) {
                                         </div>
                                     <?php } ?>
                                     <hr>
-                                    <button type="submit" class="btn btn-info">Enviar</button>
+                                    <button type="submit" class="btn btn-secondary">Enviar</button>
                                     <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
                                 </form>
                             </div>
@@ -164,7 +164,7 @@ if (!empty($_GET['id'])) {
                         <!-- /.card -->
                     </div>
                     <div class="col-md-8">
-                        <div class="card card-lightblue">
+                        <div class="card card-olive">
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fas fa-parachute-box"></i> &nbsp; Detalle Venta</h3>
                                 <div class="card-tools">
@@ -184,7 +184,7 @@ if (!empty($_GET['id'])) {
                                         <div class="col-auto mr-auto"></div>
                                         <div class="col-auto">
                                             <button id="new-producto"
-                                               class="btn btn-primary float-right"
+                                               class="btn btn-info float-right"
                                                style="margin-right: 5px;">
                                                 <i class="fas fa-plus"></i> Añadir Producto
                                             </button>

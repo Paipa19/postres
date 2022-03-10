@@ -187,14 +187,14 @@ class Ventas extends AbstractDBConnection implements Model
     }
 
     /**
-     * @param EstadoVenta|null $estadoVenta
+     * @param EstadoVenta|null $estado
      */
-    public function setEstadoVenta(null|string|EstadoVenta $estadoVenta): void
+    public function setEstadoVenta(null|string|EstadoVenta $estado): void
     {
-        if(is_string($estadoVenta)){
-            $this->estado = EstadoVenta::from($estadoVenta);
+        if(is_string($estado)){
+            $this->estado = EstadoVenta::from($estado);
         }else{
-            $this->estado = $estadoVenta;
+            $this->estado = $estado;
         }
     }
 
