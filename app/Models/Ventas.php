@@ -6,8 +6,6 @@ use Carbon\Carbon;
 use App\Enums\EstadoVenta;
 use App\Interfaces\Model;
 
-
-
 class Ventas extends AbstractDBConnection implements Model
 {
     private ?int $idVenta;
@@ -37,7 +35,6 @@ class Ventas extends AbstractDBConnection implements Model
      * @param int $Domicilio_id_Domicilio
      * @param int $Usuario_id_Usuario
      */
-
     public function __construct(array $venta = [])
     {
         parent::__construct();
@@ -197,9 +194,7 @@ class Ventas extends AbstractDBConnection implements Model
             $this->estado = $estado;
         }
     }
-
-
-
+  
     /**
      * @return array|null
      */
@@ -275,7 +270,7 @@ class Ventas extends AbstractDBConnection implements Model
         }
         $this->total = $total;
     }
-
+  
     protected function save(string $query): ?bool
     {
 
@@ -361,10 +356,6 @@ class Ventas extends AbstractDBConnection implements Model
         }
         return null;
     }
-
-
-
-
 
     static function getAll(): ?array
     {

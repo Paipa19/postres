@@ -41,7 +41,6 @@ class DetalleVentas  extends AbstractDBConnection implements Model
         if ($this->isConnected()){
             $this->Disconnect();
         }
-
     }
 
 
@@ -97,9 +96,6 @@ class DetalleVentas  extends AbstractDBConnection implements Model
     {
         return $this->getPrecioVenta() * $this->getCantidad();
     }
-
-
-
     /**
      * @return int
      */
@@ -131,7 +127,6 @@ class DetalleVentas  extends AbstractDBConnection implements Model
     {
         $this->Producto_idProducto = $Producto_idProducto;
     }
-
 
     /**
      * @return array|null
@@ -206,21 +201,16 @@ class DetalleVentas  extends AbstractDBConnection implements Model
             return $this->getProducto()->substractStock($this->getCantidad());
         }
         return false;
-
-
     }
 
     function update(): ?bool
     {
-
         $query = "UPDATE postres.detalleventa SET
         cantidad = :cantidad, precioVenta = :precioVenta, Venta_idVenta = :Venta_idVenta, Producto_idProducto = :Producto_idProducto
         WHERE idDetalleVenta = :idDetalleVenta";
         return $this -> save($query);
 
     }
-
-
 
     /**
      * @return mixed
@@ -230,8 +220,6 @@ class DetalleVentas  extends AbstractDBConnection implements Model
         $query = "DELETE FROM detalleventa WHERE idDetalleVenta = :idDetalleVenta";
         return $this->save($query, 'deleted');
     }
-
-
 
     static function search($query): ?array
     {
@@ -253,8 +241,6 @@ class DetalleVentas  extends AbstractDBConnection implements Model
         }
         return NULL;
     }
-
-
 
     static function searchForId(int $idDetalleVenta): ?object
     {
@@ -296,7 +282,6 @@ class DetalleVentas  extends AbstractDBConnection implements Model
     }
 
 
-
     /**
      * @inheritDoc
      */
@@ -307,8 +292,7 @@ class DetalleVentas  extends AbstractDBConnection implements Model
             'cantidad' => $this->getCantidad(),
             'precioVenta' => $this->getPrecioVenta(),
             'Venta_idVenta' => $this->getVentaIdVenta(),
-            'Producto_idProducto' => $this->getProductoIdProducto(),
-
+            'Producto_idProducto' => $this->getProductoIdProducto()
         ];
     }
 }
