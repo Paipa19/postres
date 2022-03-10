@@ -100,6 +100,22 @@ class VentasController{
         }
     }
 
+    static public function finalizar(){
+        try {
+            /* @var $ObjVenta Ventas */
+            $ObjVenta = Ventas::searchForId($_GET['Id']);
+            $ObjVenta->setEstadoVenta("Aprobada");
+            if($ObjVenta->update()){
+                header("Location: ../../views/modules/ventas/index.php");
+            }else{
+                header("Location: ../../views/modules/ventas/index.php?respuesta=error&mensaje=Error al guardar");
+            }
+        } catch (\Exception $e) {
+            GeneralFunctions::logFile('Exception',$e, 'error');
+            header("Location: ../../views/modules/ventas/index.php?respuesta=error");
+        }
+    }
+
     static public function selectVentas (array $params = [] ){
 
         $params['isMultiple'] = $params['isMultiple'] ?? false;
@@ -142,5 +158,7 @@ class VentasController{
         }
         return false;
     }
+
+
 
 }

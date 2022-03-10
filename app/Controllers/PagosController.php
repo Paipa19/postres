@@ -47,12 +47,13 @@ class PagosController{
             $Pago = new Pagos($this->dataPagos);
             if($Pago->update()){
                 unset($_SESSION['frmPagos']);
+                header("Location: ../../views/modules/pagos/show.php?id=" . $Pago->getIdPago() . "&respuesta=success&mensaje=Pago Actualizado");
+            }else{
+                header("Location: ../../views/modules/pagos/edit.php?id=" . $Pago->getIdPago() . "&respuesta=error&mensaje=Pago No Actualizado");
             }
-
-            header("Location: ../../views/modules/pagos/show.php?id=" . $Pago->getIdPago() . "&respuesta=success&mensaje=Pago Actualizado");
         } catch (\Exception $e) {
             GeneralFunctions::logFile('Exception',$e, 'error');
-            //header("Location: ../../views/modules/pagos/edit.php?respuesta=error");
+            header("Location: ../../views/modules/pagos/edit.php?respuesta=error");
         }
     }
     static public function searchForId (array $data){
@@ -87,6 +88,21 @@ class PagosController{
         try {
             $ObjPago = Pagos::searchForID($_GET['idPago']);
             $ObjPago->setEstadoPago("Cancelado");
+            if($ObjPago->update()){
+                header("Location: ../../views/modules/pagos/index.php");
+            }else{
+                header("Location: ../../views/modules/pagos/index.php?respuesta=error&mensaje=Error al guardar");
+            }
+        } catch (\Exception $e) {
+            GeneralFunctions::logFile('Exception',$e, 'error');
+            header("Location: ../../views/modules/pagos/index.php?respuesta=error");
+        }
+    }
+
+    static public function pendiente(){
+        try {
+            $ObjPago = Pagos::searchForID($_GET['idPago']);
+            $ObjPago->setEstadoPago("Pendiente");
             if($ObjPago->update()){
                 header("Location: ../../views/modules/pagos/index.php");
             }else{

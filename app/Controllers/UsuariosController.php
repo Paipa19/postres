@@ -6,7 +6,6 @@ require (__DIR__.'/../../vendor/autoload.php');
 use App\Models\GeneralFunctions;
 use App\Models\Usuarios;
 
-
 class UsuariosController
 {
     private array $dataUsuario;

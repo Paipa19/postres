@@ -92,23 +92,26 @@ if (!empty($_GET['id'])) {
 
                             <div class="card-body">
                                 <form class="form-horizontal" method="post" id="<?= $nameForm ?>" name="<?= $nameForm ?>"
-                                      action="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=create">
+                                      action="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=<?= ($dataVenta != null) ? 'finalizar' : 'create' ?><?= ($dataVenta != null) ? ('&Id='.$dataVenta->getIdVenta()) : ''; ?>">
+
                                     <div class="form-group row">
                                         <label for="cliente_id" class="col-sm-4 col-form-label">Costo Domicilio</label>
                                         <div class="col-sm-8">
                                             <input required type="number" class="form-control" id="costoDomicilio" name="costoDomicilio"
-                                                   placeholder="Costo del Domicilio" value="<?= $frmSession['costoDomicilio'] ?? '' ?>">
+                                                   placeholder="Costo del Domicilio" value="<?= $dataVenta?->getCostoDomicilio() ?? '' ?>">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="Usuario_idUsuario" class="col-sm-4 col-form-label">Usuario </label>
                                         <div class="col-sm-8">
-                                            <?= UsuariosController::selectUsuario(
+                                            <?=
+                                            UsuariosController::selectUsuario(
                                                 array(
                                                     'id' => 'Usuario_idUsuario',
                                                     'name' => 'Usuario_idUsuario',
                                                     'class' => 'form-control select2bs4 select2-info',
+                                                    'defaultValue' => $dataVenta?->getUsuarioIdUsuario() ?? '',
                                                     'where' => "estado = 'Activo'"
                                                 )
                                             )
@@ -124,7 +127,8 @@ if (!empty($_GET['id'])) {
                                                     'id' => 'domicilio_idDomicilio',
                                                     'name' => 'domicilio_idDomicilio',
                                                     'class' => 'form-control select2bs4 select2-info',
-                                                    'where' => ''
+                                                    'defaultValue' => $dataVenta?->getDomicilioIdDomicilio() ?? '',
+                                                    'where' => ($dataVenta?->getUsuarioIdUsuario() != null) ? 'Usuario_idUsuario = '.$dataVenta?->getUsuarioIdUsuario() : ''
                                                 )
                                             )
                                             ?>
@@ -156,8 +160,11 @@ if (!empty($_GET['id'])) {
                                         </div>
                                     <?php } ?>
                                     <hr>
-                                    <button type="submit" class="btn btn-secondary">Enviar</button>
-                                    <a href="index.php" role="button" class="btn btn-default float-right">Cancelar</a>
+                                    <button type="submit" class="btn <?= ($dataVenta != null)  ? 'btn-success' : 'btn-secondary' ?>"> <?= ($dataVenta != null)  ? 'Finalizar' : 'Enviar' ?> </button>
+                                    <?php if($dataVenta != null){ ?>
+                                        <a href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=cancel&idVenta=<?= $dataVenta->getIdVenta() ?>" role="button" class="btn btn-danger float-center">Cancelar</a>
+                                    <?php } ?>
+                                    <a href="index.php" role="button" class="btn btn-default float-right">Volver</a>
                                 </form>
                             </div>
                         </div>
@@ -202,6 +209,7 @@ if (!empty($_GET['id'])) {
                                                 <th>Cantidad</th>
                                                 <th>Valor unitario</th>
                                                 <th>Precio final</th>
+                                                <th>Acciones</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -238,6 +246,7 @@ if (!empty($_GET['id'])) {
                                                 <th>Cantidad</th>
                                                 <th>Valor unitario</th>
                                                 <th>Precio final</th>
+                                                <th>Acciones</th>
                                             </tfoot>
                                         </table>
                                     </div>

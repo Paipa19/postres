@@ -111,7 +111,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                         <div class="col-sm-10">
                                                             <input required type="date" minlength="6" class="form-control"
                                                                    id="fechaPago" name="fechaPago"
-                                                                   value="<?= $DataPago->getFechaPago(); ?>"
+                                                                   value="<?= $DataPago->getFechaPago()->toDateString(); ?>"
                                                                    placeholder="Ingrese la fecha de pago">
                                                         </div>
                                                     </div>
@@ -143,6 +143,7 @@ $frmSession = $_SESSION[$nameForm] ?? NULL;
                                                                     'id' => 'Venta_idVenta',
                                                                     'name' => 'Venta_idVenta',
                                                                     'class' => 'form-control select2bs4 select2-info',
+                                                                    'defaultValue' => $DataPago?->getVentaIdVenta() ?? '',
                                                                     'where' => ''
                                                                 )
                                                             )

@@ -223,7 +223,7 @@ class Pagos extends AbstractDBConnection implements Model
     {
         $query = "UPDATE postres.pago SET
         abono = :abono, saldo = :saldo, fechaPago = :fechaPago,
-        estado = :estado, Venta_idVenta = :Venta_idVenta
+        descuento = :descuento, estado = :estado, Venta_idVenta = :Venta_idVenta
         WHERE idPago = :idPago";
 
         return $this->save($query);

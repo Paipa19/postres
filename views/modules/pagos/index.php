@@ -129,7 +129,7 @@ $frmSession = $_SESSION['frm'.$pluralModel] ?? NULL;
                                                                         class="fa fa-check-square"></i></a>
                                                         <?php } else { ?>
                                                             <a type="button"
-                                                               href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=cancel&idPago=<?= $pagos->getIdPago(); ?>"
+                                                               href="../../../app/Controllers/MainController.php?controller=<?= $pluralModel ?>&action=pendiente&idPago=<?= $pagos->getIdPago(); ?>"
                                                                data-toggle="tooltip" title="Pendiente"
                                                                class="btn docs-tooltip btn-danger btn-xs"><i
                                                                         class="fa fa-times-circle"></i></a>
