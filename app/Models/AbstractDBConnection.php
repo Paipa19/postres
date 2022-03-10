@@ -16,7 +16,7 @@ use PDOException;
 abstract class AbstractDBConnection {
 
     private bool $isConnected = false;
-    protected PDO $objConnection; es la base de la conexion me puedo conectar cualquier base de datos , coje el codigo siempre pdo para php
+    protected PDO $objConnection;
 
     abstract protected function save(string $query) : ?bool;
 
@@ -166,12 +166,13 @@ abstract class AbstractDBConnection {
      * @return int|null
      * @throws Exception
      */
-    public function getLastId(string $table = null) : ?int {
+    public function getLastId(string $table = null, ?string $nameId = null) : ?int {
         try{
             if(!empty($table)){
                 if($this->countRowsTable($table) > 0){
-                    $result = $this->getRow("SELECT id FROM ".$table." ORDER BY id DESC LIMIT 1", []);
-                    return $result['id'];
+                    $id = empty($nameId) ? "id" : $nameId;
+                    $result = $this->getRow("SELECT ".$id." FROM ".$table." ORDER BY ".$id." DESC LIMIT 1", []);
+                    return $result[$id];
                 }
                 return 0;
             }else{

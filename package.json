@@ -1,5 +1,5 @@
 {
-  "name": "weber",
+  "name": "postres",
   "version": "1.0.0",
   "description": "Ejemplo MVC POO",
   "main": "index.js",
@@ -11,21 +11,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EjemplosADSI/WebER.git"
+    "url": "git+https://github.com/Paipa19/postres.git"
   },
   "keywords": [
-    "weber",
+    "postres",
     "ejemplo",
     "mvc",
     "php",
     "inventarios"
   ],
-  "author": "Diego Alonso Ojeda Medina",
+  "author": "Anderson Duvan Paipa Diaz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/EjemplosADSI/WebER/issues"
+    "url": "https://github.com/Paipa19/postres.git/issues"
   },
-  "homepage": "https://github.com/EjemplosADSI/WebER#readme",
+  "homepage": "https://github.com/Paipa19/postres.git#readme",
   "devDependencies": {},
   "dependencies": {
     "bootstrap-imageupload": "^1.1.3",

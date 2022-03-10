@@ -1,24 +1,33 @@
 <?php
 
-class Venta extends AbstractDBConnection implements Model
+namespace App\Models;
+
+use Carbon\Carbon;
+use App\Enums\EstadoVenta;
+use App\Interfaces\Model;
+
+class Ventas extends AbstractDBConnection implements Model
 {
     private ?int $idVenta;
     private string $numeroVenta;
     private Carbon $fecha;
-    private int $total;
-    private string $costo_domicilio;
-    private string $estado;
-    private int $Domicilio_id_Domicilio;
-    private int $Usuario_id_Usuario;
+    private string $total;
+    private string $costoDomicilio;
+    private EstadoVenta $estado;
+    private int $domicilio_idDomicilio;
+    private int $Usuario_idUsuario;
 
 
 //Relaciones
+    private ?Usuarios $Usuario;
+    private ?Domicilios $Domicilio;
+
     private ?array $PagosVentas;
-    private ?array $DetalleVentasVentas;
+    private ?array $DetalleVentas;
 
     /**
      * @param int|null $idVenta
-     * @param string $numeroVenta
+     * @param int $numeroVenta
      * @param Carbon $fecha
      * @param int $total
      * @param string $costo_domicilio
@@ -26,15 +35,18 @@ class Venta extends AbstractDBConnection implements Model
      * @param int $Domicilio_id_Domicilio
      * @param int $Usuario_id_Usuario
      */
-    public function __construct(array $idVenta = [])
+    public function __construct(array $venta = [])
     {
         parent::__construct();
-        $this->setIdVenta($idVenta['idVenta'] ?? null);
-        $this->setNumeroVenta($numeroVenta['numeroVenta'] ?? '');
-        $this->setFecha($fecha['fecha'] ?? '');
-        $this->setTotal($total['total'] ?? '');
-        $this->setCostoDomicilio($costo_domicilio['costo_domicilio'] ?? '');
-        $this->setEstado($estado['estado'] ?? null);
+        $this->setIdVenta($venta['idVenta'] ?? null);
+        $this->setNumeroVenta($venta['numeroVenta'] ?? '');
+        $this->setFecha(!empty($venta['fecha']) ? Carbon::parse($venta['fecha']) : new Carbon());
+        $this->setTotal($venta['total'] ?? 0);
+        $this->setCostoDomicilio($venta['costoDomicilio'] ?? 0);
+        $this->setEstadoVenta($venta['estado'] ?? EstadoVenta::EN_PROCESO);
+        $this->setUsuarioIdUsuario($venta['Usuario_idUsuario'] ?? 0);
+        $this->setDomicilioIdDomicilio($venta['domicilio_idDomicilio'] ?? 0);
+        $this->setMontoTotal();
     }
 
     public function __destruct(){
@@ -69,11 +81,17 @@ class Venta extends AbstractDBConnection implements Model
     }
 
     /**
-     * @param string $numeroVenta
+     * @param int $numeroVenta
      */
-    public function setNumeroVenta(string $numeroVenta): void
+    public function setNumeroVenta(string $numeroVenta = null): void
     {
-        $this->numeroVenta = $numeroVenta;
+        if(empty($numero_serie)){
+            $this->Connect();
+            $this->numeroVenta =  'FV-'.($this->countRowsTable('venta')+1).'-'.date('Y-m-d');
+            $this->Disconnect();
+        }else{
+            $this->numeroVenta = $numeroVenta;
+        }
     }
 
     /**
@@ -81,7 +99,7 @@ class Venta extends AbstractDBConnection implements Model
      */
     public function getFecha(): Carbon
     {
-        return $this->fecha;
+        return $this->fecha->locale('es');
     }
 
     /**
@@ -93,17 +111,17 @@ class Venta extends AbstractDBConnection implements Model
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getTotal(): int
+    public function getTotal(): string
     {
         return $this->total;
     }
 
     /**
-     * @param int $total
+     * @param string $total
      */
-    public function setTotal(int $total): void
+    public function setTotal(string $total): void
     {
         $this->total = $total;
     }
@@ -113,33 +131,70 @@ class Venta extends AbstractDBConnection implements Model
      */
     public function getCostoDomicilio(): string
     {
-        return $this->costo_domicilio;
+        return $this->costoDomicilio;
     }
 
     /**
-     * @param string $costo_domicilio
+     * @param string $costoDomicilio
      */
-    public function setCostoDomicilio(string $costo_domicilio): void
+    public function setCostoDomicilio(string $costoDomicilio): void
     {
-        $this->costo_domicilio = $costo_domicilio;
+        $this->costoDomicilio = $costoDomicilio;
     }
+
+    /**
+     * @return int
+     */
+    public function getDomicilioIdDomicilio(): int
+    {
+        return $this->domicilio_idDomicilio;
+    }
+
+    /**
+     * @param int $domicilio_idDomicilio
+     */
+    public function setDomicilioIdDomicilio(int $domicilio_idDomicilio): void
+    {
+        $this->domicilio_idDomicilio = $domicilio_idDomicilio;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUsuarioIdUsuario(): int
+    {
+        return $this->Usuario_idUsuario;
+    }
+
+    /**
+     * @param int $Usuario_idUsuario
+     */
+    public function setUsuarioIdUsuario(int $Usuario_idUsuario): void
+    {
+        $this->Usuario_idUsuario = $Usuario_idUsuario;
+    }
+
 
     /**
      * @return string
      */
-    public function getEstado(): string
+    public function getEstadoVenta(): string
     {
-        return $this->estado;
+        return $this->estado->toString();
     }
 
     /**
-     * @param string $estado
+     * @param EstadoVenta|null $estado
      */
-    public function setEstado(string $estado): void
+    public function setEstadoVenta(null|string|EstadoVenta $estado): void
     {
-        $this->estado = $estado;
+        if(is_string($estado)){
+            $this->estado = EstadoVenta::from($estado);
+        }else{
+            $this->estado = $estado;
+        }
     }
-
+  
     /**
      * @return array|null
      */
@@ -159,35 +214,77 @@ class Venta extends AbstractDBConnection implements Model
 
 
     /**
-     * @return array|null
+     * retorna un array de detalles venta que perteneces a una venta
+     * @return array
      */
-
-    public function getDetalleVentasVentas(): ?array
+    public function getDetalleVentas(): ?array
     {
-        return $this->DetalleVentasVentas;
+        $this->detalleVenta = DetalleVentas::search('SELECT * FROM postres.detalleventa where Venta_idVenta = '.$this->idVenta);
+        return $this->detalleVenta;
     }
 
     /**
-     * @param array|null $DetalleVentasVentas
+     * @param array|null $DetalleVentas
      */
-    public function setDetalleVentasVentas(?array $DetalleVentasVentas): void
+    public function setDetalleVentas(?array $DetalleVentas): void
     {
-        $this->DetalleVentasVentas = $DetalleVentasVentas;
+        $this->DetalleVentas = $DetalleVentas;
     }
 
+    /**
+     * @return array|null
+     */
+    public function getUsuario(): Usuarios|null
+    {
+        if (!empty($this->Usuario_idUsuario)) {
+            return Usuarios::searchForId($this->Usuario_idUsuario) ?? new Usuarios();
+        }
+        return null;
+    }
 
+    /**
+     * @return Domicilios|null
+     */
+    public function getDomicilio(): Domicilios|null
+    {
+        if (!empty($this->domicilio_idDomicilio)) {
+            return Domicilios::searchForId($this->domicilio_idDomicilio) ?? new Domicilios();
+        }
+        return null;
+    }
+
+    /**
+     * @param float|mixed $monto
+     */
+    public function setMontoTotal(): void
+    {
+        $total = 0;
+        if($this->getIdVenta() != null){
+            $arrDetallesVenta = $this->getDetalleVentas();
+            if(!empty($arrDetallesVenta)){
+                /* @var $arrDetallesVenta DetalleVentas[] */
+                foreach ($arrDetallesVenta as $DetalleVenta){
+                    $total += $DetalleVenta->getTotalProducto();
+                }
+            }
+        }
+        $this->total = $total;
+    }
+  
     protected function save(string $query): ?bool
     {
 
         $arrData = [
             ':idVenta' => $this->getIdVenta(),
             ':numeroVenta' => $this->getNumeroVenta(),
-            ':fecha' => $this->getFecha(),
+            ':fecha' => $this->getFecha()->toDateString(),
             ':total' => $this->getTotal(),
-            ':costo_domicilio' => $this->getCostoDomicilio(),
-            ':estado' => $this->getEstado(),
+            ':costoDomicilio' => $this->getCostoDomicilio(),
+            ':estado' => $this->getEstadoVenta() ,
+            ':Usuario_idUsuario' => $this->getUsuarioIdUsuario(),
+            ':domicilio_idDomicilio' => $this->getDomicilioIdDomicilio()
         ];
-        $this->Connet();
+        $this->Connect();
         $result = $this->insertRow($query, $arrData);
         $this->Disconnect();
         return $result;
@@ -195,10 +292,8 @@ class Venta extends AbstractDBConnection implements Model
 
     function insert(): ?bool
     {
-        // TODO: Implement insert() method.
         $query = "INSERT INTO postres.venta VALUES (
-        :idventas, :numeroVenta, :fecha, :total, :costo_domicilio, :estado                          
-      )";
+        :idVenta, :numeroVenta, :fecha, :total, :costoDomicilio, :estado, :Usuario_idUsuario,:domicilio_idDomicilio )";
         return $this->save($query);
     }
 
@@ -207,15 +302,16 @@ class Venta extends AbstractDBConnection implements Model
 
         $query = "UPDATE postres.venta SET
            numeroVenta = :numeroVenta, fecha = :fecha, total = :total,
-           costo_domicilio = :costo_domicilio, estado = :estado WHERE idVenta = idVenta";
-        return $this - save($query);
+           costoDomicilio = :costoDomicilio, estado = :estado, Usuario_idUsuario = :Usuario_idUsuario, domicilio_idDomicilio = :domicilio_idDomicilio
+           WHERE idVenta = :idVenta";
+        return $this -> save($query);
 
     }
 
     function deleted(): ?bool
     {
         // TODO: Implement deleted() method.
-        $this->setEstado(EstadoGeneral::INACTIVO); //cambia el estado de la venta
+        $this->setEstadoVenta(EstadoVenta::NO_APROBADA); //cambia el estado de la venta
         return $this->update();
     }
 
@@ -243,14 +339,14 @@ class Venta extends AbstractDBConnection implements Model
         return null;
     }
 
-    static function searchForId(int $idVentas): ?object
+    static function searchForId(int $idVenta): ?object
     {
         try {
-            if ($idVentas > 0) {
+            if ($idVenta > 0) {
                 $tmpVentas = new Ventas();
                 $tmpVentas->Connect();
-                $getrow = $tmpVentas->getrow("SELECT * FROM postres.ventas WHERE idVentas =?", array($idVentas));
-                $tmpVentas->Disconnet();
+                $getrow = $tmpVentas->getrow("SELECT * FROM postres.venta WHERE idVenta =?", array($idVenta));
+                $tmpVentas->Disconnect();
                 return ($getrow) ? new Ventas($getrow) : null;
             } else {
                 throw new  Exception('Id de ventas invalida');
@@ -261,27 +357,25 @@ class Venta extends AbstractDBConnection implements Model
         return null;
     }
 
-
-
     static function getAll(): ?array
     {
-        return Venta::search("SELECT * FROM postres.ventas");
+        return Ventas::search("SELECT * FROM postres.venta");
     }
 
+
     /**
-     * @param $documento
+     * @param $idVenta
      * @return bool
      * @throws Exception
      */
-    public static function VentaRegistrada($documento): bool
+    public static function ventaRegistrada ($idVenta): bool
     {
-        $result = Venta::search("SELECT*FROM postres.ventas where documento = " . $documento);
-        if (!empty($result) && count($result) > 0) {
+        $result = Ventas::search("SELECT * FROM postres.venta where idVenta = " . $idVenta);
+        if (!empty($result) && count($result)>0) {
             return true;
         } else {
             return false;
         }
-
     }
 
     /**
@@ -289,26 +383,31 @@ class Venta extends AbstractDBConnection implements Model
      */
     public function __toString(): string
     {
-        return "idVenta: $this->idVenta,
-               numeroVenta: $this->numeroVenta,
-               fecha: $this->fecha,
-               total: $this->total,
-               costo_domicilio: $this->costo_domicilio,
-               estado: $this->estado";
+        return
+            "numeroVenta: => $this->numeroVenta,
+            fecha => $this->fecha,
+            total' => $this->total,
+            costoDomicilio => $this->costoDomicilio,
+            estado: ".$this->getEstadoVenta().";
+            domicilio_idDomicilio => $this->domicilio_idDomicilio,
+            Usuario_idUsuario => $this->Usuario_idUsuario";
     }
 
     /**
      * @inheritDoc
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'idVenta' => $this->getIdVenta(),
             'numeroVenta' => $this->getNumeroVenta(),
             'fecha' => $this->getFecha(),
             'total' => $this->getTotal(),
-            'costo_domicilio' => $this->getCostoDomicilio(),
-            'estado' => $this->getEstado(),
+            'costoDomicilio' => $this->getCostoDomicilio(),
+            'estado' => $this->getEstadoVenta(),
+            'domicilio_idDomicilio' => $this->getDomicilio_idDomicilio(),
+            'usuario_idUsuario' => $this->getUsuario_idUsuario(),
+
         ];
     }
 }
